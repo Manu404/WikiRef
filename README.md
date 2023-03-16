@@ -1,4 +1,4 @@
-# wikiref
+# WikiRef
 
 Wikiref is a multiplateform tool built to analyze MediaWiki references, identifies errors and archive reference through WaybackMachine service.
 
