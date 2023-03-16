@@ -16,7 +16,7 @@ namespace WikiRef
 
         public void SaveConsoleOutputToFile()
         {
-            string filename = GenerateFileName(".json");
+            string filename = GenerateFileName(".txt");
             try
             {
                 using (TextWriter textWritter = new StreamWriter(filename))

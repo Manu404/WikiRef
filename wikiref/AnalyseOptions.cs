@@ -21,7 +21,7 @@ namespace WikiRef
         [Option('w', "wiki", Required = true, HelpText = "Url of the wiki to analyze, for eg: https://wikipedia.com - Required")]
         public string Wiki { get; set; }
 
-        [Option('o', "file-output", Required = false, HelpText = "Name of the output file containing the console output. Might be usefull when silent mode is required/forced and piping can't be used.")]
+        [Option('o', "file-output", Required = false, HelpText = "Write the console output in a file in the executing folder using the date and time as name")]
         public bool ConsoleOutputToFile { get; set; }
 
         [Option('f', "no-color", Required = false, HelpText = "Disable coloring of input for certain terminal with compatibility issues.")]

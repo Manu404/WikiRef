@@ -19,45 +19,47 @@ namespace WikiRef
 
         public void WriteLine(string text)
         {
+            TextBuffer.Add(text);
             if (_config.Silent) return;
             Console.WriteLine(text);
-            TextBuffer.Add(text);
         }
 
         public void WriteLineInRed(string text)
         {
+            TextBuffer.Add(text);
             if (_config.Silent) return;
             if (_config.NoColor) WriteLine(text);
             else WriteLineInColor(text, ConsoleColor.Red);
-            TextBuffer.Add(text);
         }
 
         public void WriteLineInGreen(string text)
         {
+            TextBuffer.Add(text);
             if (_config.Silent) return;
             if (_config.NoColor) WriteLine(text);
             else WriteLineInColor(text, ConsoleColor.Green);
-            TextBuffer.Add(text);
         }
 
         public void WriteLineInOrange(string text)
         {
+            TextBuffer.Add(text);
             if (_config.Silent) return;
             if (_config.NoColor) WriteLine(text);
             else WriteLineInColor(text, ConsoleColor.Yellow);
-            TextBuffer.Add(text);
         }
 
         public void WriteLineInGray(string text)
         {
+            TextBuffer.Add(text);
             if (_config.Silent) return;
             if (_config.NoColor) WriteLine(text);
             else WriteLineInColor(text, ConsoleColor.DarkGray);
-            TextBuffer.Add(text);
         }
 
         public void DisplayCheckingPageMessage(string pageName)
         {
+            TextBuffer.Add(String.Format(new string('-', 20)));
+            TextBuffer.Add(String.Format("Analyzing page: {0}...", pageName));
             if (_config.Silent) return;
             Console.WriteLine(String.Format(new string('-', 20)));
             Console.WriteLine(String.Format("Analyzing page: {0}...", pageName));
