@@ -241,6 +241,11 @@ namespace WikiRef
     {
         public string Url { get; set; }
         public string Name { get; set; }
+
+        public void RetreiveName()
+        {
+
+        }
     }
 
     class WebPage

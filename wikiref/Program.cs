@@ -61,9 +61,8 @@ namespace WikiRef
                     foreach (var page in _api.GetWikiPageInGivenCategory(_config.Category))
                     {
                         _consoleHelper.DisplayCheckingPageMessage(page.Name);
-                        var newpage = new WikiPage(_config.Page, _consoleHelper, _api, _config, _whitelistHandler);
-                        newpage.BuildYoutubeLinkList();
-                        pages.Add(newpage);
+                        page.BuildYoutubeLinkList();
+                        pages.Add(page);
                     }
                 }
                 else if (!String.IsNullOrEmpty(_config.Page)) // if treating specific page
