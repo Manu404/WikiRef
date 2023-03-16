@@ -21,7 +21,7 @@ namespace WikiRef
         [Option('w', "wiki", Required = true, HelpText = "Url of the wiki to analyze, for eg: https://wikipedia.com - Required")]
         public string Wiki { get; set; }
 
-        [Option('o', "output-to-file", Required = false, HelpText = "Name of the output file containing the console output. Might be usefull when silent mode is required/forced and piping can't be used.")]
+        [Option('o', "file-output", Required = false, HelpText = "Name of the output file containing the console output. Might be usefull when silent mode is required/forced and piping can't be used.")]
         public bool ConsoleOutputToFile { get; set; }
 
         [Option('f', "no-color", Required = false, HelpText = "Disable coloring of input for certain terminal with compatibility issues.")]
@@ -40,7 +40,7 @@ namespace WikiRef
         [Option('a', "aggregate", Required = false, HelpText = "Aggregate youtunbe url with same adress but different timestamp.")]
         public bool Aggregate { get; set; }
 
-        [Option('j', "json-output-to-file", Required = false, HelpText = "Output the youtube url grouped by page in json format.")]
+        [Option('j', "json-output", Required = false, HelpText = "Output the youtube url grouped by page in json format.")]
         public bool OutputJson { get; set; }
 
         [Option('d', "display", Default = true, Required = false, HelpText = "Display the youtube urls. Defualt: true")]
