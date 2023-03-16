@@ -65,7 +65,6 @@ Those options are a superset of arguments for the youtube mode. Cfr. example.
 
 Currently in development. TBD
 
-
 ### Running on different systems
 
 Version build through these scripts are portable and require no dependencies. But might be a bit heavy as they embed a lot of the .net framework libraries wit them.
@@ -74,6 +73,13 @@ For windows, some lighter versions are available, as they don't need to bundle a
 
 On linux a 'chmod 755 wikiref' might be required to have it work.
 
-- build_for_linux-x64.bat => build compatible for all windows 7 >
-- build_for_win-x64.bat => build compatible for most desktop linux distributions like CentOS, Debian, Fedora, Ubuntu, and derivatives.
+- build_for_win-x64.bat => build compatible for all windows 7 >
+- build_for_linux-x64.bat => build compatible for most desktop linux distributions like CentOS, Debian, Fedora, Ubuntu, and derivatives.
+
+### Not supported system
 - MacOs support is coming, but require a specific script for each specific version of mac os, but will be coming soon.
+- Arm and arm64 architecture, both linux and windows, might be supported in the future.
+- There's no plan to support x86 architecture for any plateform unless explicitely asked.
+- RHEL systems low to no chances to be supported.
+
+In any case, if you need to build the solution for an architecture or system not supported, it's totally open-source and written with .net core. So it can target a lot of plateform jut by changing the "-r" argument of the build script. More informations about supported architecture and plateform here: https://learn.microsoft.com/en-us/dotnet/core/rid-catalog
