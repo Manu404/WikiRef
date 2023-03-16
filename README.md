@@ -23,10 +23,10 @@ If you need anything, have any ideas or find any bugs or issues, let me know thr
 Analyze all references from pages in category Science on the wiki https://demowiki.com/
 > wikiref analyze -w https://demowiki.com/ -c Science
 
-Analyze all references from the page Informatic on the wiki https://demowiki.cpm/
+Analyze all references from the page Informatic on the wiki https://demowiki.com/
 > wikiref analyze -w https://demowiki.com/ -p Informatic
 
-Analyze all references from pages in category Science on the wiki https://demowiki.fr/; put the output in a file and output nothing in the console
+Analyze all references from pages in category Science on the wiki https://demowiki.com/; put the output in a file and output nothing in the console
 > wikiref analyze -w https://demowiki.com/ -c Science -o -s
 
 Analyze all references from page Informatic on the wiki https://demowiki.com/ and find all youtube videos, aggregate them and output them on the screen and in a json file
