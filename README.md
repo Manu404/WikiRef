@@ -1,8 +1,11 @@
 # WikiRef
 
+
 WikiRef is a multiplateform tool built to analyze MediaWiki references, identifies errors and archive reference through WaybackMachine service.
 
 In case of errors, like dead link, duplicated references, malformed references, etc, the tool will issue an error or warning message.
+
+<img align="left" src="https://github.com/Manu404/WikiRef/raw/main/icon.png" width="350" height="350">
 
 Feature overview:
  - Analyse references for specific page or all pages in specific categories
