@@ -32,6 +32,9 @@ Analyze all references from pages in category Science on the wiki https://demowi
 Analyze all references from page Informatic on the wiki https://demowiki.com/ and find all youtube videos, aggregate them and output them on the screen and in a json file
 > wikiref youtube -w https://demowiki.com/ -p Informatic -a -j -d
 
+Analyze all references from page Informatic on the wiki https://demowiki.com/ and find all youtube videos, aggregate them, write the terminal output in a file but output nothing to the terminal
+> wikiref youtube -w https://demowiki.com/ -p Informatic -a -j -s -o
+
 Note: Under windows, wikiref will be replaced by wikiref‧exe
 
 ##  Command line arguments
