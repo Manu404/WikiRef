@@ -76,7 +76,7 @@ On linux a 'chmod 755 wikiref' might be required to have it work.
 - build_for_win-x64.bat => build compatible for all windows 7 >
 - build_for_linux-x64.bat => build compatible for most desktop linux distributions like CentOS, Debian, Fedora, Ubuntu, and derivatives.
 
-### Not supported system
+### Not yet supported system
 - MacOs support is coming, but require a specific script for each specific version of mac os, but will be coming soon.
 - Arm and arm64 architecture, both linux and windows, might be supported in the future.
 - There's no plan to support x86 architecture for any plateform unless explicitely asked.
