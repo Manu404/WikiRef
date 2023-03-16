@@ -14,25 +14,29 @@ Feature overview:
 
 Some false positive are possible, for instance a website with a faulty SSL certificate will trigger an error, or some website like linkedin fight against bot accessing their content. A "whitelist" system is being developed to allow to ignore certain url or domains.
 
-## Example usage
+This tool, yet already working well for pointing out issues, is stil in early stage, tested only on one project and missing features I haven't talked about until they are done. But it allowed us to fix few dozens issues on few dozen pages. 
 
-Analyze all references from pages in category Science on the wiki https://demowiki.fr/
-> wikiref analyze -w https://demowiki.fr/ -c Science
+If you need anything, have any ideas or find any bugs or issues, let me know through the issue tracker !
 
-Analyze all references from the page Informatic on the wiki https://demowiki.fr/
-> wikiref analyze -w https://demowiki.fr/ -p Informatic
+## Example
+
+Analyze all references from pages in category Science on the wiki https://demowiki.com/
+> wikiref analyze -w https://demowiki.com/ -c Science
+
+Analyze all references from the page Informatic on the wiki https://demowiki.cpm/
+> wikiref analyze -w https://demowiki.com/ -p Informatic
 
 Analyze all references from pages in category Science on the wiki https://demowiki.fr/; put the output in a file and output nothing in the console
-> wikiref analyze -w https://demowiki.fr/ -c Science -o -s
+> wikiref analyze -w https://demowiki.com/ -c Science -o -s
 
-Analyze all references from pages in category Science on the wiki https://demowiki.fr/ and find all youtube videos, aggregate them and output them on the screen and in a json file
-> wikiref youtube -w https://demowiki.fr/ -p Informatic -a -j -d
+Analyze all references from page Informatic on the wiki https://demowiki.com/ and find all youtube videos, aggregate them and output them on the screen and in a json file
+> wikiref youtube -w https://demowiki.com/ -p Informatic -a -j -d
 
-Note: Under windows, wikiref will be replaced by wikiref.exe
+Note: Under windows, wikiref will be replaced by wikiref‧exe
 
 ##  Command line arguments
 
-### The 'analyze' mod
+### The 'analyze' mode
 
 Those options are related to the analyse mode.
 Flags argument don't require value.
@@ -47,9 +51,9 @@ Flags argument don't require value.
 | -s | --silent | x | Produce no output in the console |
 | -f | --no-color | x | Disable coloring of the output for terminal having trouble with the coloring of the text |
 
-### The 'youtube' verb arguments
+### The 'youtube' mode
 
-Those options are a superset of arguments for the youtube mode.
+Those options are a superset of arguments for the youtube mode. Cfr. example.
 
 |  |  | Flag | Description |
 |---|---|---|---|
@@ -71,5 +75,5 @@ For windows, some lighter versions are available, as they don't need to bundle a
 On linux a 'chmod 755 wikiref' might be required to have it work.
 
 - build_for_linux-x64.bat => build compatible for all windows 7 >
-- build_for_win-x64.bat => build compatible for most desktop linux distributions like CentOS, Debian, Fedora, Ubuntu, and derivatives)
-- - MacOs support is coming, but require a specific script for each specific version of mac os, but will be coming soon
+- build_for_win-x64.bat => build compatible for most desktop linux distributions like CentOS, Debian, Fedora, Ubuntu, and derivatives.
+- MacOs support is coming, but require a specific script for each specific version of mac os, but will be coming soon.
