@@ -8,6 +8,7 @@
         public string Page { get; set; } // DefaultOptions=>Page
         public bool Silent { get; set; } // DefaultOptions=>Silent
         public bool ConsoleOutputToFile { get; set; } // DefaultOptions=>ConsoleOutputToFile
+        public bool NoColor { get; set; } // DefaultOption=>NoColor
 
         public string YoutubeListDestinationFile { get; set; } // YoutubeOptions=>Output
         public bool AggrgateYoutubeUrl { get; set; } // YoutubeOptions=>Aggregate
@@ -32,6 +33,7 @@
             Action = action;
             Silent = options.Silent;
             ConsoleOutputToFile = options.ConsoleOutputToFile;
+            NoColor = options.NoColor;
 
             if (options is YoutubeOptions)
                 InitalizeOptions((YoutubeOptions)options);

@@ -1,8 +1,7 @@
 ﻿using CommandLine;
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Threading.Tasks;
+
 
 namespace WikiRef
 {
@@ -23,14 +22,14 @@ namespace WikiRef
 
     class Program
     {
-        static GlobalConfiguration _config;
-        static MediaWikiApi _api;
-        static ConsoleHelper _consoleHelper;
-        static FileHelper _fileHelper;
-        static WhitelistHandler _whitelistHandler;
+        GlobalConfiguration _config;
+        MediaWikiApi _api;
+        ConsoleHelper _consoleHelper;
+        FileHelper _fileHelper;
+        WhitelistHandler _whitelistHandler;
 
         // Main method for the analyze verb
-        static void AnalyzeReferences()
+        private void AnalyzeReferences()
         {
             if (!String.IsNullOrEmpty(_api.ServerUrl))
             {
@@ -52,7 +51,7 @@ namespace WikiRef
         }
 
         // Main method for the youtube verb
-        static void GetYoutubeLinkList()
+        private void GetYoutubeLinkList()
         {
             List<WikiPage> pages = new List<WikiPage>();
 
@@ -95,16 +94,17 @@ namespace WikiRef
                 _fileHelper.SaveJsonToFile(pages);
         }
 
-        private static void Initialize(DefaultOptions options, Action action)
+        // Initialize dependencies and config
+        private void Initialize(DefaultOptions options, Action action)
         {
             _config = new GlobalConfiguration(options, action);
-            _consoleHelper = new ConsoleHelper(_config.Silent);
+            _consoleHelper = new ConsoleHelper(_config);
             _whitelistHandler = new WhitelistHandler();
             _api = new MediaWikiApi(_config.WikiUrl, _consoleHelper, _config, _whitelistHandler);
             _fileHelper = new FileHelper(_consoleHelper);
         }
 
-        private static void ParseCommandlineArgument(string[] args)
+        private void ParseCommandlineArgument(string[] args)
         {
             Parser.Default.ParseArguments<WaybackLachineArchivingOptions, YoutubeOptions, AnalyseOptions>(args)
                 .WithParsed<WaybackLachineArchivingOptions>(option =>
@@ -123,12 +123,17 @@ namespace WikiRef
                 });
         }
 
+        private void SaveTextBuffer()
+        {
+            if (_config != null && _config.ConsoleOutputToFile) // config null if no paramter given, init never done
+                _fileHelper.SaveConsoleOutputToFile();
+        }
+
         static void Main(string[] args)
         {
-            ParseCommandlineArgument(args);
-
-            if (_config.ConsoleOutputToFile)
-                _fileHelper.SaveConsoleOutputToFile();
+            var p = new Program();
+            p.ParseCommandlineArgument(args);
+            p.SaveTextBuffer();
         }
     }
 }

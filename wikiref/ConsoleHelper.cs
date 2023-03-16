@@ -6,53 +6,59 @@ namespace WikiRef
 {
     class ConsoleHelper
     {
+        GlobalConfiguration _config;
+
         public List<string> TextBuffer { get; set; }
 
-        private bool IsSilent { get; set; }
-
-        public ConsoleHelper(bool isSilent)
+        public ConsoleHelper(GlobalConfiguration config)
         {
-            this.IsSilent = isSilent;
             TextBuffer = new List<string>();
+
+            _config = config;
         }
+
         public void WriteLine(string text)
         {
-            if (IsSilent) return;
+            if (_config.Silent) return;
             Console.WriteLine(text);
             TextBuffer.Add(text);
         }
 
         public void WriteLineInRed(string text)
         {
-            if (IsSilent) return;
-            WriteLineInColor(text, ConsoleColor.Red);
+            if (_config.Silent) return;
+            if (_config.NoColor) WriteLine(text);
+            else WriteLineInColor(text, ConsoleColor.Red);
             TextBuffer.Add(text);
         }
 
         public void WriteLineInGreen(string text)
         {
-            if (IsSilent) return;
-            WriteLineInColor(text, ConsoleColor.Green);
+            if (_config.Silent) return;
+            if (_config.NoColor) WriteLine(text);
+            else WriteLineInColor(text, ConsoleColor.Green);
             TextBuffer.Add(text);
         }
 
         public void WriteLineInOrange(string text)
         {
-            if (IsSilent) return;
-            WriteLineInColor(text, ConsoleColor.Yellow);
+            if (_config.Silent) return;
+            if (_config.NoColor) WriteLine(text);
+            else WriteLineInColor(text, ConsoleColor.Yellow);
             TextBuffer.Add(text);
         }
 
         public void WriteLineInGray(string text)
         {
-            if (IsSilent) return;
-            WriteLineInColor(text, ConsoleColor.DarkGray);
+            if (_config.Silent) return;
+            if (_config.NoColor) WriteLine(text);
+            else WriteLineInColor(text, ConsoleColor.DarkGray);
             TextBuffer.Add(text);
         }
 
         public void DisplayCheckingPageMessage(string pageName)
         {
-            if (IsSilent) return;
+            if (_config.Silent) return;
             Console.WriteLine(String.Format(new string('-', 20)));
             Console.WriteLine(String.Format("Analyzing page: {0}...", pageName));
         }

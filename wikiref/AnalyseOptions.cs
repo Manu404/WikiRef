@@ -15,14 +15,17 @@ namespace WikiRef
         [Option('c', "category", Required = false, HelpText = "The category to analyse, without the 'Category:' prefix.", SetName = "category")]
         public string Category { get; set; }
 
-        [Option('p', "page", Required = false, HelpText = "The name of page a to analyse", SetName = "page")]
+        [Option('p', "page", Required = false, HelpText = "The name of page a to analyse.", SetName = "page")]
         public string Page { get; set; }
 
-        [Option('w', "wiki", Required = true, HelpText = "Url of the wiki to analyze, for eg: https://wikipedia.com")]
+        [Option('w', "wiki", Required = true, HelpText = "Url of the wiki to analyze, for eg: https://wikipedia.com - Required")]
         public string Wiki { get; set; }
 
         [Option('o', "output-to-file", Required = false, HelpText = "Name of the output file containing the console output. Might be usefull when silent mode is required/forced and piping can't be used.")]
         public bool ConsoleOutputToFile { get; set; }
+
+        [Option('f', "no-color", Required = false, HelpText = "Disable coloring of input for certain terminal with compatibility issues.")]
+        public bool NoColor { get; set; }
     }
 
     [Verb("analyze", HelpText = "Provide analysis features regarding references. '--help analyze' for more informations.")]
