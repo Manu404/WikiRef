@@ -56,13 +56,13 @@ namespace WikiRef
             else WriteLineInColor(text, ConsoleColor.DarkGray);
         }
 
-        public void DisplayCheckingPageMessage(string pageName)
+        public void WriteSection(string text)
         {
             TextBuffer.Add(String.Format(new string('-', 20)));
-            TextBuffer.Add(String.Format("Analyzing page: {0}...", pageName));
+            TextBuffer.Add(text);
             if (_config.Silent) return;
             Console.WriteLine(String.Format(new string('-', 20)));
-            Console.WriteLine(String.Format("Analyzing page: {0}...", pageName));
+            Console.WriteLine(text);
         }
 
         private void WriteLineInColor(string text, ConsoleColor color)

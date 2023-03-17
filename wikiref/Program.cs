@@ -19,6 +19,7 @@ namespace WikiRef
         Analyse,
         Youtube,
         Archive,
+        Backup,
         Undefined
     }
 
@@ -29,6 +30,7 @@ namespace WikiRef
         ConsoleHelper _consoleHelper;
         FileHelper _fileHelper;
         WhitelistHandler _whitelistHandler;
+        YoutubeVideoDownloader _youtubeVideoDownload;
 
         // Main method for the analyze verb
         private void AnalyzeReferences()
@@ -39,13 +41,13 @@ namespace WikiRef
                 {
                     foreach (var page in _api.GetWikiPageInGivenCategory(_config.Category))
                     {
-                        _consoleHelper.DisplayCheckingPageMessage(page.Name);
+                        _consoleHelper.WriteSection(String.Format("Analyzing page: {0}...", page.Name));
                         page.CheckPageStatus();
                     }
                 }
                 else if (!String.IsNullOrEmpty(_config.Page))
                 {
-                    _consoleHelper.DisplayCheckingPageMessage(_config.Page);
+                    _consoleHelper.WriteSection(String.Format("Analyzing page: {0}...", _config.Page));
                     var page = new WikiPage(_config.Page, _consoleHelper, _api, _config, _whitelistHandler);
                     page.CheckPageStatus();
                 }
@@ -53,7 +55,7 @@ namespace WikiRef
         }
 
         // Main method for the youtube verb
-        private void GetYoutubeLinkList()
+        private void AnalyseYoutubeVideos()
         {
             List<WikiPage> pages = new List<WikiPage>();
 
@@ -62,22 +64,25 @@ namespace WikiRef
                 {
                     foreach (var page in _api.GetWikiPageInGivenCategory(_config.Category))
                     {
-                        _consoleHelper.DisplayCheckingPageMessage(page.Name);
+                        _consoleHelper.WriteSection(String.Format("Analyzing page: {0}...", page.Name));
                         page.BuildYoutubeLinkList();
                         pages.Add(page);
                     }
                 }
                 else if (!String.IsNullOrEmpty(_config.Page)) // if treating specific page
                 {
-                    _consoleHelper.DisplayCheckingPageMessage(_config.Page);
+                    _consoleHelper.WriteSection(String.Format("Analyzing page: {0}...", _config.Page));
                     var newpage = new WikiPage(_config.Page, _consoleHelper, _api, _config, _whitelistHandler);
                     newpage.BuildYoutubeLinkList();
                     pages.Add(newpage);
                 }
 
-            if (_config.AggrgateYoutubeUrl)
+            if (_config.AggrgateYoutubeUrl || _config.Action == Action.Archive)
+            {
+                _consoleHelper.WriteSection("Aggregating youtube links");
                 foreach (var page in pages)
                     page.AggregateYoutubUrl();
+            }
 
             if (_config.DisplayYoutubeUrlList)
             {
@@ -93,6 +98,14 @@ namespace WikiRef
 
             if (_config.OutputYoutubeUrlJson)
                 _fileHelper.SaveJsonToFile(pages);
+
+            if(_config.Action == Action.Backup)
+            {
+                _consoleHelper.WriteSection("Downloading youtube videos");
+                foreach (var page in pages)
+                    foreach (var video in page.YoutubeUrls)
+                        _youtubeVideoDownload.Download(page.Name, video);
+            }
         }
 
         // Initialize dependencies and config
@@ -103,19 +116,25 @@ namespace WikiRef
             _whitelistHandler = new WhitelistHandler();
             _api = new MediaWikiApi(_config.WikiUrl, _consoleHelper, _config, _whitelistHandler);
             _fileHelper = new FileHelper(_consoleHelper);
+            _youtubeVideoDownload = new YoutubeVideoDownloader(_consoleHelper, _config);
         }
 
         private void ParseCommandlineArgument(string[] args)
         {
-            Parser.Default.ParseArguments<WaybackLachineArchivingOptions, YoutubeOptions, AnalyseOptions>(args)
-                .WithParsed<WaybackLachineArchivingOptions>(option =>
+            Parser.Default.ParseArguments<ArchiveOptions, YoutubeOptions, AnalyseOptions, BackuptOptions>(args)
+                .WithParsed<ArchiveOptions>(option =>
                 {
                     Initialize(option, Action.Archive);
                 })
                 .WithParsed<YoutubeOptions>(option =>
                 {
                     Initialize(option, Action.Youtube);
-                    GetYoutubeLinkList();
+                    AnalyseYoutubeVideos();
+                })
+                .WithParsed<BackuptOptions>(option =>
+                {
+                    Initialize(option, Action.Backup);
+                    AnalyseYoutubeVideos();
                 })
                 .WithParsed<AnalyseOptions>(option =>
                 {

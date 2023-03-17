@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Web;
 
 namespace WikiRef
 {
+
     class WikiPage
     {
         // Internal status flags
@@ -158,7 +160,7 @@ namespace WikiRef
             if (checkedReference == numberOfReference)
                 _consoleHelper.WriteLineInGreen(String.Format("All references seems valid"));
             else
-                _consoleHelper.WriteLineInRed(String.Format("Some references seems invalid, check the error message if any or the wikicode for malformated refrerences"));
+                _consoleHelper.WriteLineInRed(String.Format("Some references seems invalid, check the error message and/or the wikicode for malformated refrerences"));
         }
 
         private SourceStatus CheckUrlStatus(string url)
@@ -229,6 +231,8 @@ namespace WikiRef
 
         public void AggregateYoutubUrl()
         {
+            _consoleHelper.WriteLine("Aggregating youtube links");
+
             List<YoutubeVideo> aggregatedUrlList = new List<YoutubeVideo>();
 
             foreach (var video in YoutubeUrls)
@@ -239,11 +243,15 @@ namespace WikiRef
                     if (!aggregatedUrlList.Exists(o => o.Url == baseUrl))
                         aggregatedUrlList.Add(new YoutubeVideo(baseUrl, _consoleHelper, _configuration));
                 }
-                if (video.Url.Contains("&t"))
+                else if (video.Url.Contains("&t"))
                 {
                     string baseUrl = video.Url.Split("&t")[0];
                     if (!aggregatedUrlList.Exists(o => o.Url == baseUrl))
                         aggregatedUrlList.Add(new YoutubeVideo(baseUrl, _consoleHelper, _configuration));
+                }
+                else
+                {
+                    aggregatedUrlList.Add(video);
                 }
             }
 
@@ -259,6 +267,7 @@ namespace WikiRef
 
         public string Url { get; set; }
         public string Name { get; set; }
+        public string FileName { get; set; }
 
         public YoutubeVideo(string url, ConsoleHelper consoleHelper, GlobalConfiguration configuration)
         {
@@ -268,6 +277,7 @@ namespace WikiRef
             _configuration = configuration;
 
             RetreiveName();
+            GenerateFileName();
         }
 
         public void RetreiveName()
@@ -286,7 +296,6 @@ namespace WikiRef
 
                     foreach (Match match in matches)
                         Name = HttpUtility.HtmlDecode(match.Groups[2].Value);
-
                 }
                 catch (WebException ex)
                 {
@@ -297,6 +306,31 @@ namespace WikiRef
                     _consoleHelper.WriteLineInRed(String.Format("URL: {0} - Erreur: {1}", Url, e.Message));
                 }
             }
+        }
+
+        private void GenerateFileName()
+        {
+            if (String.IsNullOrEmpty(Name))
+                return;
+
+            // Make video name valid for use as path
+            var name = Name;
+            foreach (char c in System.IO.Path.GetInvalidFileNameChars())
+            {
+                name = name.Replace(c, '_');
+            }
+            name = name.Replace(' ', '_');
+            FileName = name;
+
+            // Add youtube code as reference in case the reference doesn't contain file name, split on / then remove & and ? args
+            // match:   https://youtu.be/SQuSdHIfuoU?t=37
+            //          https://www.youtube.com/watch?v=nA0eTwsdhS8&t=772
+            //          https://www.youtube.com/shorts/PElWZRmFwc4
+            var youtubeName = Url.Split('/').ToList().Last();
+            youtubeName = youtubeName.Split('?').ToList().First();
+            youtubeName = youtubeName.Split('&').ToList().First();
+
+            FileName = String.Format("{0}_{1}", name, youtubeName);
         }
     }
 

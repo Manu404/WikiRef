@@ -46,8 +46,28 @@ namespace WikiRef
         public bool Display { get; set; }
     }
 
-    [Verb("archive", HelpText = "Generate a wayback machine archive of non-video content. '--help youtube' for more informations.")]
-    class WaybackLachineArchivingOptions : DefaultOptions
+    [Verb("archive", HelpText = "Generate a wayback machine archive of non-video content. '--help archive' for more informations.")]
+    class ArchiveOptions : DefaultOptions
     {
+
+    }
+
+    [Verb("backup", HelpText = "Generate local backup of youtube video sources using yt-dlp. '--help backup' for more informations.")]
+    class BackuptOptions : DefaultOptions
+    {
+        [Option('d', "download", Default = true, Required = false, HelpText = "Download localy the youtube video found in references. The filename is composer of the video title and youtube video id.", SetName = "download")]
+        public bool Download { get; set; }
+
+        [Option('r', "redownload", Default = false, Required = false, HelpText = "Download localy the youtube video found in references, even if it already exists.", SetName = "redownload")]
+        public bool Redownload { get; set; }
+
+        [Option('t', "tool", Required = true, HelpText = "Location of yt-dlp.")]
+        public string ToolLocation { get; set; }
+
+        [Option('a', "arguments", Default = "-S res,ext:mp4:m4a --recode mp4", HelpText = "Yt -dlp arguments. Default argument produce compressed mp4. Cfr. https://github.com/yt-dlp/yt-dlp for more information")]
+        public string Arguments { get; set; }
+
+        [Option('r', "root", Required = true, HelpText = "Root folder where videos will be placed. A subfolder using the page name will be created to place the video.")]
+        public string RootFolder { get; set; }
     }
 }
