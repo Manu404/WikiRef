@@ -42,7 +42,7 @@ namespace WikiRef
         {
             if (isReferenceListBuilt) return;
 
-            string referenceContainingUrlRegularExpression = @"([<]( *)(ref)?( *)[>]).*?(https?|www).*?([<]( *)[\/]( *)(ref)?( *)[>])";
+            string referenceContainingUrlRegularExpression = @"([<]( *)(ref)?( *)[>]).*?(?:https?|www)?.*?([<]( *)[\/]( *)(ref)?( *)[>])";
             Regex refParser = new Regex(referenceContainingUrlRegularExpression, RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
             MatchCollection matches = refParser.Matches(Content);
