@@ -101,7 +101,10 @@ namespace WikiRef
                         if (url.Contains("youtu.", StringComparison.InvariantCultureIgnoreCase) ||
                             url.Contains("youtube.", StringComparison.InvariantCultureIgnoreCase)) // youtu is used in shorten version of the youtube url
                         {
-                            YoutubeUrls.Add(new YoutubeVideo { Url = url });
+                            if (_configuration.Verbose)
+                                _consoleHelper.WriteLineInGray(String.Format("Found {0}", url));
+
+                            YoutubeUrls.Add(new YoutubeVideo(url, _consoleHelper, _configuration));
                             youtubeLinkCount += 1;
                         }
                     }
@@ -222,13 +225,13 @@ namespace WikiRef
                 {
                     string baseUrl = video.Url.Split("?t")[0];
                     if (!aggregatedUrlList.Exists(o => o.Url == baseUrl))
-                        aggregatedUrlList.Add(new YoutubeVideo() { Url = baseUrl });
+                        aggregatedUrlList.Add(new YoutubeVideo(baseUrl, _consoleHelper, _configuration));
                 }
                 if (video.Url.Contains("&t"))
                 {
                     string baseUrl = video.Url.Split("&t")[0];
                     if (!aggregatedUrlList.Exists(o => o.Url == baseUrl))
-                        aggregatedUrlList.Add(new YoutubeVideo() { Url = baseUrl });
+                        aggregatedUrlList.Add(new YoutubeVideo(baseUrl, _consoleHelper, _configuration));
                 }
             }
 
@@ -239,12 +242,49 @@ namespace WikiRef
 
     class YoutubeVideo
     {
+        ConsoleHelper _consoleHelper;
+        GlobalConfiguration _configuration;
+
         public string Url { get; set; }
         public string Name { get; set; }
 
+        public YoutubeVideo(string url, ConsoleHelper consoleHelper, GlobalConfiguration configuration)
+        {
+            Url = url;
+            
+            _consoleHelper = consoleHelper;
+            _configuration = configuration;
+
+            RetreiveName();
+        }
+
         public void RetreiveName()
         {
+            using (WebClient client = new WebClient())
+            {
+                try
+                {
+                    if(_configuration.Verbose)
+                        _consoleHelper.WriteLineInGray(String.Format("Retreiving name for {0}", Url));
 
+                    string pageContent = client.DownloadString(Url);
+                    string urlfilterRegularExpression = "(<meta property=.og:title. content=.)(.*?)(.)([>])"; // match <meta name="title" content="TITLE"> in 4 group, title is in group 2
+                    Regex linkParser = new Regex(urlfilterRegularExpression, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+                    var matches = linkParser.Matches(pageContent);
+
+                    foreach (Match match in matches)
+                        Name = HttpUtility.HtmlDecode(match.Groups[2].Value);
+
+                }
+                catch (WebException ex)
+                {
+                    _consoleHelper.WriteLineInRed(String.Format("URL: {0} - Erreur: {1}", Url, ex.Message));
+                }
+                catch (Exception e)
+                {
+                    _consoleHelper.WriteLineInRed(String.Format("URL: {0} - Erreur: {1}", Url, e.Message));
+                }
+            }
         }
     }
 

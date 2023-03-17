@@ -83,7 +83,7 @@ namespace WikiRef
                 foreach (var page in pages)
                     foreach (var video in page.YoutubeUrls)
                     {
-                        _consoleHelper.WriteLineInGray(String.Format("{0} - {1}", page.Name, video.Url));
+                        _consoleHelper.WriteLineInGray(String.Format("{0} - {1} - {2}", page.Name, video.Name, video.Url));
                         urlCount += 1;
                     }
                 _consoleHelper.WriteLine(String.Format("Unique links: {0}", urlCount));
