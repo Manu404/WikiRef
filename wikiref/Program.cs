@@ -9,7 +9,9 @@ namespace WikiRef
     {
         Valid = 0,
         Invalid = 1,
-        Undefined = 2
+        Undefined = 2,
+        //TakedownTos = 3,
+        //Private = 4
     }
 
     enum Action

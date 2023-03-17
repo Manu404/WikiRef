@@ -31,7 +31,6 @@ namespace WikiRef
     [Verb("analyze", HelpText = "Provide analysis features regarding references. '--help analyze' for more informations.")]
     public class AnalyseOptions : DefaultOptions
     {
-
     }
 
     [Verb("youtube", HelpText = "Generate a list of youtube video links used in references. '--help youtube' for more informations.")]
