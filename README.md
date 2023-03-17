@@ -1,7 +1,7 @@
 # WikiRef
 
 
-WikiRef is a public domain multiplateform tool built to analyze MediaWiki references, identifies errors, archive reference through WaybackMachine service and create local copy of youtube references.
+WikiRef is a public domain multiplateform tool built to analyze MediaWiki references, identifies errors, archive webpage references with WaybackMachine service and create local copy of youtube references.
 
 In case of errors, like dead link, duplicated references, malformed references, etc, the tool will issue an error or warning message.
 
