@@ -6,11 +6,11 @@ namespace WikiRef
 {
     class ConsoleHelper
     {
-        GlobalConfiguration _config;
+        AppConfiguration _config;
 
         public List<string> TextBuffer { get; set; }
 
-        public ConsoleHelper(GlobalConfiguration config)
+        public ConsoleHelper(AppConfiguration config)
         {
             TextBuffer = new List<string>();
 

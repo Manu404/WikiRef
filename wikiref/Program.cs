@@ -1,7 +1,8 @@
 ﻿using CommandLine;
 using System;
 using System.Collections.Generic;
-
+using System.Linq;
+using System.Threading;
 
 namespace WikiRef
 {
@@ -25,12 +26,12 @@ namespace WikiRef
 
     class Program
     {
-        GlobalConfiguration _config;
+        AppConfiguration _config;
         MediaWikiApi _api;
-        ConsoleHelper _consoleHelper;
+        ConsoleHelper _console;
         FileHelper _fileHelper;
         WhitelistHandler _whitelistHandler;
-        YoutubeVideoDownloader _youtubeVideoDownload;
+        YoutubeVideoDownloader _youtubeVideoDownloader;
 
         // Main method for the analyze verb
         private void AnalyzeReferences()
@@ -41,14 +42,14 @@ namespace WikiRef
                 {
                     foreach (var page in _api.GetWikiPageInGivenCategory(_config.Category))
                     {
-                        _consoleHelper.WriteSection(String.Format("Analyzing page: {0}...", page.Name));
+                        _console.WriteSection(String.Format("Analyzing page: {0}...", page.Name));
                         page.CheckPageStatus();
                     }
                 }
                 else if (!String.IsNullOrEmpty(_config.Page))
                 {
-                    _consoleHelper.WriteSection(String.Format("Analyzing page: {0}...", _config.Page));
-                    var page = new WikiPage(_config.Page, _consoleHelper, _api, _config, _whitelistHandler);
+                    _console.WriteSection(String.Format("Analyzing page: {0}...", _config.Page));
+                    var page = new WikiPage(_config.Page, _console, _api, _config, _whitelistHandler);
                     page.CheckPageStatus();
                 }
             }
@@ -64,36 +65,40 @@ namespace WikiRef
                 {
                     foreach (var page in _api.GetWikiPageInGivenCategory(_config.Category))
                     {
-                        _consoleHelper.WriteSection(String.Format("Analyzing page: {0}...", page.Name));
+                        _console.WriteSection(String.Format("Analyzing page: {0}...", page.Name));
                         page.BuildYoutubeLinkList();
                         pages.Add(page);
                     }
                 }
                 else if (!String.IsNullOrEmpty(_config.Page)) // if treating specific page
                 {
-                    _consoleHelper.WriteSection(String.Format("Analyzing page: {0}...", _config.Page));
-                    var newpage = new WikiPage(_config.Page, _consoleHelper, _api, _config, _whitelistHandler);
+                    _console.WriteSection(String.Format("Analyzing page: {0}...", _config.Page));
+                    var newpage = new WikiPage(_config.Page, _console, _api, _config, _whitelistHandler);
                     newpage.BuildYoutubeLinkList();
                     pages.Add(newpage);
                 }
 
-            if (_config.AggrgateYoutubeUrl || _config.Action == Action.Archive)
-            {
-                _consoleHelper.WriteSection("Aggregating youtube links");
-                foreach (var page in pages)
-                    page.AggregateYoutubUrl();
-            }
 
             if (_config.DisplayYoutubeUrlList)
             {
-                int urlCount = 0;
                 foreach (var page in pages)
-                    foreach (var video in page.YoutubeUrls)
+                {
+                    if (_config.AggrgateYoutubeUrl)
                     {
-                        _consoleHelper.WriteLineInGray(String.Format("{0} - {1} - {2}", page.Name, video.Name, video.Url));
-                        urlCount += 1;
+                        _console.WriteSection("Aggregate youtube video references");
+                        foreach (var video in page.AggregatedYoutubeUrls)
+                            _console.WriteLineInGray(String.Format("{0} - {1} - {2}", page.Name, video.Name, video.UrlWithoutArguments));
+                        _console.WriteLine(String.Format("Unique video links for page {0}: {1} - Total YouTube links", page.Name, page.AggregatedYoutubeUrls.Count, page.YoutubeUrls.Count));
                     }
-                _consoleHelper.WriteLine(String.Format("Unique links: {0}", urlCount));
+                    else
+                    {
+                        _console.WriteSection("All video youtube refergences");
+                        foreach (var video in page.YoutubeUrls)
+                            _console.WriteLineInGray(String.Format("{0} - {1} - {2}", page.Name, video.Name, video.Url));
+                        _console.WriteLine(String.Format("Youtube links for page {0}: {1} - Unique videos", page.Name, page.YoutubeUrls.Count, page.AggregatedYoutubeUrls.Count));
+                    }
+                }
+                Console.WriteLine("Total YouTube links {0} - Total unique videos {1}", pages.Select(o => o.YoutubeUrls.Count).Sum(), pages.Select(o => o.AggregatedYoutubeUrls.Count).Sum());
             }
 
             if (_config.OutputYoutubeUrlJson)
@@ -101,22 +106,27 @@ namespace WikiRef
 
             if(_config.Action == Action.Backup)
             {
-                _consoleHelper.WriteSection("Downloading youtube videos");
+                _console.WriteSection("Downloading youtube videos");
                 foreach (var page in pages)
-                    foreach (var video in page.YoutubeUrls)
-                        _youtubeVideoDownload.Download(page.Name, video);
+                    foreach (var video in page.AggregatedYoutubeUrls)
+                    {
+                        if (_config.Throttle != 0)
+                            Thread.Sleep(1000 * _config.Throttle);
+                        
+                        _youtubeVideoDownloader.Download(page.Name, video);
+                    }
             }
         }
 
         // Initialize dependencies and config
         private void Initialize(DefaultOptions options, Action action)
         {
-            _config = new GlobalConfiguration(options, action);
-            _consoleHelper = new ConsoleHelper(_config);
+            _config = new AppConfiguration(options, action);
+            _console = new ConsoleHelper(_config);
             _whitelistHandler = new WhitelistHandler();
-            _api = new MediaWikiApi(_config.WikiUrl, _consoleHelper, _config, _whitelistHandler);
-            _fileHelper = new FileHelper(_consoleHelper);
-            _youtubeVideoDownload = new YoutubeVideoDownloader(_consoleHelper, _config);
+            _api = new MediaWikiApi(_config.WikiUrl, _console, _config, _whitelistHandler);
+            _fileHelper = new FileHelper(_console);
+            _youtubeVideoDownloader = new YoutubeVideoDownloader(_console, _config);
         }
 
         private void ParseCommandlineArgument(string[] args)

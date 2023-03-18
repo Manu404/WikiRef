@@ -51,11 +51,17 @@ namespace WikiRef
 
         private static string GenerateFileName(string extension)
         {
-            string filename = String.Format("output_{0}", DateTime.Now.ToString("yyyyMMddTHH-mm-ss"));
-            while (File.Exists(filename))
-                filename += "_";
-            filename += extension;
-            return filename;
+            string filenameWithtoutExtension = String.Format("output_{0}", DateTime.Now.ToString("yyyyMMddTHH-mm-ss"));
+            string filenameWithExtension = String.Format("{0}{1}", filenameWithtoutExtension, extension);
+
+            // add '_' until find unique file name, barely possible, but possible.
+            while (File.Exists(filenameWithExtension))
+            {
+                filenameWithtoutExtension += "_";
+                filenameWithExtension = String.Format("{0}{1}", filenameWithtoutExtension, extension);
+            }
+
+            return filenameWithExtension;
         }
     }
 }

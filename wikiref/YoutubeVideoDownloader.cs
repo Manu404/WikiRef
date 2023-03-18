@@ -9,16 +9,16 @@ namespace WikiRef
         private string _args;
         private string _rootFolder;
 
-        private ConsoleHelper _consoleHelper;
-        private GlobalConfiguration _configuration;
+        private ConsoleHelper _console;
+        private AppConfiguration _config;
 
-        public YoutubeVideoDownloader(ConsoleHelper consoleHelper, GlobalConfiguration configuration)
+        public YoutubeVideoDownloader(ConsoleHelper consoleHelper, AppConfiguration configuration)
         {
-            _consoleHelper = consoleHelper;
-            _configuration = configuration;
-            _toolPath = _configuration.DownloadToolLocation;
-            _rootFolder = _configuration.DownloadRootFolder;
-            _args = _configuration.DownloadArguments;
+            _console = consoleHelper;
+            _config = configuration;
+            _toolPath = _config.DownloadToolLocation;
+            _rootFolder = _config.DownloadRootFolder;
+            _args = _config.DownloadArguments;
         }
 
         public void Download(string page, YoutubeVideo video)
@@ -27,7 +27,7 @@ namespace WikiRef
             {
                 var outputFile = String.Format("{0}.mp4", video.FileName);
                 if (String.IsNullOrEmpty(video.FileName)) {
-                    _consoleHelper.WriteLineInRed(String.Format("Can't download {0} from {1} - maybe private or violate TOS", video.Url, page));
+                    _console.WriteLineInRed(String.Format("Can't download {0} from {1} - maybe private or violate TOS", video.Url, page));
                     return;
                 }
 
@@ -38,13 +38,13 @@ namespace WikiRef
                 var sourceFile = Path.GetFullPath(Path.Combine(Directory.GetCurrentDirectory(), outputFile));
                 var destinationFile = Path.GetFullPath(Path.Combine(outputFolder, outputFile));
 
-                if (File.Exists(destinationFile) && !_configuration.DownloadRedownload)
+                if (File.Exists(destinationFile) && !_config.DownloadRedownload)
                 {
-                    _consoleHelper.WriteLineInGray(String.Format("File {0} - {1} from page {2} already exists. Download skipped.", video.Url, video.FileName, page));
+                    _console.WriteLineInGray(String.Format("File {0} - {1} from page {2} already exists. Download skipped.", video.Url, video.FileName, page));
                     return;
                 }
 
-                _consoleHelper.WriteLineInGray(String.Format("Downloading {0} - {1} from page {2}", video.Url, video.FileName, page));
+                _console.WriteLineInGray(String.Format("Downloading {0} - {1} from page {2}", video.Url, video.FileName, page));
                 
                 Process videoDownloaderCommand = new Process();
                 videoDownloaderCommand.StartInfo.FileName = Path.GetFullPath(_toolPath);
@@ -55,20 +55,19 @@ namespace WikiRef
                 videoDownloaderCommand.StartInfo.RedirectStandardOutput = true;
                 videoDownloaderCommand.Start();
 
-
                 Console.WriteLine(videoDownloaderCommand.StandardOutput.ReadToEnd());
 
                 videoDownloaderCommand.WaitForExit();
 
                 File.Move(sourceFile, destinationFile);
 
-                _consoleHelper.WriteLineInGray(String.Format("File {0} - {1} from page {2} archived.", video.Url, video.FileName, page));
+                _console.WriteLineInGray(String.Format("File {0} - {1} from page {2} archived.", video.Url, video.FileName, page));
 
             }
             catch (Exception ex)
             {
-                _consoleHelper.WriteLineInRed(String.Format("Error downloading {0} - {1} from page {2}", video.Url, video.FileName, page));
-                _consoleHelper.WriteLineInRed(ex.Message);
+                _console.WriteLineInRed(String.Format("Error downloading {0} - {1} from page {2}", video.Url, video.FileName, page));
+                _console.WriteLineInRed(ex.Message);
             }
         }
 

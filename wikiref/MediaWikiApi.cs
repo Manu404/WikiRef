@@ -8,16 +8,16 @@ namespace WikiRef
 {
     class MediaWikiApi
     {
-        private ConsoleHelper _consoleHelper;
+        private ConsoleHelper _console;
         private WhitelistHandler _whitelistHandler;
-        private GlobalConfiguration _config;
+        private AppConfiguration _config;
 
         public string ServerUrl { get; private set; }
 
-        public MediaWikiApi(string serverUrl, ConsoleHelper consoleHelper, GlobalConfiguration config, WhitelistHandler whitelistHandler)
+        public MediaWikiApi(string serverUrl, ConsoleHelper consoleHelper, AppConfiguration config, WhitelistHandler whitelistHandler)
         {
             ServerUrl = serverUrl;
-            _consoleHelper = consoleHelper;
+            _console = consoleHelper;
             _whitelistHandler = whitelistHandler;
             _config = config;
         }
@@ -30,13 +30,13 @@ namespace WikiRef
                 string json = new WebClient().DownloadString(queryUrl);
                 JObject jsonObject = JObject.Parse(json);
                 foreach (var page in jsonObject["query"]["categorymembers"])
-                    pages.Add(new WikiPage((string)page["title"], _consoleHelper, this, _config, _whitelistHandler));
+                    pages.Add(new WikiPage((string)page["title"], _console, this, _config, _whitelistHandler));
                 return pages;
             }
             catch(Exception ex)
             {
-                _consoleHelper.WriteLineInRed(String.Format("Error retreiving pages from {0}", categoryName));
-                _consoleHelper.WriteLineInRed(ex.Message);
+                _console.WriteLineInRed(String.Format("Error retreiving pages from {0}", categoryName));
+                _console.WriteLineInRed(ex.Message);
                 return pages;
             }
         }
@@ -59,8 +59,8 @@ namespace WikiRef
             }
             catch(Exception ex)
             {
-                _consoleHelper.WriteLineInRed(String.Format("Error treating page {0}", pageName));
-                _consoleHelper.WriteLineInRed(ex.Message);
+                _console.WriteLineInRed(String.Format("Error treating page {0}", pageName));
+                _console.WriteLineInRed(ex.Message);
                 return String.Empty;
             }
         }

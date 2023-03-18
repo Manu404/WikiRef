@@ -26,6 +26,9 @@ namespace WikiRef
 
         [Option('f', "no-color", Required = false, HelpText = "Disable coloring of input for certain terminal with compatibility issues.")]
         public bool NoColor { get; set; }
+
+        [Option('T', "throttle", Required = false, HelpText = "Give a value in second to enable throttling to avoid '429 : Too Many Request' errors. Mainly for YouTube. That will slow down the speed of the too but avoid temporary banning.")]
+        public int Throttle { get; set; }
     }
 
     [Verb("analyze", HelpText = "Provide analysis features regarding references. '--help analyze' for more informations.")]
@@ -36,13 +39,13 @@ namespace WikiRef
     [Verb("youtube", HelpText = "Generate a list of youtube video links used in references. '--help youtube' for more informations.")]
     class YoutubeOptions : DefaultOptions
     {
-        [Option('a', "aggregate", Required = false, HelpText = "Aggregate youtunbe url with same adress but different timestamp.")]
+        [Option('a', "aggregate", Required = false, HelpText = "Display an aggregated view of YouTube reference based on VideoId")]
         public bool Aggregate { get; set; }
 
-        [Option('j', "json-output", Required = false, HelpText = "Output the youtube url grouped by page in json format.")]
+        [Option('j', "json-output", Required = false, HelpText = "Output the YouTube urls grouped by page in a file in json format for usage by other tools")]
         public bool OutputJson { get; set; }
 
-        [Option('d', "display", Default = true, Required = false, HelpText = "Display the youtube urls. Defualt: true")]
+        [Option('d', "display", Default = true, Required = false, HelpText = "Display complete list of  YouTube references. Defualt: true")]
         public bool Display { get; set; }
     }
 
@@ -58,16 +61,16 @@ namespace WikiRef
         [Option('d', "download", Default = true, Required = false, HelpText = "Download localy the youtube video found in references. The filename is composer of the video title and youtube video id.", SetName = "download")]
         public bool Download { get; set; }
 
-        [Option('r', "redownload", Default = false, Required = false, HelpText = "Download localy the youtube video found in references, even if it already exists.", SetName = "redownload")]
+        [Option('r', "redownload", Default = false, Required = false, HelpText = "Redownload the video, even if they already exists locally.", SetName = "redownload")]
         public bool Redownload { get; set; }
 
-        [Option('t', "tool", Required = true, HelpText = "Location of yt-dlp.")]
+        [Option('t', "tool-path", Required = true, HelpText = "Location of yt-dlp.")]
         public string ToolLocation { get; set; }
 
         [Option('a', "arguments", Default = "-S res,ext:mp4:m4a --recode mp4", HelpText = "Yt -dlp arguments. Default argument produce compressed mp4. Cfr. https://github.com/yt-dlp/yt-dlp for more information")]
         public string Arguments { get; set; }
 
-        [Option('r', "root", Required = true, HelpText = "Root folder where videos will be placed. A subfolder using the page name will be created to place the video.")]
+        [Option('r', "root-folder", Required = true, HelpText = "Root folder where videos will be placed. A subfolder using the page name will be created to place the video.")]
         public string RootFolder { get; set; }
     }
 }
