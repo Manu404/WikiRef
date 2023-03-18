@@ -54,36 +54,76 @@ Flags argument don't require value.
 | -v | --verbose | x | Verbose output |
 | -s | --silent | x | Produce no output in the console |
 | -f | --no-color | x | Disable coloring of the output for terminal having trouble with the coloring of the text |
+| -T | --throttle |  | Give a value in second to enable throttling to avoid '429 : Too Many Request' errors. Mainly for YouTube. That will slow down the speed of the too but avoid temporary banning. |
 
 ### The 'youtube' mode
 
-Those options are a superset of arguments for the youtube mode. Cfr. example.
+Those options are a superset of arguments for the YouTube mode. Cfr. example.
 
 |  |  | Flag | Description |
 |---|---|---|---|
-| -a | -aggregate | x | Aggregate urls refering to the same videos, but for instance pointing to different timestamp |
-| -j | --json-output | x | Output the youtube urls grouped by page in json format for usage by other tools |
+| -a | -aggregate | x | Aggregate urls based on VideoId                              |
+| -j | --json-output | x | Output the YouTube urls grouped by page in a file in json format for usage by other tools |
 | -d | --display | x | Display the list of the collected youtube url and a count |
 
 ### The 'archive' mode
 
 Currently in development. TBD
 
-### Running on different systems
+### Multiplatform
 
-Version build through these scripts are portable and require no dependencies. But might be a bit heavy as they embed a lot of the .net framework libraries wit them.
+##### Supported system
 
-For windows, some lighter versions are available, as they don't need to bundle a big part of the .net framework with them.
+For now, supported systems are:
 
-On linux a 'chmod 755 wikiref' might be required to have it work.
+- Windows 64 bits from 7 and above.
+- "Standard" Linux 64 bits like CentOS, Debian, Fedora, Ubuntu, and derivatives
 
-- build_for_win-x64.bat => build compatible for all windows 7 >
-- build_for_linux-x64.bat => build compatible for most desktop linux distributions like CentOS, Debian, Fedora, Ubuntu, and derivatives.
+##### Not yet supported system
 
-### Not yet supported system
-- MacOs support is coming, but require a specific script for each specific version of mac os, but will be coming soon.
-- Arm and arm64 architecture, both linux and windows, might be supported in the future.
-- There's no plan to support x86 architecture for any plateform unless explicitely asked.
+- MacOS support will be coming soon, after testing can be done.
+- Arm and arm64 architecture, both linux and windows, will be supported in the future, for instance for raspberries.
+- There's no plan to support x86 architecture for any platform unless explicitly asked, let me know if it's the case. I consider this architecture to be totally outdated in 2023 and only remaining in niche sectors. 
 - RHEL systems low to no chances to be supported.
 
-In any case, if you need to build the solution for an architecture or system not supported, it's totally open-source and written with .net core. So it can target a lot of plateform jut by changing the "-r" argument of the build script. More informations about supported architecture and plateform here: https://learn.microsoft.com/en-us/dotnet/core/rid-catalog
+Remarks: I,considered supported platform on which we have feedback of the software working. Tons of platform can be technically already supported, but without guarantee and feedback it works on those systems, I prefer to let them in the "not yet supported system" by caution.
+
+In any case, if you need to build the solution for an architecture or system not supported, cfr "Build for not officially supported system" section at the end of this page.
+
+### Building the tool
+
+Version build through these scripts are portable and require no dependencies. But might be a bit heavy as they embed a lot of the .net framework libraries wit them. They are all "self-contained", meaning the application is a single file, containing all it's required dependencies.
+
+##### Dependencies
+
+Build is meant to be done on windows with using gitbash (normally provided with git). You don't need any IDE like Visual Studio or similar. What you need is:
+
+- Git for Windows: https://git-scm.com/download/win
+- Framework .Net Core 3.1: https://dotnet.microsoft.com/en-us/download/dotnet/3.1
+- Latest .net framework sdk: https://dotnet.microsoft.com/en-us/download 
+- Zip and bzip2 2 need to be added to your gitbash, it's really easy; here's a straight forward tutorial: https://ranxing.wordpress.com/2016/12/13/add-zip-into-git-bash-on-windows/
+
+##### Compilation
+
+Once the dependencies are installed, you're ready to compile by yourself the project.
+
+A script is present in the root folder of the repo named *"multiplateform_build.sh"*, run it through git bash.
+
+He will present you a list of supported architecture and platform, you just need to pick the one that fit your need. 
+
+If you want to bypass the question, you can use the parameter -p and provide the platform you want to target, might be useful in CI/CD context or for other automations. Supported values are available [here](https://learn.microsoft.com/en-us/dotnet/core/rid-catalog). Usage in this case will be for ex: *"./multiplateform_build -p \<plateform\>\"*
+
+The build output is placed in ./output/build/\<plateform\>
+
+A zip containing the build output is placed in ./output/zip/\<plateform\>.zip
+
+###### Remarks
+
+- On linux a 'chmod 755 wikiref' might be required to have it work.
+- Sadly, WSL have compatibility issues with the "dotnet" command, prohibiting it to be used.
+
+##### Build for not officially supported system
+
+You can build for 'unofficially supported system' using the -p paramter of the build script and using for a plateform available in the lise [here](https://learn.microsoft.com/en-us/dotnet/core/rid-catalog)
+
+Exemple, building for macOS 13 Ventura ARM 64 : "./multiplateform_build -p osx.13-arm64"
