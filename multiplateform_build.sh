@@ -72,8 +72,7 @@ echo -----------------------------------
 echo Packing project
 echo -----------------------------------
 zipDestination="$zipOutput/$selectedPlateform.zip"
-echo $outputFolder
-cd $outputFolder
+cd $buildFolder
 mkdir -p $zipOutput
 zip -r $zipDestination ./*
 cd -
