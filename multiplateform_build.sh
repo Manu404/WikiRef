@@ -4,13 +4,11 @@ echo -----------------------------------
 echo Settings up build
 echo -----------------------------------
 
-# Required variables
-outputFolder='./output/'
+# Default variables
+currentDir="$PWD"
+outputFolder="$currentDir/output/"
 selectedPlateform=""
-buildFolder="$outputFolder/build/"
 zipOutput="$outputFolder/zip/"
-outputFolder="$buildFolder/$selectedPlateform"
-zipDestination="$zipOutput/$selectedPlateform.zip"
 
 #
 # PARSE COMMAND PARAMETER
@@ -25,7 +23,7 @@ while [ : ]; do
   case "$1" in
     -p | --plateform)
 		selectedPlateform="$2"
-        echo "Provided plateform is '$2'"
+        echo "Provided plateform is $2"
         shift 2
         ;;
     --) shift; 
@@ -40,16 +38,16 @@ done
 if [ -z "${selectedPlateform}" ]
 then
 	echo "Choose your plateform"
-	PS3='Your choice: '
+	PS3=Your choice: 
 	plateform=("linux-x64" "win-x64")
 	select p in "${plateform[@]}"; do
 		case $p in
 			"linux-x64")
-				selectedPlateform='linux-x64'
+				selectedPlateform=linux-x64
 				break;
 				;;
 			"win-x64")
-				selectedPlateform='win-x64'
+				selectedPlateform=win-x64
 				break;
 				;;
 			*)
@@ -63,7 +61,8 @@ fi
 echo -----------------------------------
 echo Building project
 echo -----------------------------------
-dotnet publish -v n -c Release -r linux-x64 -p:PublishSingleFile=True --self-contained True -o $outputFolder
+buildFolder="$outputFolder/build/$selectedPlateform/"
+dotnet publish -v n -c Release -r $selectedPlateform -p:PublishSingleFile=True --self-contained True -o $buildFolder
 
 
 #
@@ -72,9 +71,12 @@ dotnet publish -v n -c Release -r linux-x64 -p:PublishSingleFile=True --self-con
 echo -----------------------------------
 echo Packing project
 echo -----------------------------------
-echo $zipOutput
+zipDestination="$zipOutput/$selectedPlateform.zip"
+echo $outputFolder
+cd $outputFolder
 mkdir -p $zipOutput
-zip -r $zipDestination $outputFolder
+zip -r $zipDestination ./*
+cd -
 
 
 
