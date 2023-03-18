@@ -3,10 +3,10 @@
 
 WikiRef is a public domain multiplateform tool built to analyze MediaWiki references, identifies errors, archive webpage references with WaybackMachine service and create local copy of youtube references.
 
-In case of errors, like dead link, duplicated references, malformed references, etc, the tool will issue an error or warning message, allowing you to act and improve the quality of the sourcing of your wiki.
+In case of errors, like dead link, duplicated references, malformed references, etc, the tool will issue an error or warning message, allowing you to act and improve the quality of the sourcing of your wiki. This tool doesn't fix the issues, it show them.
 
 Feature overview:
- - Analyse references for specific page or all pages in specific categories
+ - Analyze references for specific page or all pages in specific categories
  - Check reference urls are valid and accessible
  - Check youtube videos are still online and visible
  - Generate a list of url used, that can be aggregated (for instance youtube url containing timestamp)
@@ -17,7 +17,7 @@ Some false positive are possible, for instance a website with a faulty SSL certi
 
 This tool, yet already working well for pointing out issues, is stil in early stage, tested only on one project and missing features I haven't talked about until they are done. But it allowed us to fix few dozens issues on few dozen pages. 
 
-If you need anything, have any ideas or find any bugs or issues, let me know through the issue tracker !
+If you need anything, have any ideas or find any bugs or issues, let me know through the issue tracker, I'm totally open to new suggestions !
 
 ## Example
 
@@ -42,33 +42,51 @@ Note: Under windows, wikiref will be replaced by wikiref‧exe
 
 ### The 'analyze' mode
 
-Those options are related to the analyse mode.
+Those options are related to the analyze mode.
 Flags argument don't require value.
 
-|  |  | Flag | Description |
-|---|---|---|---|
-| -w | --wiki |  | The url of the wiki to analyze |
-| -c | --category |  | The name of the category to analyze |
-| -p | --page |  | The name of the page to analyze |
-| -o | --file-output | x | Output the analysis to a file with a generated name based on date in the executing folder |
-| -v | --verbose | x | Verbose output |
-| -s | --silent | x | Produce no output in the console |
-| -f | --no-color | x | Disable coloring of the output for terminal having trouble with the coloring of the text |
-| -T | --throttle |  | Give a value in second to enable throttling to avoid '429 : Too Many Request' errors. Mainly for YouTube. That will slow down the speed of the too but avoid temporary banning. |
+|  |  | Flag | Required | Description |
+|---|---|:-:|:-:|---|
+| -w | --wiki |  | x | The url of the wiki to analyze |
+| -c | --category |  | x (but mutually exclusive with page parameter) | The name of the category to analyze |
+| -p | --page |  | x (but mutually exclusive with category parameter) | The name of the page to analyze |
+| -o | --file-output | x |  | Output the analysis to a file with a generated name based on date in the executing folder |
+| -v | --verbose | x |  | Verbose output |
+| -s | --silent | x |  | Produce no output in the console |
+| -f | --no-color | x |  | Disable coloring of the output for terminal having trouble with the coloring of the text |
+| -T | --throttle |  |  | Give a value in second to enable throttling to avoid '429 : Too Many Request' errors. Mainly for YouTube. That will slow down the speed of the too but avoid temporary banning. |
 
 ### The 'youtube' mode
 
 Those options are a superset of arguments for the YouTube mode. Cfr. example.
 
-|  |  | Flag | Description |
-|---|---|---|---|
-| -a | -aggregate | x | Aggregate urls based on VideoId                              |
-| -j | --json-output | x | Output the YouTube urls grouped by page in a file in json format for usage by other tools |
-| -d | --display | x | Display the list of the collected youtube url and a count |
+|  |  | Flag | Required | Description |
+|---|---|:-:|:-:|---|
+| -d | --display | x |  | Display complete list of  YouTube references. Default behavior. |
+| -a | -aggregate | x |  | Display an aggregated view of YouTube reference based on VideoId |
+| -j | --json-output | x |  | Output the YouTube urls grouped by page in a file in json format for usage by other tools |
 
 ### The 'archive' mode
 
 Currently in development. TBD
+
+### The 'backup' mode
+
+Those options are a superset of arguments for creating local backup of YouTube video used as references. Cfr. example.
+
+This mode rely on a free, open-source and multiplatform the usage of the tool [yt-dlp](https://github.com/yt-dlp/yt-dlp). Check their document for installation depending on your system [here](https://github.com/yt-dlp/yt-dlp/wiki/Installation).
+
+The videos a placed in a folder given as parameter. Within this folder, each page will create a folder, containing their related video.
+
+The files use the video name followed by the YouTube VideoId.
+
+|      |               | Flag | Required | Description                                                  |
+| ---- | ------------- | :--: | :------: | ------------------------------------------------------------ |
+| -d   | --download    |  x   |    x     | Default to true. Download the videos. Might be useful to have it set to false for testing purpose. |
+| -r   | --redownload  |  x   |    x     | Redownload the video, even if they already exists locally.   |
+| -t   | --tool        |      |    x     | Location of yt-dlp tool.                                     |
+| -a   | --arguments   |      |          | Provide default argument "-S res,ext:mp4:m4a --recode mp4", that produce a good compromise between quality and weight, close to 480p format, our goal when developing the tool being mainly focused on audio. But feel free to provide the arguments best your needs. Check the documentation [here](https://github.com/yt-dlp/yt-dlp#usage-and-options). Warning: The filename output parameter can't be changed as it's handled by the tool itself. Everything else can be adapted. |
+| -r   | --root-folder |      |    x     | The folder in which the video will be save                   |
 
 ### Multiplatform
 
@@ -126,4 +144,10 @@ A zip containing the build output is placed in ./output/zip/\<plateform\>.zip
 
 You can build for 'unofficially supported system' using the -p paramter of the build script and using for a plateform available in the lise [here](https://learn.microsoft.com/en-us/dotnet/core/rid-catalog)
 
-Exemple, building for macOS 13 Ventura ARM 64 : "./multiplateform_build -p osx.13-arm64"
+Example, building for macOS 13 Ventura ARM 64 : "./multiplateform_build -p osx.13-arm64"
+
+#### Beerz, greetz and personal words
+
+If you like this tool, let me know, it's always appreciated. As well, if you have any comment or would like any request, I'm totally open for it.
+
+I would like to give a big hug to BadMulch, BienfaitsPourTous and their communities, for their support, greetz, ideas and for whom this tool was developed and keep me company during the development of this tool I streamed on their discord server.

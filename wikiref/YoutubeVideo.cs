@@ -25,8 +25,8 @@ namespace WikiRef
             _configuration = configuration;
 
             RetreiveName();
-            //GetVideoId();
-            //BuildUrlWihtoutArgument();
+            GenerateFileName();
+            BuildUrlWihtoutArgument();
         }
 
         public void BuildUrlWihtoutArgument()
@@ -85,7 +85,7 @@ namespace WikiRef
             }
         }
 
-        private void GetVideoId()
+        private void GenerateFileName()
         {
             if (String.IsNullOrEmpty(Name))
                 return;
@@ -99,16 +99,10 @@ namespace WikiRef
             name = name.Replace(' ', '_');
             FileName = name;
 
-            string urlfilterRegularExpression = @"\b(?:https?:\/\/|www\.)\S+"; // The following regex could be used @"\b(?:https?://|www\.)\S+(?=</ref)"; but in case of malformated ref containing two url, handled by mediawiki, this report as an error.
-            Regex linkParser = new Regex(urlfilterRegularExpression, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
-            if (linkParser.Matches(reference.Content).Count > 1)
-                _console.WriteLineInOrange(String.Format("This reference contains multiple urls. Reference: {0}", reference));
-
-            foreach (Match match in linkParser.Matches(reference.Content))
-                reference.Urls.Add(HttpUtility.UrlDecode(RemoveRefTagIfIcluded(match.Value)));
-
             // Add youtube code as reference in case the reference doesn't contain file name, split on / then remove & and ? args
+            // match:   https://youtu.be/SQuSdHIfuoU?t=37
+            //          https://www.youtube.com/watch?v=nA0eTwsdhS8&t=772
+            //          https://www.youtube.com/shorts/PElWZRmFwc4
             var youtubeName = Url.Split('/').ToList().Last();
             youtubeName = youtubeName.Split('?').ToList().First();
             youtubeName = youtubeName.Split('&').ToList().First();
