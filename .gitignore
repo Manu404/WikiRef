@@ -3,3 +3,4 @@ Properties
 bin
 /*.exe
 /.vs
+/output
