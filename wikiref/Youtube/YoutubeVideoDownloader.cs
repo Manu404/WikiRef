@@ -31,6 +31,19 @@ namespace WikiRef
                     return;
                 }
 
+                if(video.IsChannel && !_config.DownloadChannel)
+                {
+                    _console.WriteLineInOrange(String.Format("Download skipped. Url is a channel {0} from {1}. Use --download-channel if you want to download it's content", video.Url, page));
+                    return;
+                }
+
+
+                if (video.IsPlaylist && !_config.DownloadPlaylist)
+                {
+                    _console.WriteLineInOrange(String.Format("Download skipped. Url is a playlist {0} from {1}. Use --download-playlist if you want to download it's content", video.Url, page));
+                    return;
+                }
+
                 var outputFile = String.Format("{0}.mp4", video.FileName);
                 var outputFolder = Path.Combine(Directory.GetCurrentDirectory(), _rootFolder, page);
 
