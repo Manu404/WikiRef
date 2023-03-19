@@ -79,6 +79,7 @@ Note: Under windows, wikiref will be replaced by wikiref‧exe
 | -d | --display | x |  | Display complete list of  YouTube references. Default behavior. |
 | -a | --aggregate | x |  | Display an aggregated view of YouTube reference based on VideoId. |
 |  | --json-output | x |  | Output the YouTube urls grouped by page in a file in JSON format for usage by other tools |
+|  | --valid-links | x | | Display or export only valid links. |
 
 ### The 'archive' mode
 
@@ -94,13 +95,15 @@ The videos a placed in a folder given as parameter. Within this folder, each pag
 
 The files use the video name followed by the YouTube VideoId.
 
-|      |               | Flag | Required | Description                                                  |
-| ---- | ------------- | :--: | :------: | ------------------------------------------------------------ |
-| -d   | --download    |  x   |    x     | Default to true. Download the videos. Might be useful to have it set to false for testing purposes. |
-|      | --redownload  |  x   |    x     | Redownload the video, even if they already exist locally.    |
-| -t   | --tool-path   |      |    x     | Location of yt-dlp tool.                                     |
-| -a   | --arguments   |      |          | Provide default argument "-S res,ext:mp4:m4a --recode mp4", that produces a good compromise between quality and weight, close to 480p format, our goal when developing the tool being mainly focused on audio. But feel free to provide the arguments that fit best your needs. Check the documentation [here](https://github.com/yt-dlp/yt-dlp#usage-and-options). Warning: The filename output parameter can't be changed as it's handled by the tool itself. Everything else can be adapted. |
-| -r   | --root-folder |      |    x     | The folder in which the video will be saved                  |
+|      |                     | Flag | Required |      | Description                                                  |
+| ---- | ------------------- | :--: | :------: | ---- | ------------------------------------------------------------ |
+| -d   | --download          |  x   |    x     |      | Default to true. Download the videos. Might be useful to have it set to false for testing purposes. |
+|      | --redownload        |  x   |    x     |      | Redownload the video, even if they already exist locally.    |
+| -t   | --tool-path         |      |    x     |      | Location of yt-dlp tool.                                     |
+| -a   | --arguments         |      |          |      | Provide default argument "-S res,ext:mp4:m4a --recode mp4", that produces a good compromise between quality and weight, close to 480p format, our goal when developing the tool being mainly focused on audio. But feel free to provide the arguments that fit best your needs. Check the documentation [here](https://github.com/yt-dlp/yt-dlp#usage-and-options). Warning: The filename output parameter can't be changed as it's handled by the tool itself. Everything else can be adapted. |
+| -r   | --root-folder       |      |    x     |      | The folder in which the video will be saved                  |
+|      | --download-playlist |  x   |          |      | Download playlist url content. Default: false                |
+|      | --download-channel  |  x   |          |      | "Download channel url content. Default: false                |
 
 ### Multiplatform
 

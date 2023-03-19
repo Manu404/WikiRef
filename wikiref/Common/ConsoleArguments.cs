@@ -76,10 +76,10 @@ namespace WikiRef
         [Option('r', "root-folder", Required = true, HelpText = "Root folder where videos will be placed. A subfolder using the page name will be created to place the video.")]
         public string RootFolder { get; set; }
 
-        [Option("download-playlist", Default = false, Required = false, HelpText = "Download playlist content. Default: false")]
+        [Option("download-playlist", Default = false, Required = false, HelpText = "Download playlist url content. Default: false")]
         public bool DownloadPlaylist { get; set; }
 
-        [Option("download-channel", Default = false, Required = false, HelpText = "Download channel content. Default: false")]
+        [Option("download-channel", Default = false, Required = false, HelpText = "Download channel url content. Default: false")]
         public bool DownloadChannel { get; set; }
     }
 }
