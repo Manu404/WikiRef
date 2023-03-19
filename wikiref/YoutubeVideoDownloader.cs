@@ -21,7 +21,7 @@ namespace WikiRef
             _args = _config.DownloadArguments;
         }
 
-        public void Download(string page, YoutubeVideo video)
+        public void Download(string page, YoutubeUrl video)
         {
             try
             {
@@ -62,7 +62,7 @@ namespace WikiRef
             }
         }
 
-        private void DownloadVideo(YoutubeVideo video, string outputFile)
+        private void DownloadVideo(YoutubeUrl video, string outputFile)
         {
             Process videoDownloaderCommand = new Process();
             videoDownloaderCommand.StartInfo.FileName = Path.GetFullPath(_toolPath);
@@ -75,7 +75,7 @@ namespace WikiRef
             videoDownloaderCommand.WaitForExit();
         }
 
-        private string FormatArguments(YoutubeVideo video, string outputFile)
+        private string FormatArguments(YoutubeUrl video, string outputFile)
         {
             return String.Format("{0} -o  \"{1}\" \"{2}\"", _args, outputFile, video.Url);
         }

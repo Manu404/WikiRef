@@ -16,12 +16,15 @@
         public bool AggrgateYoutubeUrl { get; private set; } // YoutubeOptions=>Aggregate
         public bool OutputYoutubeUrlJson { get; private set; } // YoutubeOptions=>Json
         public bool DisplayYoutubeUrlList { get; private set; } // YoutubeOptions=>display
+        public bool OnlyValidLinks { get; private set; }
 
         public bool DownloadYoutubeVideos { get; private set; } // Backup=>download
         public string DownloadArguments { get; private set; } // Backup=>Arguments
         public string DownloadToolLocation { get; private set; } // Backup=>ToolLocation
         public string DownloadRootFolder { get; private set; } // Backup=>RootFolder
         public bool DownloadRedownload { get; private set; } // Backup=>Redownload
+        public bool DownloadPlaylist { get; private set; } // Backupt=>download-playlist
+        public bool DownloadChannel { get; private set; } // Backupt=>download-channel
 
         public Action Action { get; set; }
 
@@ -57,6 +60,7 @@
             AggrgateYoutubeUrl = options.Aggregate;
             OutputYoutubeUrlJson = options.OutputJson;
             DisplayYoutubeUrlList = options.Display;
+            OnlyValidLinks = options.OnlyValidLinks;
         }
 
         private void InitalizeOptions(ArchiveOptions options)

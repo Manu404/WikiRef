@@ -22,11 +22,17 @@ namespace WikiRef
             _config = config;
         }
 
-        public IEnumerable<WikiPage> GetWikiPageInGivenCategory(string categoryName)
+        public IEnumerable<WikiPage> GetWikiPages()
         {
             List<WikiPage> pages = new List<WikiPage>();
-            try { 
-                string queryUrl = $"{ServerUrl}/w/api.php?action=query&list=categorymembers&cmtitle=Category:{categoryName}&cmlimit=500&format=json";
+
+            try {
+                // If query page
+                if (String.IsNullOrEmpty(_config.Category))
+                    return new[] { new WikiPage(_config.Page, _console, this, _config, _whitelistHandler) };
+
+                // if query category
+                string queryUrl = $"{ServerUrl}/w/api.php?action=query&list=categorymembers&cmtitle=Category:{_config.Category}&cmlimit=500&format=json";
                 string json = new WebClient().DownloadString(queryUrl);
                 JObject jsonObject = JObject.Parse(json);
                 foreach (var page in jsonObject["query"]["categorymembers"])
@@ -35,7 +41,7 @@ namespace WikiRef
             }
             catch(Exception ex)
             {
-                _console.WriteLineInRed(String.Format("Error retreiving pages from {0}", categoryName));
+                _console.WriteLineInRed(String.Format("Error retreiving pages from {0}", _config.Category));
                 _console.WriteLineInRed(ex.Message);
                 return pages;
             }

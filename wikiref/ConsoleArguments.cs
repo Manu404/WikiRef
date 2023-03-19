@@ -47,6 +47,9 @@ namespace WikiRef
 
         [Option('d', "display", Default = true, Required = false, HelpText = "Display complete list of  YouTube references. Defualt: true")]
         public bool Display { get; set; }
+
+        [Option("valid-links", Default = false, Required = false, HelpText = "Display or export only valid links.")]
+        public bool OnlyValidLinks { get; set; }
     }
 
     [Verb("archive", HelpText = "Generate a wayback machine archive of non-video content. '--help archive' for more informations.")]
@@ -72,5 +75,11 @@ namespace WikiRef
 
         [Option('r', "root-folder", Required = true, HelpText = "Root folder where videos will be placed. A subfolder using the page name will be created to place the video.")]
         public string RootFolder { get; set; }
+
+        [Option("download-playlist", Default = false, Required = false, HelpText = "Download playlist content. Default: false")]
+        public bool DownloadPlaylist { get; set; }
+
+        [Option("download-channel", Default = false, Required = false, HelpText = "Download channel content. Default: false")]
+        public bool DownloadChannel { get; set; }
     }
 }

@@ -7,7 +7,7 @@ using System.Web;
 
 namespace WikiRef
 {
-    class YoutubeVideo
+    class YoutubeUrl
     {
         ConsoleHelper _console;
         AppConfiguration _config;
@@ -17,8 +17,10 @@ namespace WikiRef
         public string Name { get; private set; }
         public string FileName { get; private set; }
         public SourceStatus IsValid { get; set; }
+        public bool IsPlaylist { get; set; }
+        public bool IsChannel { get; set; }
 
-        public YoutubeVideo(string url, ConsoleHelper consoleHelper, AppConfiguration configuration)
+        public YoutubeUrl(string url, ConsoleHelper consoleHelper, AppConfiguration configuration)
         {
             Url = url;
             
@@ -36,21 +38,47 @@ namespace WikiRef
         {
             if (String.IsNullOrEmpty(Url))
                 return;
-
-            if (Url.Contains("?t"))            
-                Url = Url.Split("?t")[0];            
-            else if (Url.Contains("&t"))            
-                Url = Url.Split("&t")[0];            
+            UrlWithoutArguments = Url;
+            if (UrlWithoutArguments.Contains("?t"))
+                UrlWithoutArguments = Url.Split("?t")[0];            
+            else if (UrlWithoutArguments.Contains("&t"))
+                UrlWithoutArguments = Url.Split("&t")[0];            
         }
 
         private void CheckIfValid()
         {
             if (Name == " - YouTube") // takedown - private or TOS violation
+            {
+                if (_config.Verbose)
+                    _console.WriteLineInOrange("Url invalid cause video is private or violate TOS.");
                 IsValid = SourceStatus.Invalid;
+            }
             else if (Name == "YouTube") // redirect home page
+            {
+                if (_config.Verbose)
+                    _console.WriteLineInOrange("Url invalid cause redirection to homepage.");
                 IsValid = SourceStatus.Invalid;
+            }
             else if ((String.IsNullOrEmpty(Name) || String.IsNullOrWhiteSpace(Name)) && !Url.Contains("/embed/")) // deleted channel, embeded videos doesen't have title, so htey should be considered valid
+            {
+                if (_config.Verbose)
+                    _console.WriteLineInOrange("Url invalid cause refer to deleted channel or private.");
                 IsValid = SourceStatus.Invalid;
+            }
+            else if (Url.Contains("/user/")) // lien de chaine
+            {
+                if (_config.Verbose)
+                    _console.WriteLineInOrange("User channel url.");
+                IsValid = SourceStatus.Valid;
+                IsChannel = true;
+            }
+            else if (Url.Contains("/playlist?list=")) // playlist
+            {
+                if (_config.Verbose)
+                    _console.WriteLineInOrange("Playlist url.");
+                IsValid = SourceStatus.Valid;
+                IsPlaylist = true;
+            }
         }
 
         private void RetreiveName()
@@ -88,7 +116,8 @@ namespace WikiRef
 
                     Name = stripedTitle;
 
-                    _console.WriteLineInGray(String.Format("Video name: {0}", Name));
+                    if(_config.Verbose)
+                        _console.WriteLineInGray(String.Format("{0} - {1}", Url, Name));
                 }
                 catch (WebException ex)
                 {
@@ -144,7 +173,8 @@ namespace WikiRef
 
             FileName = String.Format("{0}_[{1}]", name, videoId);
 
-            _console.WriteLineInOrange(FileName);
+            if(_config.Verbose)
+                _console.WriteLineInGray(FileName);
         }
     }
 }

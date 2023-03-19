@@ -39,19 +39,11 @@ namespace WikiRef
         {
             if (!String.IsNullOrEmpty(_api.ServerUrl))
             {
-                if (!String.IsNullOrEmpty(_config.Category)) // if analysing category
+                foreach (var page in _api.GetWikiPages())
                 {
-                    foreach (var page in _api.GetWikiPageInGivenCategory(_config.Category))
-                    {
-                        _console.WriteSection(String.Format("Analyzing page: {0}...", page.Name));
-                        page.CheckPageStatus();
-                    }
-                }
-                else if (!String.IsNullOrEmpty(_config.Page))
-                {
-                    _console.WriteSection(String.Format("Analyzing page: {0}...", _config.Page));
-                    var page = new WikiPage(_config.Page, _console, _api, _config, _whitelistHandler);
+                    _console.WriteSection(String.Format("Analyzing page: {0}...", page.Name));
                     page.CheckPageStatus();
+                    page.CheckFormatting();
                 }
             }
         }
@@ -59,24 +51,16 @@ namespace WikiRef
         // Main method for the youtube verb
         private void AnalyseYoutubeVideos()
         {
+            int youtubeLinkCount = 1;
             if (String.IsNullOrEmpty(_api.ServerUrl))
                 return;
 
-            if (!String.IsNullOrEmpty(_config.Category)) // if treating cateogory
+
+            foreach (var page in _api.GetWikiPages())
             {
-                foreach (var page in _api.GetWikiPageInGivenCategory(_config.Category))
-                {
-                    _console.WriteSection(String.Format("Analyzing page: {0}...", page.Name));
-                    page.BuildYoutubeLinkList();
-                    wikiPages.Add(page);
-                }
-            }
-            else if (!String.IsNullOrEmpty(_config.Page)) // if treating specific page
-            {
-                _console.WriteSection(String.Format("Analyzing page: {0}...", _config.Page));
-                var newpage = new WikiPage(_config.Page, _console, _api, _config, _whitelistHandler);
-                newpage.BuildYoutubeLinkList();
-                wikiPages.Add(newpage);
+                _console.WriteSection(String.Format("Analyzing page: {0}...", page.Name));
+                youtubeLinkCount = page.BuildYoutubeLinkList();
+                wikiPages.Add(page);
             }
 
             if (_config.DisplayYoutubeUrlList)
@@ -88,7 +72,12 @@ namespace WikiRef
                         _console.WriteSection("Aggregate youtube video references");
                         foreach (var video in page.AggregatedYoutubeUrls)
                             _console.WriteLineInGray(String.Format("{0} - {1} - {2}", page.Name, video.Name, video.UrlWithoutArguments));
-                        _console.WriteLine(String.Format("Unique video links for page {0}: {1} - Total YouTube links", page.Name, page.AggregatedYoutubeUrls.Count, page.YoutubeUrls.Count));
+
+
+                        Console.WriteLine("Youtube : Page {0} - Total links {1} - Total valid unique links {2} - Total valid links {3}", page.Name,
+                                                                                                                        page.YoutubeUrls.Count(),
+                                                                                                                        page.AggregatedYoutubeUrls.Where(o => o.IsValid == SourceStatus.Valid).Count(),
+                                                                                                                        page.YoutubeUrls.Where(o => o.IsValid == SourceStatus.Valid).Count());
                     }
                     else // Display raw list
                     {
@@ -98,7 +87,10 @@ namespace WikiRef
                         _console.WriteLine(String.Format("Youtube links for page {0}: {1} - Unique videos", page.Name, page.YoutubeUrls.Count, page.AggregatedYoutubeUrls.Count));
                     }
                 }
-                Console.WriteLine("Total YouTube links {0} - Total unique videos {1}", wikiPages.Select(o => o.YoutubeUrls.Count).Sum(), wikiPages.Select(o => o.AggregatedYoutubeUrls.Count).Sum());
+
+                Console.WriteLine("Youtube : Total links {0} - Total valid unique links {1} - Total valid links {2}", youtubeLinkCount,
+                                                                                                                        wikiPages.SelectMany(o => o.AggregatedYoutubeUrls).Where(o => o.IsValid == SourceStatus.Valid).Count(), 
+                                                                                                                        wikiPages.SelectMany(o => o.YoutubeUrls).Where(o => o.IsValid == SourceStatus.Valid).Count());
             }
 
             if (_config.OutputYoutubeUrlJson)
