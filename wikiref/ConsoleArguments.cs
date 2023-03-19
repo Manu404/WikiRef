@@ -24,10 +24,10 @@ namespace WikiRef
         [Option('o', "file-output", Required = false, HelpText = "Write the console output in a file in the executing folder using the date and time as name")]
         public bool ConsoleOutputToFile { get; set; }
 
-        [Option('f', "no-color", Required = false, HelpText = "Disable coloring of input for certain terminal with compatibility issues.")]
+        [Option("no-color", Required = false, HelpText = "Disable coloring of input for certain terminal with compatibility issues.")]
         public bool NoColor { get; set; }
 
-        [Option('T', "throttle", Required = false, HelpText = "Give a value in second to enable throttling to avoid '429 : Too Many Request' errors. Mainly for YouTube. That will slow down the speed of the too but avoid temporary banning.")]
+        [Option("throttle", Required = false, HelpText = "Give a value in second to enable throttling to avoid '429 : Too Many Request' errors. Mainly for YouTube. That will slow down the speed of the too but avoid temporary banning.")]
         public int Throttle { get; set; }
     }
 
@@ -42,7 +42,7 @@ namespace WikiRef
         [Option('a', "aggregate", Required = false, HelpText = "Display an aggregated view of YouTube reference based on VideoId")]
         public bool Aggregate { get; set; }
 
-        [Option('j', "json-output", Required = false, HelpText = "Output the YouTube urls grouped by page in a file in json format for usage by other tools")]
+        [Option("json-output", Required = false, HelpText = "Output the YouTube urls grouped by page in a file in json format for usage by other tools")]
         public bool OutputJson { get; set; }
 
         [Option('d', "display", Default = true, Required = false, HelpText = "Display complete list of  YouTube references. Defualt: true")]
@@ -61,7 +61,7 @@ namespace WikiRef
         [Option('d', "download", Default = true, Required = false, HelpText = "Download localy the youtube video found in references. The filename is composer of the video title and youtube video id.", SetName = "download")]
         public bool Download { get; set; }
 
-        [Option('r', "redownload", Default = false, Required = false, HelpText = "Redownload the video, even if they already exists locally.", SetName = "redownload")]
+        [Option("redownload", Default = false, Required = false, HelpText = "Redownload the video, even if they already exists locally.", SetName = "redownload")]
         public bool Redownload { get; set; }
 
         [Option('t', "tool-path", Required = true, HelpText = "Location of yt-dlp.")]

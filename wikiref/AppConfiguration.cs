@@ -54,7 +54,7 @@
 
         private void InitalizeOptions(YoutubeOptions options)
         {
-            //AggrgateYoutubeUrl = options.Aggregate;
+            AggrgateYoutubeUrl = options.Aggregate;
             OutputYoutubeUrlJson = options.OutputJson;
             DisplayYoutubeUrlList = options.Display;
         }

@@ -25,13 +25,15 @@ namespace WikiRef
         {
             try
             {
-                var outputFile = String.Format("{0}.mp4", video.FileName);
-                if (String.IsNullOrEmpty(video.FileName)) {
-                    _console.WriteLineInRed(String.Format("Can't download {0} from {1} - maybe private or violate TOS", video.Url, page));
+                if (video.IsValid == SourceStatus.Invalid)
+                {
+                    _console.WriteLineInOrange(String.Format("Download skipped. Invalid. Maybe private or violate TOS. {0} from {1}", video.Url, page));
                     return;
                 }
 
+                var outputFile = String.Format("{0}.mp4", video.FileName);
                 var outputFolder = Path.Combine(Directory.GetCurrentDirectory(), _rootFolder, page);
+
                 if (!Directory.Exists(outputFolder))
                     Directory.CreateDirectory(outputFolder);
 
@@ -40,24 +42,13 @@ namespace WikiRef
 
                 if (File.Exists(destinationFile) && !_config.DownloadRedownload)
                 {
-                    _console.WriteLineInGray(String.Format("File {0} - {1} from page {2} already exists. Download skipped.", video.Url, video.FileName, page));
+                    _console.WriteLineInGray(String.Format("File already existe, download skipped. {0} - {1} from page {2}", video.Url, video.FileName, page));
                     return;
                 }
 
                 _console.WriteLineInGray(String.Format("Downloading {0} - {1} from page {2}", video.Url, video.FileName, page));
-                
-                Process videoDownloaderCommand = new Process();
-                videoDownloaderCommand.StartInfo.FileName = Path.GetFullPath(_toolPath);
-                videoDownloaderCommand.StartInfo.WorkingDirectory = Directory.GetCurrentDirectory();
-                var args = FormatArguments(video, outputFile);
-                videoDownloaderCommand.StartInfo.Arguments = args;
-                videoDownloaderCommand.StartInfo.UseShellExecute = false;
-                videoDownloaderCommand.StartInfo.RedirectStandardOutput = true;
-                videoDownloaderCommand.Start();
 
-                Console.WriteLine(videoDownloaderCommand.StandardOutput.ReadToEnd());
-
-                videoDownloaderCommand.WaitForExit();
+                DownloadVideo(video, outputFile);
 
                 File.Move(sourceFile, destinationFile);
 
@@ -69,6 +60,19 @@ namespace WikiRef
                 _console.WriteLineInRed(String.Format("Error downloading {0} - {1} from page {2}", video.Url, video.FileName, page));
                 _console.WriteLineInRed(ex.Message);
             }
+        }
+
+        private void DownloadVideo(YoutubeVideo video, string outputFile)
+        {
+            Process videoDownloaderCommand = new Process();
+            videoDownloaderCommand.StartInfo.FileName = Path.GetFullPath(_toolPath);
+            videoDownloaderCommand.StartInfo.WorkingDirectory = Directory.GetCurrentDirectory();
+            var args = FormatArguments(video, outputFile);
+            videoDownloaderCommand.StartInfo.Arguments = args;
+            videoDownloaderCommand.StartInfo.UseShellExecute = false;
+            videoDownloaderCommand.StartInfo.RedirectStandardOutput = true;
+            videoDownloaderCommand.Start();
+            videoDownloaderCommand.WaitForExit();
         }
 
         private string FormatArguments(YoutubeVideo video, string outputFile)
