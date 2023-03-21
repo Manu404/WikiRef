@@ -33,22 +33,30 @@ All these parameters are used and compatible in the other modes.
 
 Analyze all references from pages in the category Science on the wiki https://demowiki.com/
 
-> wikiref analyze -w https://demowiki.com/ -c Science
+```
+wikiref analyze -w https://demowiki.com/ -c Science
+```
 
 Analyze all references from the page Informatic on the wiki https://demowiki.com/
 
-> wikiref analyze -w https://demowiki.com/ -p Informatic
+```
+wikiref analyze -w https://demowiki.com/ -p Informatic
+```
 
 Analyze all references from pages in the category Science on the wiki https://demowiki.com/; put the output in a file and output nothing in the console
 
-> wikiref analyze -w https://demowiki.com/ -c Science -o -s
+```
+wikiref analyze -w https://demowiki.com/ -c Science -o -s
+```
+
+
 
 #### Parameter reference
 
-|  |  | Flag | Required | Description |
-|---|---|:-:|:-:|---|
 | -w | --wiki |  | x | The url of the wiki to analyze |
+|---|---|:-:|:-:|---|
 | -c | --category |  | x (but mutually exclusive with page parameter) | The name of the category to analyze |
+|  |  | Flag | Required | Description |
 | -p | --page |  | x (but mutually exclusive with category parameter) | The name of the page to analyze |
 | -o | --file-output | x |  | Output the analysis to a file with a generated name based on the date in the executing folder |
 | -v | --verbose | x |  | Verbose output |
@@ -64,11 +72,15 @@ Those options are a superset of arguments for the YouTube mode.
 
 Analyze all references from page Informatic on the wiki https://demowiki.com/ and find all YouTube videos, aggregate them and output them on the screen and in a JSON file
 
-> wikiref youtube -w https://demowiki.com/ -p Informatic -a --json-output -d
+```
+wikiref youtube -w https://demowiki.com/ -p Informatic -a --json-output -d
+```
 
 Analyze all references from page Informatic on the wiki https://demowiki.com/ and find all YouTube videos, whiteout aggregating , write the terminal output in a file but output nothing to the terminal
 
-> wikiref youtube -w https://demowiki.com/ -p Informatic --json-output -s -o
+```
+wikiref youtube -w https://demowiki.com/ -p Informatic --json-output -s -o
+```
 
 Note: Under windows, wikiref will be replaced by wikiref‧exe
 
