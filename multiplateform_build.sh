@@ -76,6 +76,3 @@ cd $buildFolder
 mkdir -p $zipOutput
 zip -r $zipDestination ./*
 cd -
-
-
-
