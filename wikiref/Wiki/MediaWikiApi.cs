@@ -11,15 +11,16 @@ namespace WikiRef
         private ConsoleHelper _console;
         private WhitelistHandler _whitelistHandler;
         private AppConfiguration _config;
-
+        private RegexHelper _regexHelper;
         public string ServerUrl { get; private set; }
 
-        public MediaWikiApi(string serverUrl, ConsoleHelper consoleHelper, AppConfiguration config, WhitelistHandler whitelistHandler)
+        public MediaWikiApi(string serverUrl, ConsoleHelper consoleHelper, AppConfiguration config, WhitelistHandler whitelistHandler, RegexHelper regexHelper)
         {
             ServerUrl = serverUrl;
             _console = consoleHelper;
             _whitelistHandler = whitelistHandler;
             _config = config;
+            _regexHelper = regexHelper;
         }
 
         public IEnumerable<WikiPage> GetWikiPages()
@@ -29,14 +30,14 @@ namespace WikiRef
             try {
                 // If query page
                 if (String.IsNullOrEmpty(_config.Category))
-                    return new[] { new WikiPage(_config.Page, _console, this, _config, _whitelistHandler) };
+                    return new[] { new WikiPage(_config.Page, _console, this, _config, _whitelistHandler, _regexHelper) };
 
                 // if query category
                 string queryUrl = $"{ServerUrl}/w/api.php?action=query&list=categorymembers&cmtitle=Category:{_config.Category}&cmlimit=500&format=json";
                 string json = new WebClient().DownloadString(queryUrl);
                 JObject jsonObject = JObject.Parse(json);
                 foreach (var page in jsonObject["query"]["categorymembers"])
-                    pages.Add(new WikiPage((string)page["title"], _console, this, _config, _whitelistHandler));
+                    pages.Add(new WikiPage((string)page["title"], _console, this, _config, _whitelistHandler, _regexHelper));
                 return pages;
             }
             catch(Exception ex)

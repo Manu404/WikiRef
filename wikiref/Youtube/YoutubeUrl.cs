@@ -11,6 +11,7 @@ namespace WikiRef
     {
         ConsoleHelper _console;
         AppConfiguration _config;
+        RegexHelper _regexHelper;
 
         public string Url { get; private set; }
         public string UrlWithoutArguments { get; set; }
@@ -20,12 +21,14 @@ namespace WikiRef
         public bool IsPlaylist { get; set; }
         public bool IsChannel { get; set; }
 
-        public YoutubeUrl(string url, ConsoleHelper consoleHelper, AppConfiguration configuration)
+        public YoutubeUrl(string url, ConsoleHelper consoleHelper, AppConfiguration configuration, RegexHelper helper)
         {
             Url = url;
             
             _console = consoleHelper;
             _config = configuration;
+            _regexHelper = helper;
+
             IsValid = SourceStatus.Valid;
 
             RetreiveName();
@@ -101,9 +104,10 @@ namespace WikiRef
                         GetSourceUrlFromEmbededVideo(client);
 
                     string pageContent = client.DownloadString(Url);
-                    string titleFilterExpression = @"(<title>)(?<name>.*?)(</title>)"; // regex developped with regex101, regex and the texting datas available heree: https://regex101.com/r/HOb95o/1
-                    Regex linkParser = new Regex(titleFilterExpression, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-                    var matches = linkParser.Matches(pageContent);
+
+
+
+                    var matches = _regexHelper.ExtractYoutubeVideoNameFromPageRegex.Matches(pageContent);
 
                     string title = String.Empty;
                     foreach (Match match in matches)
@@ -137,9 +141,7 @@ namespace WikiRef
         public void GetSourceUrlFromEmbededVideo(WebClient client)
         {
             string pageContent = client.DownloadString(Url);
-            string urlfilterRegularExpression = "(<a href=\")(?<url>.*?)(\")"; // regex developped with regex101, regex and the texting datas available heree: s https://regex101.com/r/aqcAnR/1
-            Regex linkParser = new Regex(urlfilterRegularExpression, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            var matches = linkParser.Matches(pageContent);
+             var matches = _regexHelper.ExtractYoutubeUrlFromEmbededVideoRegex.Matches(pageContent);
 
             foreach (Match match in matches)
                 Url = HttpUtility.HtmlDecode(match.Groups["url"].Value);
@@ -159,9 +161,8 @@ namespace WikiRef
             FileName = name;
 
             var videoId = String.Empty;
-            string urlfilterRegularExpression = @"(?<host>.*/)(?<watch>.*v=)?(?<videoid>.*)"; // regex developped with regex101, regex and the texting datas available heree:  https://regex101.com/r/0tLwmD/1
-            Regex linkParser = new Regex(urlfilterRegularExpression, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-            var matches = linkParser.Matches(Url);
+
+            var matches = _regexHelper.YoutubeVideoIdFromUrlRegex.Matches(Url);
 
             foreach (Match match in matches)
                 videoId = HttpUtility.HtmlDecode(match.Groups["videoid"].Value);

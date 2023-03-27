@@ -1,8 +1,10 @@
 ﻿using CommandLine;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace WikiRef
 {
@@ -32,6 +34,7 @@ namespace WikiRef
         FileHelper _fileHelper;
         WhitelistHandler _whitelistHandler;
         YoutubeVideoDownloader _youtubeVideoDownloader;
+        RegexHelper _regexHelper;
         List<WikiPage> wikiPages = new List<WikiPage>();
 
         // Main method for the analyze verb
@@ -56,8 +59,10 @@ namespace WikiRef
                 return;
 
 
+            //Parallel.ForEach(_api.GetWikiPages(), page =>
+            //{
             foreach (var page in _api.GetWikiPages())
-            {
+            { 
                 _console.WriteSection(String.Format("Analyzing page: {0}...", page.Name));
                 youtubeLinkCount = page.BuildYoutubeLinkList();
                 wikiPages.Add(page);
@@ -119,7 +124,8 @@ namespace WikiRef
             _config = new AppConfiguration(options, action);
             _console = new ConsoleHelper(_config);
             _whitelistHandler = new WhitelistHandler();
-            _api = new MediaWikiApi(_config.WikiUrl, _console, _config, _whitelistHandler);
+            _regexHelper = new RegexHelper();
+            _api = new MediaWikiApi(_config.WikiUrl, _console, _config, _whitelistHandler, _rege);
             _fileHelper = new FileHelper(_console);
             _youtubeVideoDownloader = new YoutubeVideoDownloader(_console, _config);
         }
@@ -156,9 +162,23 @@ namespace WikiRef
 
         static void Main(string[] args)
         {
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
             var p = new Program();
             p.ParseCommandlineArgument(args);
             p.SaveTextBuffer();
+
+            stopWatch.Stop();
+            // Get the elapsed time as a TimeSpan value.
+            TimeSpan ts = stopWatch.Elapsed;
+
+            // Format and display the TimeSpan value.
+            string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
+                ts.Hours, ts.Minutes, ts.Seconds,
+                ts.Milliseconds / 10);
+            Console.WriteLine("RunTime " + elapsedTime);
+
         }
     }
 }

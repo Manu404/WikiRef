@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace WikiRef
@@ -20,6 +21,7 @@ namespace WikiRef
         private MediaWikiApi _api;
         private AppConfiguration _config;
         private WhitelistHandler _blacklistHandler;
+        private RegexHelper _regexHelper;
 
         // Public data
         public string Name { get; private set; }
@@ -28,7 +30,7 @@ namespace WikiRef
         public List<Reference> References { get; private set; }
         public string Content { get; private set; }
 
-        public WikiPage(string name, ConsoleHelper consoleHelper, MediaWikiApi api, AppConfiguration configuration, WhitelistHandler blacklistHandler)
+        public WikiPage(string name, ConsoleHelper consoleHelper, MediaWikiApi api, AppConfiguration configuration, WhitelistHandler blacklistHandler, RegexHelper regexHelper)
         {
             YoutubeUrls = new List<YoutubeUrl>();
             AggregatedYoutubeUrls = new List<YoutubeUrl>();
@@ -40,21 +42,20 @@ namespace WikiRef
             _api = api;
             _config = configuration;
             _blacklistHandler = blacklistHandler;
-
+            _regexHelper = regexHelper;
 
             GetPageContentFromApi();
             BuildReferenceList();
             ExtractUrlsFromReference();
         }
 
+
+
         private void BuildReferenceList()
         {
             if (isReferenceListBuilt) return;
-
-            string referenceContainingUrlRegularExpression = @"([<]( *)(ref)?( *)[>]).*?(?:https?|www)?.*?([<]( *)[\/]( *)(ref)?( *)[>])"; // egex developped with regex101, regex and the texting datas available heree: https://regex101.com/r/1SYr6f/1
-            Regex refParser = new Regex(referenceContainingUrlRegularExpression, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
-            MatchCollection matches = refParser.Matches(Content);
+            
+            MatchCollection matches = _regexHelper.ExtractReferenceREgex.Matches(Content);
 
             foreach (Match match in matches)
                 References.Add(new Reference(match.Value));
@@ -68,12 +69,7 @@ namespace WikiRef
 
             foreach (var reference in References)
             {
-                string urlfilterRegularExpression = @"\b(?<url>(https?:.//?|www\.).*?)(?:</ref>)"; // regex developped with regex101, regex and the texting datas available heree: https://regex101.com/r/pQb3hs/1 
-                                                                                                   // It includes what can be considered "errors", but that that allow to detect malformed url like nowiki or multiple url referebces
-
-                Regex linkParser = new Regex(urlfilterRegularExpression, RegexOptions.Compiled | RegexOptions.IgnoreCase);
-
-                var matches = linkParser.Matches(reference.Content);
+                var matches = _regexHelper.ExtractUrlFromReferenceRegex.Matches(reference.Content);
 
                 foreach (Match match in matches)
                     if(match.Groups["url"].Value.Contains(','))
@@ -108,7 +104,7 @@ namespace WikiRef
                         if (url.Contains("youtu.", StringComparison.InvariantCultureIgnoreCase) ||
                             url.Contains("youtube.", StringComparison.InvariantCultureIgnoreCase)) // youtu is used in shorten version of the youtube url
                         {
-                            var video = new YoutubeUrl(url, _console, _config);
+                            var video = new YoutubeUrl(url, _console, _config, _regexHelper);
                             YoutubeUrls.Add(video);
 
                             if (!AggregatedYoutubeUrls.Exists(a => video.Name == a.Name))
@@ -160,7 +156,7 @@ namespace WikiRef
             int checkedReference = 0;
             SourceStatus result;
 
-            foreach (var reference in References)
+            Parallel.ForEach(References, reference =>
             {
                 foreach (var url in reference.Urls)
                 {
@@ -192,7 +188,7 @@ namespace WikiRef
                     }
                     checkedReference += 1;
                 }
-            }
+            });
 
             _console.WriteLine(String.Format("{0} reference found containing urls. {1} url verified.", numberOfReference, checkedReference));
 
@@ -241,7 +237,7 @@ namespace WikiRef
             {
                 try
                 {
-                    YoutubeUrl video = new YoutubeUrl(url, _console, _config);
+                    YoutubeUrl video = new YoutubeUrl(url, _console, _config, _regexHelper);
                     return video.IsValid;
                 }
                 catch (WebException ex)
