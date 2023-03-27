@@ -98,14 +98,11 @@ namespace WikiRef
 
                     if (_config.Verbose)
                         _console.WriteLineInGray(String.Format("Retreiving name for {0}", Url));
-
-                    
+                                        
                     if (Url.Contains("embed")) // mebed videos have no name in the title, but there's a reference to the orignal video that can be retrieved.
                         GetSourceUrlFromEmbededVideo(client);
 
                     string pageContent = client.DownloadString(Url);
-
-
 
                     var matches = _regexHelper.ExtractYoutubeVideoNameFromPageRegex.Matches(pageContent);
 

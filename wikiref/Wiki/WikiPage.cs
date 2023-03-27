@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -49,8 +50,6 @@ namespace WikiRef
             ExtractUrlsFromReference();
         }
 
-
-
         private void BuildReferenceList()
         {
             if (isReferenceListBuilt) return;
@@ -67,18 +66,18 @@ namespace WikiRef
         {
             if (areUrlExtracteFromReferences) return;
 
-            foreach (var reference in References)
+            Parallel.ForEach(References, reference =>
             {
                 var matches = _regexHelper.ExtractUrlFromReferenceRegex.Matches(reference.Content);
 
-                foreach (Match match in matches)
-                    if(match.Groups["url"].Value.Contains(','))
+                Parallel.ForEach(matches, match =>
+                {
+                    if (match.Groups["url"].Value.Contains(','))
                         _console.WriteLineInOrange(String.Format("This reference contains multiple urls. Reference: {0}", reference));
 
-                foreach (Match match in matches)
                     reference.Urls.Add(HttpUtility.UrlDecode(match.Groups["url"].Value));
-            }
-
+                });
+            });
             areUrlExtracteFromReferences = true;
         }
 
@@ -96,8 +95,8 @@ namespace WikiRef
 
             int youtubeLinkCount = 1;
 
-            foreach (var reference in References)
-                foreach (var url in reference.Urls)
+            Parallel.ForEach(References, reference => {
+                Parallel.ForEach(reference.Urls, url =>
                 {
                     try
                     {
@@ -111,7 +110,7 @@ namespace WikiRef
                                 AggregatedYoutubeUrls.Add(video);
 
                             if (_config.Verbose)
-                                if(video.IsValid == video.IsValid)
+                                if (video.IsValid == video.IsValid)
                                     _console.WriteLineInGray(String.Format("Found valide video {0} - {1}", video.Url, video.Name));
                                 else
                                     _console.WriteLineInOrange(String.Format("Found invalide video {0} - {1}", video.Url, video.Name));
@@ -123,31 +122,31 @@ namespace WikiRef
                     {
                         _console.WriteLineInRed(String.Format("URL: {0} - Erreur: {1}", url, ex.Message));
                     }
-                }
+                });
+            });
             return youtubeLinkCount;
         }
 
         public void CheckFormatting()
         {
-            https://www.youtube.com/watch?v=ubNF9QNEQLA</nowiki>
 
-            foreach (var reference in References)
+            Parallel.ForEach(References, reference =>
             {
-                foreach (var url in reference.Urls)
+                Parallel.ForEach(reference.Urls, url =>
                 {
                     try
                     {
                         if (url.Contains("</nowiki>"))
                             _console.WriteLineInOrange(String.Format("<nowiki> tag for reference {0} in page {1}", url, Name));
-                        if(url.EndsWith(']'))
+                        if (url.EndsWith(']'))
                             _console.WriteLineInOrange(String.Format("Multiple references in the same ref tag : {0} in page {1}", url, Name));
                     }
                     catch (Exception ex)
                     {
                         _console.WriteLineInRed(String.Format("URL: {0} - Erreur: {1}", url, ex.Message));
                     }
-                }
-            }
+                });
+            });
         }
 
         public void CheckPageStatus()

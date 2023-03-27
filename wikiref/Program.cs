@@ -59,25 +59,22 @@ namespace WikiRef
                 return;
 
 
-            //Parallel.ForEach(_api.GetWikiPages(), page =>
-            //{
-            foreach (var page in _api.GetWikiPages())
-            { 
-                _console.WriteSection(String.Format("Analyzing page: {0}...", page.Name));
+            Parallel.ForEach(_api.GetWikiPages(), page =>
+            {
+                 _console.WriteSection(String.Format("Analyzing page: {0}...", page.Name));
                 youtubeLinkCount = page.BuildYoutubeLinkList();
                 wikiPages.Add(page);
-            }
+            });
 
             if (_config.DisplayYoutubeUrlList)
             {
-                foreach (var page in wikiPages)
+                Parallel.ForEach(wikiPages, page =>
                 {
                     if (_config.AggrgateYoutubeUrl) // Display aggregated list
                     {
                         _console.WriteSection("Aggregate youtube video references");
                         foreach (var video in page.AggregatedYoutubeUrls)
                             _console.WriteLineInGray(String.Format("{0} - {1} - {2}", page.Name, video.Name, video.UrlWithoutArguments));
-
 
                         Console.WriteLine("Youtube : Page {0} - Total links {1} - Total valid unique links {2} - Total valid links {3}", page.Name,
                                                                                                                         page.YoutubeUrls.Count(),
@@ -91,10 +88,10 @@ namespace WikiRef
                             _console.WriteLineInGray(String.Format("{0} - {1} - {2}", page.Name, video.Name, video.Url));
                         _console.WriteLine(String.Format("Youtube links for page {0}: {1} - Unique videos", page.Name, page.YoutubeUrls.Count, page.AggregatedYoutubeUrls.Count));
                     }
-                }
+                });
 
                 Console.WriteLine("Youtube : Total links {0} - Total valid unique links {1} - Total valid links {2}", youtubeLinkCount,
-                                                                                                                        wikiPages.SelectMany(o => o.AggregatedYoutubeUrls).Where(o => o.IsValid == SourceStatus.Valid).Count(), 
+                                                                                                                        wikiPages.SelectMany(o => o.AggregatedYoutubeUrls).Where(o => o.IsValid == SourceStatus.Valid).Count(),
                                                                                                                         wikiPages.SelectMany(o => o.YoutubeUrls).Where(o => o.IsValid == SourceStatus.Valid).Count());
             }
 
@@ -104,6 +101,7 @@ namespace WikiRef
             if(_config.Action == Action.Backup)
             {
                 _console.WriteSection("Downloading youtube videos");
+                
                 foreach (var page in wikiPages)
                     foreach (var video in page.AggregatedYoutubeUrls)
                     {
