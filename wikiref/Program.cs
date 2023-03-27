@@ -125,7 +125,7 @@ namespace WikiRef
             _console = new ConsoleHelper(_config);
             _whitelistHandler = new WhitelistHandler();
             _regexHelper = new RegexHelper();
-            _api = new MediaWikiApi(_config.WikiUrl, _console, _config, _whitelistHandler, _rege);
+            _api = new MediaWikiApi(_config.WikiUrl, _console, _config, _whitelistHandler, _regexHelper);
             _fileHelper = new FileHelper(_console);
             _youtubeVideoDownloader = new YoutubeVideoDownloader(_console, _config);
         }
