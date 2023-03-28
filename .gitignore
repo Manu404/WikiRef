@@ -5,3 +5,6 @@ bin
 /.vs
 /output
 /temp
+/download.sh
+/multiplateform_build.sh
+/total.json

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,11 +26,16 @@ namespace WikiRef
         private RegexHelper _regexHelper;
 
         // Public data
-        public string Name { get; private set; }
-        public List<YoutubeUrl> YoutubeUrls { get; private set; }
-        public List<YoutubeUrl> AggregatedYoutubeUrls { get; private set; }
-        public List<Reference> References { get; private set; }
-        public string Content { get; private set; }
+        [JsonProperty] public string Name { get; private set; }
+        [JsonProperty] public List<YoutubeUrl> YoutubeUrls { get; private set; }
+        [JsonProperty] public List<YoutubeUrl> AggregatedYoutubeUrls { get; private set; }
+        [JsonProperty] public List<Reference> References { get; private set; }
+        [JsonProperty] public string Content { get; private set; }
+
+        public WikiPage()
+        {
+
+        }
 
         public WikiPage(string name, ConsoleHelper consoleHelper, MediaWikiApi api, AppConfiguration configuration, WhitelistHandler blacklistHandler, RegexHelper regexHelper)
         {

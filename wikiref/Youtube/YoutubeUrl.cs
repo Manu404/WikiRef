@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -13,13 +14,18 @@ namespace WikiRef
         AppConfiguration _config;
         RegexHelper _regexHelper;
 
-        public string Url { get; private set; }
-        public string UrlWithoutArguments { get; set; }
-        public string Name { get; private set; }
-        public string FileName { get; private set; }
-        public SourceStatus IsValid { get; set; }
-        public bool IsPlaylist { get; set; }
-        public bool IsChannel { get; set; }
+        [JsonProperty] public string Url { get; private set; }
+        [JsonProperty] public string UrlWithoutArguments { get; private set; }
+        [JsonProperty] public string Name { get; private set; }
+        [JsonProperty] public string FileName { get; private set; }
+        [JsonProperty] public SourceStatus IsValid { get; private set; }
+        [JsonProperty] public bool IsPlaylist { get; private set; }
+        [JsonProperty] public bool IsChannel { get; private set; }
+
+        public YoutubeUrl()
+        {
+
+        }
 
         public YoutubeUrl(string url, ConsoleHelper consoleHelper, AppConfiguration configuration, RegexHelper helper)
         {
@@ -81,6 +87,13 @@ namespace WikiRef
                     _console.WriteLineInOrange("Playlist url.");
                 IsValid = SourceStatus.Valid;
                 IsPlaylist = true;
+            }
+            else if (Url.EndsWith("/about"))
+            {
+                if (_config.Verbose)
+                    _console.WriteLineInOrange("Channel url.");
+                IsValid = SourceStatus.Valid;
+                IsChannel = true;
             }
         }
 

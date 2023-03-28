@@ -11,4 +11,14 @@ namespace WikiRef.Wiki
             WikiPages = _api.GetWikiPages();
         }
     }
+
+    class JsonWikiPageCache
+    {
+        public IEnumerable<WikiPage> WikiPages { get; private set; }
+
+        public JsonWikiPageCache(FileHelper helper, AppConfiguration config)
+        {
+            WikiPages = helper.LoadJsonFromFile(config.DownloadInputJson);
+        }
+    }
 }

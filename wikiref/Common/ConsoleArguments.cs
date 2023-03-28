@@ -44,7 +44,7 @@ namespace WikiRef
         [Option('a', "aggregate", Default = false, Required = false, HelpText = "Display an aggregated view of YouTube reference based on VideoId")]
         public bool Aggregate { get; set; }
 
-        [Option("json-output", Default = false, Required = false, HelpText = "Output the YouTube urls grouped by page in a file in json format for usage by other tools")]
+        [Option("output-json", Default = false, Required = false, HelpText = "Output the YouTube urls grouped by page in a file in json format for download")]
         public bool OutputJson { get; set; }
 
         [Option('d', "display", Default = true, Required = false, HelpText = "Display complete list of YouTube references. Default: true")]
@@ -60,8 +60,8 @@ namespace WikiRef
 
     }
 
-    [Verb("backup", HelpText = "Generate local backup of youtube video sources using yt-dlp. '--help backup' for more informations.")]
-    class BackuptOptions : DefaultOptions
+    [Verb("download", HelpText = "Generate a bash script relying  on yt-dlp to download youtube references. '--help backup' for more informations.")]
+    class YoutubeDownloadOption : DefaultOptions
     {
         [Option('d', "download", Default = true, Required = false, HelpText = "Download localy the youtube video found in references. The filename is composer of the video title and youtube video id.", SetName = "download")]
         public bool Download { get; set; }
@@ -83,5 +83,8 @@ namespace WikiRef
 
         [Option("download-channel", Default = false, Required = false, HelpText = "Download channel url content. Default: false")]
         public bool DownloadChannel { get; set; }
+
+        [Option("input-json", Required = true, HelpText = "Json to use as source.")]
+        public string InputJson { get; set; }
     }
 }

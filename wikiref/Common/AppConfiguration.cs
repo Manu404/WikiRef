@@ -26,6 +26,7 @@
         public bool DownloadRedownload { get; private set; } // Backup=>Redownload
         public bool DownloadPlaylist { get; private set; } // Backupt=>download-playlist
         public bool DownloadChannel { get; private set; } // Backupt=>download-channel
+        public string DownloadInputJson { get; private set; }
 
         public Action Action { get; set; }
 
@@ -52,8 +53,8 @@
                 InitalizeOptions(options as YoutubeOptions);
             else if (options is ArchiveOptions)
                 InitalizeOptions(options as ArchiveOptions);
-            else if (options is BackuptOptions)
-                InitalizeOptions(options as BackuptOptions);
+            else if (options is YoutubeDownloadOption)
+                InitalizeOptions(options as YoutubeDownloadOption);
         }
 
         private void InitalizeOptions(YoutubeOptions options)
@@ -69,13 +70,14 @@
 
         }
 
-        private void InitalizeOptions(BackuptOptions options)
+        private void InitalizeOptions(YoutubeDownloadOption options)
         {
             DownloadYoutubeVideos = options.Download;
             DownloadArguments = options.Arguments;
             DownloadToolLocation = options.ToolLocation;
             DownloadRootFolder = options.RootFolder;
             DownloadRedownload = options.Redownload;
+            DownloadInputJson = options.InputJson;
         }
 
     }
