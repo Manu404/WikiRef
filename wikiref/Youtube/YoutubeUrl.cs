@@ -21,7 +21,7 @@ namespace WikiRef
         [JsonProperty] public SourceStatus IsValid { get; private set; }
 
         [JsonProperty] public bool IsPlaylist { get; private set; }
-        [JsonProperty] public bool IsChannel { get; private set; }
+        [JsonProperty] public bool IsUser { get; private set; }
         [JsonProperty] public bool IsCommunity { get; private set; }
         [JsonProperty] public bool IsAbout { get; private set; }
         [JsonProperty] public bool IsChannels { get; private set; }
@@ -84,7 +84,7 @@ namespace WikiRef
                 if (_config.Verbose)
                     _console.WriteLineInOrange("User channel url.");
                 IsValid = SourceStatus.Valid;
-                IsChannel = true;
+                IsUser = true;
             }
             else if (Url.Contains("/playlist")) // playlist
             {
@@ -113,6 +113,13 @@ namespace WikiRef
                     _console.WriteLineInOrange("Home page");
                 IsValid = SourceStatus.Valid;
                 IsHome = true;
+            }
+            else if (Url.Contains("/channels")) // chaine
+            {
+                if (_config.Verbose)
+                    _console.WriteLineInOrange("Home page");
+                IsValid = SourceStatus.Valid;
+                IsChannels = true;
             }
         }
 
