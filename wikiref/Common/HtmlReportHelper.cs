@@ -3,14 +3,22 @@ using System.Text;
 
 namespace WikiRef
 {
-    class ReportHelper
+    class HtmlReportHelper
     {
         StringBuilder stringBuilder = new StringBuilder();
 
-        public ReportHelper()
+        public HtmlReportHelper()
+        {
+            Initialize();
+        }
+
+        private void Initialize()
         {
             stringBuilder.AppendLine("<html>");
             stringBuilder.AppendLine("<body style=\"background-color: black; font-family: consolas\">");
+            AddLine(String.Format(new string('-', 20)), ConsoleColor.White);
+            AddLine(String.Format("File generated on {0}", DateTime.Now.ToString("dddd, dd MMMM yyyy HH:mm:ss")), ConsoleColor.Green);
+            AddLine(String.Format(new string('-', 20)), ConsoleColor.White);
         }
 
         public void AddLine(string text, ConsoleColor color)
@@ -24,7 +32,7 @@ namespace WikiRef
             stringBuilder.AppendLine("</html>");
         }
 
-        public string GetReportContent()
+        public string BuildReportContent()
         {
             EndReport();
             return stringBuilder.ToString();

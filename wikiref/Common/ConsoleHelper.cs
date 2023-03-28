@@ -7,15 +7,15 @@ namespace WikiRef
     class ConsoleHelper
     {
         AppConfiguration _config;
-        ReportHelper _report;
+        HtmlReportHelper _report;
 
         public List<string> TextBuffer { get; set; }
 
-        public ConsoleHelper(AppConfiguration config, ReportHelper reportHelper)
+        public ConsoleHelper(AppConfiguration config, HtmlReportHelper reportHelper)
         {
             TextBuffer = new List<string>();
             _report = reportHelper;
-            _config = config;
+            _config = config;  
         }
 
         public void WriteLine(string text)

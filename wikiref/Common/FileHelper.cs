@@ -16,6 +16,7 @@ namespace WikiRef
             _consoleHelper = consoleHelper;
             _conf = conf;   
         }
+
         public void SaveConsoleOutputToFile()
         {
             string filename = GenerateFileName(".log");

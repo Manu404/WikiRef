@@ -19,18 +19,18 @@ namespace WikiRef
         WhitelistHandler _whitelistHandler;
         RegexHelper _regexHelper;
         WikiPageCache _wikiPageCache;
-        ReportHelper _reportHelper;
+        HtmlReportHelper _htmlReportBuilder;
 
         // Initialize dependencies and config
         private void InitializeDependencies(DefaultOptions options)
         {
             _config = new AppConfiguration(options);
-            _reportHelper = new ReportHelper();
-            _console = new ConsoleHelper(_config, _reportHelper);
+            _htmlReportBuilder = new HtmlReportHelper();
+            _console = new ConsoleHelper(_config, _htmlReportBuilder);
+            _fileHelper = new FileHelper(_console, _config);
             _whitelistHandler = new WhitelistHandler();
             _regexHelper = new RegexHelper();
             _api = new MediaWikiApi(_config.WikiUrl, _console, _config, _whitelistHandler, _regexHelper);
-            _fileHelper = new FileHelper(_console, _config);
             _wikiPageCache = new WikiPageCache(_api);
         }
 
@@ -60,14 +60,14 @@ namespace WikiRef
 
         private void SaveTextBuffer()
         {
-            if (_config != null && _config.LogOutputToFile) // config null if no paramter given, init never done
+            if (_config != null && _config.LogOutputToFile)
                 _fileHelper.SaveConsoleOutputToFile();
         }
 
-        private void SaveReport()
+        public void SaveReport()
         {
-            if (_config != null && _config.ConsoleToHtml) // config null if no paramter given, init never done
-                _fileHelper.SaveConsoleOutputToHtmlFile(_reportHelper.GetReportContent());
+            if (_config != null && _config.ConsoleToHtml) 
+                _fileHelper.SaveConsoleOutputToHtmlFile(_htmlReportBuilder.BuildReportContent());
         }
 
         static void Main(string[] args)

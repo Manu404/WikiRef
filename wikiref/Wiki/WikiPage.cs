@@ -217,7 +217,6 @@ namespace WikiRef
                             else
                                 _console.WriteLineInGray(string.Format("Valid reference: {0} -> {1}", url, reference.Status.ToString()));
                         }
-
                     }
                     catch (Exception ex)
                     {
