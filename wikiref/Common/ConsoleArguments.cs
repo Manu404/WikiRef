@@ -36,7 +36,7 @@ namespace WikiRef
         [Option('r', "report", Required = false, HelpText = "Write the console output in a file in the executing folder using the date and time as name")]
         public bool Report { get; set; }
 
-        [Option('o', "output-json", Default = false, Required = false, HelpText = "Output the YouTube urls grouped by page in a file in json format for download")]
+        [Option("output-json", Default = false, Required = false, HelpText = "Output the YouTube urls grouped by page in a file in json format for download")]
         public bool OutputJson { get; set; }
     }
 
@@ -55,7 +55,7 @@ namespace WikiRef
         [Option('a', "aggregate", Default = false, Required = false, HelpText = "Display an aggregated view of YouTube reference based on VideoId")]
         public bool Aggregate { get; set; }
 
-        [Option('o', "output-json", Default = "", Required = false, HelpText = "Output the YouTube urls grouped by page in a file in json format used by youtube-download")]
+        [Option("output-json", Default = "", Required = false, HelpText = "Output the YouTube urls grouped by page in a file in json format used by youtube-download")]
         public string OutputJson { get; set; }
 
         [Option('d', "display", Default = true, Required = false, HelpText = "Display complete list of YouTube references. Default: true")]
@@ -68,19 +68,19 @@ namespace WikiRef
 
     }
 
-    [Verb("youtube-download", HelpText = "Generate a bash script relying  on yt-dlp to download youtube references. '--help backup' for more informations.")]
+    [Verb("script", HelpText = "Generate a bash script relying  on yt-dlp to download youtube references. '--help backup' for more informations.")]
     class YoutubeDownloadOption : DefaultOptions
     {
         [Option('i', "input-json", Required = true, HelpText = "Json to use as source.")]
         public string InputJson { get; set; }
 
-        [Option('t', "tool-path", Required = true, HelpText = "Location of yt-dlp.")]
+        [Option("tool", Required = true, HelpText = "Location of yt-dlp.")]
         public string ToolLocation { get; set; }
 
-        [Option('o', "output-folder", Required = true, HelpText = "Root folder where videos will be placed. A subfolder using the page name will be created to place the video.")]
+        [Option("directory", Required = true, HelpText = "Root folder where videos will be placed. A subfolder using the page name will be created to place the video.")]
         public string OutputFolder { get; set; }
 
-        [Option('b', "output-batch", Required = true, HelpText = "Name of the output script.")]
+        [Option("output-batch", Required = false, Default = "download.sh", HelpText = "Name of the output script.")]
         public string OutputScriptName { get; set; }
 
         [Option('a', "arguments", Default = "-S res,ext:mp4:m4a --recode mp4", HelpText = "Yt -dlp arguments. Default argument produce compressed mp4. Cfr. https://github.com/yt-dlp/yt-dlp for more information")]

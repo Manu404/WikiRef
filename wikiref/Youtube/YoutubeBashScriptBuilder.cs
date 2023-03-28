@@ -9,7 +9,6 @@ namespace WikiRef
     class YoutubeBashScriptBuilder {
         private string _toolPath;
         private string _args;
-        private string _rootFolder;
 
         private ConsoleHelper _console;
         private AppConfiguration _config;
@@ -39,7 +38,8 @@ namespace WikiRef
                 }
             }
 
-            using (StreamWriter file = new StreamWriter("download.sh"))
+            // Save script
+            using (StreamWriter file = new StreamWriter(_config.DownloadOutpuScriptName))
             {
                 file.WriteLine(builder.ToString());
             }
@@ -60,6 +60,11 @@ namespace WikiRef
             if (video.IsPlaylist && !_config.DownloadPlaylist)
             {
                 _console.WriteLineInOrange(String.Format("Download skipped. Url is a playlist {0} from {1}. Use --download-playlist if you want to download it's content", video.Url, page));
+                return String.Empty;
+            }
+            else if (video.IsAbout || video.IsCommunity || video.IsHome || video.IsChannels)
+            {
+                _console.WriteLineInOrange(String.Format("Download skipped. Url is valid a channel page {0} from {1} but not a video.", video.Url, page));
                 return String.Empty;
             }
 
@@ -84,12 +89,12 @@ namespace WikiRef
 
         private string FormatArguments(YoutubeUrl video, string outputFile, string page)
         {
-            return String.Format("{0} -o '{1}' {2}", _args, GetFullFilePath(page, outputFile).Replace("'", "_"), video.Url);
+            return String.Format("{0} -o '{1}' {2}", _args, GetFullFilePath(outputFile, page).Replace("'", "_"), video.Url);
         }
 
         private string GetFullFilePath(string outputFile, string page)
         {
-            return Path.Combine(_rootFolder, page, outputFile).Replace("'", "_");
+            return Path.Combine(_config.DownloadRootFolder, page, outputFile).Replace("'", "_");
         }
     }
 }

@@ -52,6 +52,8 @@ namespace WikiRef
         {
             try
             {
+                if (String.IsNullOrEmpty(pageName)) return String.Empty;
+
                 var sanitizedPageName = pageName.Replace(" ", "_");
                 string queryUrl = $"{ServerUrl}/w/api.php?action=query&prop=revisions&titles={sanitizedPageName}&rvslots=*&rvprop=timestamp|user|comment|content&format=json";
                 string json = new WebClient().DownloadString(queryUrl);

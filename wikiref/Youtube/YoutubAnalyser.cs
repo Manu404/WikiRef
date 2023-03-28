@@ -22,13 +22,13 @@ namespace WikiRef
             _wikiPageCache = wikiPageCache;
         }
 
-        // Main method for the youtube verb
         public void AnalyseYoutubeVideos()
         {
             BuildYoutubeLinknList();
             DisplayYoutubeLinkList();
             SaveJsonToFile();
         }
+
         private void BuildYoutubeLinknList()
         {
             foreach(var page in _wikiPageCache.WikiPages)
@@ -87,8 +87,7 @@ namespace WikiRef
                 foreach (var invalidUrl in page.YoutubeUrls.Where(v => v.IsValid == SourceStatus.Invalid || v.IsValid == SourceStatus.Undefined))
                 {
                     _console.WriteLineInRed(String.Format(" => Invalid url: {0}", invalidUrl.Url));
-                }
-                
+                }                
             }
         }
 
