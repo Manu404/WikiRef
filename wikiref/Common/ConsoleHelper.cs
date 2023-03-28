@@ -19,41 +19,40 @@ namespace WikiRef
 
         public void WriteLine(string text)
         {
-            TextBuffer.Add(text);
-            if (_config.Silent) return;
-            else WriteLineInColor(text, ConsoleColor.White);
+            WriteIn(text, ConsoleColor.White);
         }
 
         public void WriteLineInRed(string text)
         {
-            TextBuffer.Add(text);
-            if (_config.Silent) return;
-            if (_config.NoColor) WriteLine(text);
-            else WriteLineInColor(text, ConsoleColor.Red);
+            WriteIn(text, ConsoleColor.Red);
         }
 
         public void WriteLineInGreen(string text)
         {
-            TextBuffer.Add(text);
-            if (_config.Silent) return;
-            if (_config.NoColor) WriteLine(text);
-            else WriteLineInColor(text, ConsoleColor.Green);
+            WriteIn(text, ConsoleColor.Green);
         }
 
         public void WriteLineInOrange(string text)
         {
-            TextBuffer.Add(text);
-            if (_config.Silent) return;
-            if (_config.NoColor) WriteLine(text);
-            else WriteLineInColor(text, ConsoleColor.Yellow);
+            WriteIn(text, ConsoleColor.Yellow);
         }
 
         public void WriteLineInGray(string text)
         {
+            WriteIn(text, ConsoleColor.DarkGray);
+        }
+
+        public void WriteLineInDarkCyan(string text)
+        {
+            WriteIn(text, ConsoleColor.DarkCyan);
+        }
+
+        private void WriteIn(string text, ConsoleColor color)
+        {
             TextBuffer.Add(text);
             if (_config.Silent) return;
             if (_config.NoColor) WriteLine(text);
-            else WriteLineInColor(text, ConsoleColor.DarkGray);
+            else WriteLineInColor(text, color);
         }
 
         public void WriteSection(string text)
@@ -61,8 +60,8 @@ namespace WikiRef
             TextBuffer.Add(String.Format(new string('-', 20)));
             TextBuffer.Add(text);
             if (_config.Silent) return;
-            Console.WriteLine(String.Format(new string('-', 20)));
-            Console.WriteLine(text);
+            WriteLine(String.Format(new string('-', 20)));
+            WriteLine(text);
         }
 
         private void WriteLineInColor(string text, ConsoleColor color)
