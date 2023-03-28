@@ -13,8 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Wiki\" />
-    <Folder Include="Youtube\" />
+    <Folder Include="Verb\" />
   </ItemGroup>
 
 </Project>

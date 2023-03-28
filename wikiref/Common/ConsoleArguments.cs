@@ -3,7 +3,7 @@
 namespace WikiRef
 {
 
-    [Verb("default", HelpText = "Provide analysis features regarding references. '--help analyze' for more informations.")]
+    [Verb("default", HelpText = "Provide analysis features regarding references. '--help analyse' for more informations.")]
     public class DefaultOptions
     {
         [Option('v', "verbose", Required = false, HelpText = "Set output to verbose messages.")]
@@ -21,8 +21,8 @@ namespace WikiRef
         [Option('w', "wiki", Required = true, HelpText = "Url of the wiki to analyze, for eg: https://wikipedia.com - Required")]
         public string Wiki { get; set; }
 
-        [Option('o', "file-output", Required = false, HelpText = "Write the console output in a file in the executing folder using the date and time as name")]
-        public bool ConsoleOutputToFile { get; set; }
+        [Option('o', "log-output", Required = false, HelpText = "Write the console output in a file in the executing folder using the date and time as name")]
+        public bool LogOtuputToFile { get; set; }
 
         [Option("no-color", Required = false, HelpText = "Disable coloring of input for certain terminal with compatibility issues.")]
         public bool NoColor { get; set; }
@@ -31,21 +31,23 @@ namespace WikiRef
         public int Throttle { get; set; }
     }
 
-    [Verb("analyze", HelpText = "Provide analysis features regarding references. '--help analyze' for more informations.")]
+    [Verb("analyse", HelpText = "Provide analysis features regarding references. '--help analyze' for more informations.")]
     public class AnalyseOptions : DefaultOptions
     {
+        [Option('e', "file-export", Required = false, HelpText = "Write the console output in a file in the executing folder using the date and time as name")]
+        public bool ExportToFile { get; set; }
     }
 
     [Verb("youtube", HelpText = "Generate a list of youtube video links used in references. '--help youtube' for more informations.")]
     class YoutubeOptions : DefaultOptions
     {
-        [Option('a', "aggregate", Required = false, HelpText = "Display an aggregated view of YouTube reference based on VideoId")]
+        [Option('a', "aggregate", Default = false, Required = false, HelpText = "Display an aggregated view of YouTube reference based on VideoId")]
         public bool Aggregate { get; set; }
 
-        [Option("json-output", Required = false, HelpText = "Output the YouTube urls grouped by page in a file in json format for usage by other tools")]
+        [Option("json-output", Default = false, Required = false, HelpText = "Output the YouTube urls grouped by page in a file in json format for usage by other tools")]
         public bool OutputJson { get; set; }
 
-        [Option('d', "display", Default = true, Required = false, HelpText = "Display complete list of  YouTube references. Defualt: true")]
+        [Option('d', "display", Default = true, Required = false, HelpText = "Display complete list of YouTube references. Default: true")]
         public bool Display { get; set; }
 
         [Option("valid-links", Default = false, Required = false, HelpText = "Display or export only valid links.")]

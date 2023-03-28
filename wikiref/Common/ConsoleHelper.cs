@@ -21,7 +21,7 @@ namespace WikiRef
         {
             TextBuffer.Add(text);
             if (_config.Silent) return;
-            Console.WriteLine(text);
+            else WriteLineInColor(text, ConsoleColor.White);
         }
 
         public void WriteLineInRed(string text)

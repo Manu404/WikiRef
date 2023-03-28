@@ -1,33 +1,47 @@
 ﻿using CommandLine;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
+using WikiRef.Wiki;
 
 namespace WikiRef
 {
-    enum SourceStatus
+    class Backup
     {
-        Valid = 0,
-        Invalid = 1,
-        Undefined = 2,
-        //TakedownTos = 3,
-        //Private = 4
-    }
+        AppConfiguration _config;
+        ConsoleHelper _console;
+        YoutubeVideoDownloader _youtubeVideoDownloader;
+        WikiPageCache _wikiPageCache;
 
-    enum Action
-    {
-        Analyse,
-        Youtube,
-        Archive,
-        Backup,
-        Undefined
+        public Backup(AppConfiguration config, ConsoleHelper console, YoutubeVideoDownloader youtubeVideoDownloader, WikiPageCache wikiPageCache)
+        {
+            _config = config;
+            _console = console;
+            _youtubeVideoDownloader = youtubeVideoDownloader;
+            _wikiPageCache = wikiPageCache;
+        }
+
+        public void DownloadVideos()
+        {
+            _console.WriteSection("Downloading youtube videos");
+
+            foreach (var page in _wikiPageCache.WikiPages)
+                foreach (var video in page.AggregatedYoutubeUrls)
+                {
+                    if (_config.Throttle != 0)
+                    {
+                        _console.WriteLine(String.Format("Waiting {0} for throttleling...", _config.Throttle));
+                        Thread.Sleep(1000 * _config.Throttle);
+                    }
+                    
+                    _youtubeVideoDownloader.Download(page.Name, video);
+                }
+        }
     }
 
     class Program
     {
+        //dependencies
         AppConfiguration _config;
         MediaWikiApi _api;
         ConsoleHelper _console;
@@ -35,89 +49,10 @@ namespace WikiRef
         WhitelistHandler _whitelistHandler;
         YoutubeVideoDownloader _youtubeVideoDownloader;
         RegexHelper _regexHelper;
-        List<WikiPage> wikiPages = new List<WikiPage>();
-
-        // Main method for the analyze verb
-        private void AnalyzeReferences()
-        {
-            if (!String.IsNullOrEmpty(_api.ServerUrl))
-            {
-                foreach (var page in _api.GetWikiPages())
-                {
-                    _console.WriteSection(String.Format("Analyzing page: {0}...", page.Name));
-                    page.CheckPageStatus();
-                    page.CheckFormatting();
-                }
-            }
-        }
-
-        // Main method for the youtube verb
-        private void AnalyseYoutubeVideos()
-        {
-            int youtubeLinkCount = 1;
-            if (String.IsNullOrEmpty(_api.ServerUrl))
-                return;
-
-
-            Parallel.ForEach(_api.GetWikiPages(), page =>
-            {
-                 _console.WriteSection(String.Format("Analyzing page: {0}...", page.Name));
-                youtubeLinkCount = page.BuildYoutubeLinkList();
-                wikiPages.Add(page);
-            });
-
-            if (_config.DisplayYoutubeUrlList)
-            {
-                Parallel.ForEach(wikiPages, page =>
-                {
-                    if (_config.AggrgateYoutubeUrl) // Display aggregated list
-                    {
-                        _console.WriteSection("Aggregate youtube video references");
-                        foreach (var video in page.AggregatedYoutubeUrls)
-                            _console.WriteLineInGray(String.Format("{0} - {1} - {2}", page.Name, video.Name, video.UrlWithoutArguments));
-
-                        Console.WriteLine("Youtube : Page {0} - Total links {1} - Total valid unique links {2} - Total valid links {3}", page.Name,
-                                                                                                                        page.YoutubeUrls.Count(),
-                                                                                                                        page.AggregatedYoutubeUrls.Where(o => o.IsValid == SourceStatus.Valid).Count(),
-                                                                                                                        page.YoutubeUrls.Where(o => o.IsValid == SourceStatus.Valid).Count());
-                    }
-                    else // Display raw list
-                    {
-                        _console.WriteSection("All video youtube refergences");
-                        foreach (var video in page.YoutubeUrls)
-                            _console.WriteLineInGray(String.Format("{0} - {1} - {2}", page.Name, video.Name, video.Url));
-                        _console.WriteLine(String.Format("Youtube links for page {0}: {1} - Unique videos", page.Name, page.YoutubeUrls.Count, page.AggregatedYoutubeUrls.Count));
-                    }
-                });
-
-                Console.WriteLine("Youtube : Total links {0} - Total valid unique links {1} - Total valid links {2}", youtubeLinkCount,
-                                                                                                                        wikiPages.SelectMany(o => o.AggregatedYoutubeUrls).Where(o => o.IsValid == SourceStatus.Valid).Count(),
-                                                                                                                        wikiPages.SelectMany(o => o.YoutubeUrls).Where(o => o.IsValid == SourceStatus.Valid).Count());
-            }
-
-            if (_config.OutputYoutubeUrlJson)
-                _fileHelper.SaveJsonToFile(wikiPages);
-
-            if(_config.Action == Action.Backup)
-            {
-                _console.WriteSection("Downloading youtube videos");
-                
-                foreach (var page in wikiPages)
-                    foreach (var video in page.AggregatedYoutubeUrls)
-                    {
-                        if (_config.Throttle != 0)
-                        {
-                            _console.WriteLine(String.Format("Waiting {0} for throttleling...", _config.Throttle));
-                            Thread.Sleep(1000 * _config.Throttle);
-                        }                        
-
-                        _youtubeVideoDownloader.Download(page.Name, video);
-                    }
-            }
-        }
+        WikiPageCache _wikiPageCache;
 
         // Initialize dependencies and config
-        private void Initialize(DefaultOptions options, Action action)
+        private void InitializeDependencies(DefaultOptions options, Action action)
         {
             _config = new AppConfiguration(options, action);
             _console = new ConsoleHelper(_config);
@@ -126,6 +61,7 @@ namespace WikiRef
             _api = new MediaWikiApi(_config.WikiUrl, _console, _config, _whitelistHandler, _regexHelper);
             _fileHelper = new FileHelper(_console);
             _youtubeVideoDownloader = new YoutubeVideoDownloader(_console, _config);
+            _wikiPageCache = new WikiPageCache(_api);
         }
 
         private void ParseCommandlineArgument(string[] args)
@@ -133,28 +69,28 @@ namespace WikiRef
             Parser.Default.ParseArguments<ArchiveOptions, YoutubeOptions, AnalyseOptions, BackuptOptions>(args)
                 .WithParsed<ArchiveOptions>(option =>
                 {
-                    Initialize(option, Action.Archive);
+                    InitializeDependencies(option, Action.Archive);
                 })
                 .WithParsed<YoutubeOptions>(option =>
                 {
-                    Initialize(option, Action.Youtube);
-                    AnalyseYoutubeVideos();
+                    InitializeDependencies(option, Action.Youtube);
+                    new YoutubAnalyser(_console,  _api, _config, _fileHelper, _wikiPageCache).AnalyseYoutubeVideos();
                 })
                 .WithParsed<BackuptOptions>(option =>
                 {
-                    Initialize(option, Action.Backup);
-                    AnalyseYoutubeVideos();
+                    InitializeDependencies(option, Action.Backup);
+                    new Backup(_config, _console, _youtubeVideoDownloader, _wikiPageCache).DownloadVideos();
                 })
                 .WithParsed<AnalyseOptions>(option =>
                 {
-                    Initialize(option, Action.Analyse);
-                    AnalyzeReferences();
+                    InitializeDependencies(option, Action.Analyse);
+                    new WikiAnalyser(_api, _console, _wikiPageCache).AnalyseReferences();
                 });
         }
 
         private void SaveTextBuffer()
         {
-            if (_config != null && _config.ConsoleOutputToFile) // config null if no paramter given, init never done
+            if (_config != null && _config.LogOutputToFile) // config null if no paramter given, init never done
                 _fileHelper.SaveConsoleOutputToFile();
         }
 

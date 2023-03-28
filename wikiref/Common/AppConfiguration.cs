@@ -7,16 +7,17 @@
         public string Category { get; private set; } // DefaultOptions=>Category
         public string Page { get; private set; } // DefaultOptions=>Page
         public bool Silent { get; private set; } // DefaultOptions=>Silent
-        public bool ConsoleOutputToFile { get; private set; } // DefaultOptions=>ConsoleOutputToFile
+        public bool LogOutputToFile { get; private set; } // DefaultOptions=>LogOtuputToFile
         public bool NoColor { get; private set; } // DefaultOption=>NoColor
         public int Throttle { get; private set; } // Default=>Throttle
 
+        public bool ExportToFile { get; private set; }  // export the annalyis output to file
 
         public string YoutubeListDestinationFile { get; private set; } // YoutubeOptions=>Output
         public bool AggrgateYoutubeUrl { get; private set; } // YoutubeOptions=>Aggregate
         public bool OutputYoutubeUrlJson { get; private set; } // YoutubeOptions=>Json
         public bool DisplayYoutubeUrlList { get; private set; } // YoutubeOptions=>display
-        public bool OnlyValidLinks { get; private set; }
+        public bool OnlyValidLinks { get; private set; }  // Display or export only valid links.
 
         public bool DownloadYoutubeVideos { get; private set; } // Backup=>download
         public string DownloadArguments { get; private set; } // Backup=>Arguments
@@ -43,16 +44,16 @@
             Category = options.Category;
             Action = action;
             Silent = options.Silent;
-            ConsoleOutputToFile = options.ConsoleOutputToFile;
+            LogOutputToFile = options.LogOtuputToFile;
             NoColor = options.NoColor;
             Throttle = options.Throttle;
 
             if (options is YoutubeOptions)
-                InitalizeOptions((YoutubeOptions)options);
+                InitalizeOptions(options as YoutubeOptions);
             else if (options is ArchiveOptions)
-                InitalizeOptions((ArchiveOptions)options);
+                InitalizeOptions(options as ArchiveOptions);
             else if (options is BackuptOptions)
-                InitalizeOptions((BackuptOptions)options);
+                InitalizeOptions(options as BackuptOptions);
         }
 
         private void InitalizeOptions(YoutubeOptions options)
@@ -65,6 +66,7 @@
 
         private void InitalizeOptions(ArchiveOptions options)
         {
+
         }
 
         private void InitalizeOptions(BackuptOptions options)

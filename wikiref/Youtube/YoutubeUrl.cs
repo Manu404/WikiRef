@@ -95,10 +95,7 @@ namespace WikiRef
                         _console.WriteLine(String.Format("Waiting {0} for throttleling...", _config.Throttle));
                         Thread.Sleep(1000 * _config.Throttle);
                     }
-
-                    if (_config.Verbose)
-                        _console.WriteLineInGray(String.Format("Retreiving name for {0}", Url));
-                                        
+                                                            
                     if (Url.Contains("embed")) // mebed videos have no name in the title, but there's a reference to the orignal video that can be retrieved.
                         GetSourceUrlFromEmbededVideo(client);
 
@@ -118,7 +115,7 @@ namespace WikiRef
                     Name = stripedTitle;
 
                     if(_config.Verbose)
-                        _console.WriteLineInGray(String.Format("{0} - {1}", Url, Name));
+                        _console.WriteLineInGray(String.Format("Retreiving name for {0} - Name : {1}", Url, Name));
                 }
                 catch (WebException ex)
                 {
@@ -172,7 +169,7 @@ namespace WikiRef
             FileName = String.Format("{0}_[{1}]", name, videoId);
 
             if(_config.Verbose)
-                _console.WriteLineInGray(FileName);
+                _console.WriteLineInGray(String.Format("Filename for url {0} - {1}", Url, FileName));
         }
     }
 }

@@ -120,7 +120,7 @@ namespace WikiRef
                     }
                     catch (Exception ex)
                     {
-                        _console.WriteLineInRed(String.Format("URL: {0} - Erreur: {1}", url, ex.Message));
+                        _console.WriteLineInRed(String.Format("#ERROR# URL: {0} - Erreur: {1}", url, ex.Message));
                     }
                 });
             });
@@ -155,7 +155,7 @@ namespace WikiRef
             int checkedReference = 0;
             SourceStatus result;
 
-            Parallel.ForEach(References, reference =>
+            Parallel.ForEach(References, (Action<Reference>)(reference =>
             {
                 foreach (var url in reference.Urls)
                 {
@@ -163,31 +163,31 @@ namespace WikiRef
                     {
                         if (_config.Throttle != 0)
                         {
-                            _console.WriteLine(String.Format("Waiting {0} for throttleling...", _config.Throttle));
+                            _console.WriteLine(string.Format("Waiting {0} for throttleling...", _config.Throttle));
                             Thread.Sleep(1000 * _config.Throttle);
                         }
 
                         if (url.Contains("youtu.", StringComparison.InvariantCultureIgnoreCase) ||
                             url.Contains("youtube.", StringComparison.InvariantCultureIgnoreCase)) // youtu is used in shorten version of the youtube url
-                            result = CheckIfYoutubeVideoviolateTOS(url);
+                            result = CheckYoutubeUrlStatus(url);
                         else
                             result = CheckUrlStatus(url);
 
                         if (result != SourceStatus.Valid || _config.Verbose)
                         {
                             if (result == SourceStatus.Invalid)
-                                _console.WriteLineInOrange(String.Format("Invalid reference: {0} -> {1}", url, result.ToString()));
+                                _console.WriteLineInOrange(string.Format("Invalid reference: {0} -> {1}", url, result.ToString()));
                             else
-                                _console.WriteLineInGray(String.Format("Valid reference: {0} -> {1}", url, result.ToString()));
+                                _console.WriteLineInGray(string.Format("Valid reference: {0} -> {1}", url, result.ToString()));
                         }
                     }
                     catch (Exception ex)
                     {
-                        _console.WriteLineInRed(String.Format("URL: {0} - Erreur: {1}", url, ex.Message));
+                        _console.WriteLineInRed(string.Format("URL: {0} - Erreur: {1}", url, ex.Message));
                     }
                     checkedReference += 1;
                 }
-            });
+            }));
 
             _console.WriteLine(String.Format("{0} reference found containing urls. {1} url verified.", numberOfReference, checkedReference));
 
@@ -230,13 +230,14 @@ namespace WikiRef
             }
         }
 
-        private SourceStatus CheckIfYoutubeVideoviolateTOS(string url)
+        private SourceStatus CheckYoutubeUrlStatus(string url)
         {
             using (WebClient client = new WebClient())
             {
                 try
                 {
                     YoutubeUrl video = new YoutubeUrl(url, _console, _config, _regexHelper);
+                    this.YoutubeUrls.Add(video);
                     return video.IsValid;
                 }
                 catch (WebException ex)
@@ -265,28 +266,6 @@ namespace WikiRef
             }
             YoutubeUrls.Clear();
             YoutubeUrls = aggregatedUrlList;            
-        }
-    }
-
-    class WebPage
-    {
-        public string Url { get; set; }
-
-        public WebPage(string url)
-        {
-            Url = url;
-        }
-    }
-
-    class Reference
-    {
-        public string Content { get; set; }
-        public List<string> Urls { get; set; }
-
-        public Reference(string content)
-        {
-            Content = content;
-            Urls = new List<string>();
         }
     }
 }
