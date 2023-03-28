@@ -16,7 +16,6 @@ namespace WikiRef
             _consoleHelper = consoleHelper;
             _conf = conf;   
         }
-
         public void SaveConsoleOutputToFile()
         {
             string filename = GenerateFileName(".log");
@@ -25,6 +24,20 @@ namespace WikiRef
                 using (TextWriter textWritter = new StreamWriter(filename))
                     foreach (String line in _consoleHelper.TextBuffer)
                         textWritter.WriteLine(line);
+            }
+            catch (Exception e)
+            {
+                _consoleHelper.WriteLineInRed(String.Format("An error occured while saving console output to file {0}", filename));
+                _consoleHelper.WriteLineInRed(e.Message);
+            }
+        }
+
+        public void SaveConsoleOutputToHtmlFile(string text)
+        {
+            string filename = GenerateFileName(".html");
+            try
+            {
+                File.WriteAllText(filename, text);
             }
             catch (Exception e)
             {

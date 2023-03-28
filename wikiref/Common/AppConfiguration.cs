@@ -16,6 +16,7 @@
         public bool LogOutputToFile { get; private set; }
         public bool NoColor { get; private set; }
         public int Throttle { get; private set; }
+        public bool ConsoleToHtml { get; private set; }
         public void InitalizeOptions(DefaultOptions options)
         {
             Verbose = options.Verbose;
@@ -23,6 +24,7 @@
             LogOutputToFile = options.LogOtuputToFile;
             NoColor = options.NoColor;
             Throttle = options.Throttle;
+            ConsoleToHtml = options.ConsoleToHtml;
 
             if (options is YoutubeOptions)
                 InitalizeOptions(options as YoutubeOptions);
@@ -38,7 +40,6 @@
         public string WikiUrl { get; private set; }
         public string Category { get; private set; }
         public string Page { get; private set; }
-        public bool Report { get; private set; }
         public void InitalizeOptions(AnalyseOptions options)
         {
             Action = Action.Analyse;

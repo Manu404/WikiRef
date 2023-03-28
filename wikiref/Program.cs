@@ -19,13 +19,15 @@ namespace WikiRef
         WhitelistHandler _whitelistHandler;
         RegexHelper _regexHelper;
         WikiPageCache _wikiPageCache;
+        ReportHelper _reportHelper;
 
 
         // Initialize dependencies and config
         private void InitializeDependencies(DefaultOptions options)
         {
             _config = new AppConfiguration(options);
-            _console = new ConsoleHelper(_config);
+            _reportHelper = new ReportHelper();
+            _console = new ConsoleHelper(_config, _reportHelper);
             _whitelistHandler = new WhitelistHandler();
             _regexHelper = new RegexHelper();
             _api = new MediaWikiApi(_config.WikiUrl, _console, _config, _whitelistHandler, _regexHelper);
@@ -63,6 +65,12 @@ namespace WikiRef
                 _fileHelper.SaveConsoleOutputToFile();
         }
 
+        private void SaveReport()
+        {
+            if (_config != null && _config.ConsoleToHtml) // config null if no paramter given, init never done
+                _fileHelper.SaveConsoleOutputToHtmlFile(_reportHelper.GetReportContent());
+        }
+
         static void Main(string[] args)
         {
             Stopwatch stopWatch = new Stopwatch();
@@ -70,11 +78,13 @@ namespace WikiRef
 
             var p = new Program();
             p.ParseCommandlineArgument(args);
-            p.SaveTextBuffer();
 
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
-            Console.WriteLine(String.Format("Runtime: {0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10));
+            p._console.WriteLine(String.Format("Runtime: {0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10));
+
+            p.SaveTextBuffer();
+            p.SaveReport();
         }
     }
 }

@@ -19,6 +19,9 @@ namespace WikiRef
 
         [Option('t', "throttle", Required = false, HelpText = "Give a value in second to enable throttling to avoid '429 : Too Many Request' errors. Mainly for YouTube. That will slow down the speed of the too but avoid temporary banning.")]
         public int Throttle { get; set; }
+
+        [Option('h', "html-report", Required = false, HelpText = "Write the console output in a file in html format")]
+        public bool ConsoleToHtml { get; set; }
     }
 
     [Verb("analyse", HelpText = "Provide analysis features regarding references. '--help analyze' for more informations.")]
@@ -32,9 +35,6 @@ namespace WikiRef
 
         [Option('p', "page", Required = true, HelpText = "The name of page a to analyse.", SetName = "page")]
         public string Page { get; set; }
-
-        [Option('r', "report", Required = false, HelpText = "Write the console output in a file in the executing folder using the date and time as name")]
-        public bool Report { get; set; }
 
         [Option("output-json", Default = false, Required = false, HelpText = "Output the YouTube urls grouped by page in a file in json format for download")]
         public bool OutputJson { get; set; }
