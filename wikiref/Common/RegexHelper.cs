@@ -20,7 +20,7 @@ namespace WikiRef
 
         private void BuildRegex()
         {
-            string referenceContainingUrlExpression = @"([<]( *)(ref)?( *)[>]).*?(?:https?|www)?.*?([<]( *)[\/]( *)(ref)?( *)[>])"; // egex developped with regex101, regex and the texting datas available heree: https://regex101.com/r/1SYr6f/1
+            string referenceContainingUrlExpression = @"([<]( *)(ref)( |.*?)([>])).*?(?:https?|www)?.*?([<]( *?)(/ref)( *?)[>])"; // egex developped with regex101, regex and the texting datas available heree: https://regex101.com/r/1SYr6f/1
             ExtractReferenceREgex = new Regex(referenceContainingUrlExpression, RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
             string urlFilterExpression = @"\b(?<url>(https?:.//?|www\.).*?)(?:</ref>|[ ])"; // regex developped with regex101, regex and the texting datas available heree: https://regex101.com/r/pQb3hs/1 

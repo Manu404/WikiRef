@@ -79,7 +79,7 @@ namespace WikiRef
                 Parallel.ForEach(matches, match =>
                 {
                     if (match.Groups["url"].Value.Contains(','))
-                        _console.WriteLineInOrange(String.Format("This reference contains multiple urls. Reference: {0}", reference));
+                        _console.WriteLineInOrange(String.Format("This reference contains multiple urls. Reference: {0}", reference.Content));
 
                     reference.Urls.Add(HttpUtility.UrlDecode(match.Groups["url"].Value));
                 });
@@ -143,7 +143,7 @@ namespace WikiRef
                 // multiple links
                 if (reference.Urls.Count > 1)
                 {
-                    _console.WriteLineInOrange(String.Format("Multiple link in the reference {0} in page {1}", reference, Name));
+                    _console.WriteLineInOrange(String.Format("Multiple link in the reference {0} in page {1}", reference.Content, Name)); ;
                     reference.FormattingIssue = true;
                 }
 
@@ -188,10 +188,11 @@ namespace WikiRef
 
         public void CheckPageStatus()
         {
-            int numberOfReference = References.Count;
-            int checkedReference = 0;
+            int numberOfcitation = References.Where(r => r.IsCitation).Count();
+            int numberOfReference = References.Count - numberOfcitation;
+            int checkedurls = 0;
 
-            Parallel.ForEach(References, (Action<Reference>)(reference =>
+            Parallel.ForEach(References.Where(r => !r.IsCitation), (Action<Reference>)(reference =>
             {
                 foreach (var url in reference.Urls)
                 {
@@ -222,13 +223,12 @@ namespace WikiRef
                     {
                         _console.WriteLineInRed(string.Format("URL: {0} - Erreur: {1}", url, ex.Message));
                     }
-                    checkedReference += 1;
+                    checkedurls += 1;
                 }
-
                 CheckFormatting(reference);
             }));
 
-            _console.WriteLine(String.Format("{0} reference found containing urls. {1} url verified.", numberOfReference, checkedReference));
+            _console.WriteLine(String.Format("{0} reference found and {1} citation references. {2} url verified.", numberOfReference, numberOfcitation, checkedurls));
 
             if (References.Any(r => r.Status != SourceStatus.Valid))
                 _console.WriteLineInRed(String.Format("Some references seems invalid, check the error message and/or the wikicode for malformated refrerences"));

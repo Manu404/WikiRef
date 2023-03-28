@@ -9,6 +9,12 @@ namespace WikiRef
         public SourceStatus Status { get; set; }
         public bool FormattingIssue { get; set; }
 
+        public bool IsCitation { 
+            get {
+                return Content.Contains("group=\"citation\"");
+            } 
+        }
+
         public Reference(string content)
         {
             Content = content;

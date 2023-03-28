@@ -21,7 +21,6 @@ namespace WikiRef
         WikiPageCache _wikiPageCache;
         ReportHelper _reportHelper;
 
-
         // Initialize dependencies and config
         private void InitializeDependencies(DefaultOptions options)
         {
