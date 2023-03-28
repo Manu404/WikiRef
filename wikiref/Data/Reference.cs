@@ -6,6 +6,8 @@ namespace WikiRef
     {
         public string Content { get; set; }
         public List<string> Urls { get; set; }
+        public SourceStatus Status { get; set; }
+        public bool FormattingIssue { get; set; }
 
         public Reference(string content)
         {

@@ -136,33 +136,60 @@ namespace WikiRef
             return youtubeLinkCount;
         }
 
-        public void CheckFormatting()
+        public void CheckFormatting(Reference reference)
         {
-
-            Parallel.ForEach(References, reference =>
+            try
             {
+                // multiple links
+                if (reference.Urls.Count > 1)
+                {
+                    _console.WriteLineInOrange(String.Format("Multiple link in the reference {0} in page {1}", reference, Name));
+                    reference.FormattingIssue = true;
+                }
+
+                // check if meta once url removed an ref tags
+                string meta = reference.Content.Replace("<ref>", "").Replace("</ref>", "");
+                foreach (var url in reference.Urls)
+                    meta = meta.Replace(url, "");
+                if (String.IsNullOrEmpty(meta))
+                {
+                    _console.WriteLineInOrange(String.Format("No metadata for reference {0} in page {1}", reference.Content, Name));
+                    reference.FormattingIssue = true;
+                }
+
                 Parallel.ForEach(reference.Urls, url =>
                 {
                     try
                     {
+                        // check nowiki tag in refs
                         if (url.Contains("</nowiki>"))
+                        {
                             _console.WriteLineInOrange(String.Format("<nowiki> tag for reference {0} in page {1}", url, Name));
+                            reference.FormattingIssue = true;
+                        }
+                        // check multiple urls in bracket
                         if (url.EndsWith(']'))
-                            _console.WriteLineInOrange(String.Format("Multiple references in the same ref tag : {0} in page {1}", url, Name));
+                        {
+                            _console.WriteLineInOrange(String.Format("Multiple links in the same ref tag : {0} in page {1}", url, Name));
+                            reference.FormattingIssue = true;
+                        }
                     }
                     catch (Exception ex)
                     {
                         _console.WriteLineInRed(String.Format("URL: {0} - Erreur: {1}", url, ex.Message));
                     }
                 });
-            });
+            }
+            catch (Exception ex)
+            {
+                _console.WriteLineInRed(String.Format("Erro checking reference {0} - {1}", reference.Content, ex.Message));
+            }
         }
 
         public void CheckPageStatus()
         {
             int numberOfReference = References.Count;
             int checkedReference = 0;
-            SourceStatus result;
 
             Parallel.ForEach(References, (Action<Reference>)(reference =>
             {
@@ -178,17 +205,18 @@ namespace WikiRef
 
                         if (url.Contains("youtu.", StringComparison.InvariantCultureIgnoreCase) ||
                             url.Contains("youtube.", StringComparison.InvariantCultureIgnoreCase)) // youtu is used in shorten version of the youtube url
-                            result = CheckYoutubeUrlStatus(url);
+                            reference.Status = CheckYoutubeUrlStatus(url);
                         else
-                            result = CheckUrlStatus(url);
+                            reference.Status = CheckUrlStatus(url);
 
-                        if (result != SourceStatus.Valid || _config.Verbose)
+                        if (reference.Status != SourceStatus.Valid || _config.Verbose)
                         {
-                            if (result == SourceStatus.Invalid)
-                                _console.WriteLineInOrange(string.Format("Invalid reference: {0} -> {1}", url, result.ToString()));
+                            if (reference.Status == SourceStatus.Invalid)
+                                _console.WriteLineInRed(string.Format("Invalid reference: {0} -> {1}", url, reference.Status.ToString()));
                             else
-                                _console.WriteLineInGray(string.Format("Valid reference: {0} -> {1}", url, result.ToString()));
+                                _console.WriteLineInGray(string.Format("Valid reference: {0} -> {1}", url, reference.Status.ToString()));
                         }
+
                     }
                     catch (Exception ex)
                     {
@@ -196,14 +224,16 @@ namespace WikiRef
                     }
                     checkedReference += 1;
                 }
+
+                CheckFormatting(reference);
             }));
 
             _console.WriteLine(String.Format("{0} reference found containing urls. {1} url verified.", numberOfReference, checkedReference));
 
-            if (checkedReference == numberOfReference)
-                _console.WriteLineInGreen(String.Format("All references seems valid"));
-            else
+            if (References.Any(r => r.Status != SourceStatus.Valid))
                 _console.WriteLineInRed(String.Format("Some references seems invalid, check the error message and/or the wikicode for malformated refrerences"));
+            else
+                _console.WriteLineInGreen(String.Format("All references seems valid"));
         }
 
         private SourceStatus CheckUrlStatus(string url)

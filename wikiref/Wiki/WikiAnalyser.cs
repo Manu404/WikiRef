@@ -24,7 +24,6 @@ namespace WikiRef.Wiki
                 {
                     _console.WriteSection(string.Format("Analyzing page: {0}...", page.Name));
                     page.CheckPageStatus();
-                    page.CheckFormatting();
                 }
             }
         }

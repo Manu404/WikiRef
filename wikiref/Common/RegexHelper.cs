@@ -23,7 +23,7 @@ namespace WikiRef
             string referenceContainingUrlExpression = @"([<]( *)(ref)?( *)[>]).*?(?:https?|www)?.*?([<]( *)[\/]( *)(ref)?( *)[>])"; // egex developped with regex101, regex and the texting datas available heree: https://regex101.com/r/1SYr6f/1
             ExtractReferenceREgex = new Regex(referenceContainingUrlExpression, RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-            string urlFilterExpression = @"\b(?<url>(https?:.//?|www\.).*?)(?:</ref>)"; // regex developped with regex101, regex and the texting datas available heree: https://regex101.com/r/pQb3hs/1 
+            string urlFilterExpression = @"\b(?<url>(https?:.//?|www\.).*?)(?:</ref>|[ ])"; // regex developped with regex101, regex and the texting datas available heree: https://regex101.com/r/pQb3hs/1 
                                                                                         // It includes what can be considered "errors", but that that allow to detect malformed url like nowiki or multiple url referebces
             ExtractUrlFromReferenceRegex = new Regex(urlFilterExpression, RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
