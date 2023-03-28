@@ -1,4 +1,5 @@
 ﻿using CommandLine;
+using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Diagnostics;
 using System.IO;
@@ -19,15 +20,16 @@ namespace WikiRef
         RegexHelper _regexHelper;
         WikiPageCache _wikiPageCache;
 
+
         // Initialize dependencies and config
-        private void InitializeDependencies(DefaultOptions options, Action action)
+        private void InitializeDependencies(DefaultOptions options)
         {
-            _config = new AppConfiguration(options, action);
+            _config = new AppConfiguration(options);
             _console = new ConsoleHelper(_config);
             _whitelistHandler = new WhitelistHandler();
             _regexHelper = new RegexHelper();
             _api = new MediaWikiApi(_config.WikiUrl, _console, _config, _whitelistHandler, _regexHelper);
-            _fileHelper = new FileHelper(_console);
+            _fileHelper = new FileHelper(_console, _config);
             _wikiPageCache = new WikiPageCache(_api);
         }
 
@@ -36,21 +38,21 @@ namespace WikiRef
             Parser.Default.ParseArguments<ArchiveOptions, YoutubeOptions, AnalyseOptions, YoutubeDownloadOption>(args)
                 .WithParsed<ArchiveOptions>(option =>
                 {
-                    InitializeDependencies(option, Action.Archive);
+                    InitializeDependencies(option);
                 })
                 .WithParsed<YoutubeOptions>(option =>
                 {
-                    InitializeDependencies(option, Action.Youtube);
+                    InitializeDependencies(option);
                     new YoutubAnalyser(_console,  _api, _config, _fileHelper, _wikiPageCache).AnalyseYoutubeVideos();
                 })
                 .WithParsed<YoutubeDownloadOption>(option =>
                 {
-                    InitializeDependencies(option, Action.Backup);
+                    InitializeDependencies(option);
                     new YoutubeBashScriptBuilder(_config, _console, new JsonWikiPageCache(_fileHelper, _config)).ConstructBashScript();
                 })
                 .WithParsed<AnalyseOptions>(option =>
                 {
-                    InitializeDependencies(option, Action.Analyse);
+                    InitializeDependencies(option);
                     new WikiAnalyser(_api, _console, _wikiPageCache).AnalyseReferences();
                 });
         }
