@@ -112,6 +112,8 @@ namespace WikiRef
                             var video = new YoutubeUrl(url, _console, _config, _regexHelper);
                             YoutubeUrls.Add(video);
 
+                            Thread.Sleep(500);
+
                             if (!AggregatedYoutubeUrls.Exists(a => video.Name == a.Name))
                                 AggregatedYoutubeUrls.Add(video);
 
@@ -119,7 +121,7 @@ namespace WikiRef
                                 if (video.IsValid == video.IsValid)
                                     _console.WriteLineInGray(String.Format("Found valide video {0} - {1}", video.Url, video.Name));
                                 else
-                                    _console.WriteLineInOrange(String.Format("Found invalide video {0} - {1}", video.Url, video.Name));
+                                    _console.WriteLineInOrange(String.Format("Found invalid video {0} - {1}", video.Url, video.Name));
 
                             youtubeLinkCount += 1;
                         }
@@ -130,6 +132,7 @@ namespace WikiRef
                     }
                 });
             });
+
             return youtubeLinkCount;
         }
 

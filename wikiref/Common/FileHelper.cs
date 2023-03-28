@@ -2,21 +2,24 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Enumeration;
 
 namespace WikiRef
 {
     class FileHelper
     {
         private ConsoleHelper _consoleHelper;
+        private AppConfiguration _conf;
 
-        public FileHelper(ConsoleHelper consoleHelper)
+        public FileHelper(ConsoleHelper consoleHelper, AppConfiguration conf)
         {
             _consoleHelper = consoleHelper;
+            _conf = conf;   
         }
 
         public void SaveConsoleOutputToFile()
         {
-            string filename = GenerateFileName(".txt");
+            string filename = GenerateFileName(".log");
             try
             {
                 using (TextWriter textWritter = new StreamWriter(filename))
@@ -30,11 +33,13 @@ namespace WikiRef
             }
         }
 
-        public void SaveJsonToFile(List<WikiPage> pages)
+        public void SaveWikiPagesToJsonFile(List<WikiPage> pages, string filename = "")
         {
-            string filename = GenerateFileName(".json");
             try
             {
+                if (String.IsNullOrEmpty(filename))
+                    filename = GenerateFileName(".json");
+
                 using (TextWriter textWritter = new StreamWriter(filename))
                 {
                     string output = JsonConvert.SerializeObject(pages);

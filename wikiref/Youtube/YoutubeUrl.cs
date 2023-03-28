@@ -19,8 +19,13 @@ namespace WikiRef
         [JsonProperty] public string Name { get; private set; }
         [JsonProperty] public string FileName { get; private set; }
         [JsonProperty] public SourceStatus IsValid { get; private set; }
+
         [JsonProperty] public bool IsPlaylist { get; private set; }
         [JsonProperty] public bool IsChannel { get; private set; }
+        [JsonProperty] public bool IsCommunity { get; private set; }
+        [JsonProperty] public bool IsAbout { get; private set; }
+        [JsonProperty] public bool IsChannels { get; private set; }
+        [JsonProperty] public bool IsHome { get; private set; }
 
         public YoutubeUrl()
         {
@@ -74,26 +79,40 @@ namespace WikiRef
                     _console.WriteLineInOrange("Url invalid cause refer to deleted channel or private.");
                 IsValid = SourceStatus.Invalid;
             }
-            else if (Url.Contains("/user/")) // lien de chaine
+            else if (Url.Contains("/user")) // lien de chaine
             {
                 if (_config.Verbose)
                     _console.WriteLineInOrange("User channel url.");
                 IsValid = SourceStatus.Valid;
                 IsChannel = true;
             }
-            else if (Url.Contains("/playlist?list=")) // playlist
+            else if (Url.Contains("/playlist")) // playlist
             {
                 if (_config.Verbose)
-                    _console.WriteLineInOrange("Playlist url.");
+                    _console.WriteLineInOrange("Playlist");
                 IsValid = SourceStatus.Valid;
                 IsPlaylist = true;
             }
-            else if (Url.EndsWith("/about"))
+            else if (Url.Contains("/about")) // chaine
             {
                 if (_config.Verbose)
-                    _console.WriteLineInOrange("Channel url.");
+                    _console.WriteLineInOrange("About page");
                 IsValid = SourceStatus.Valid;
-                IsChannel = true;
+                IsAbout = true;
+            }
+            else if (Url.Contains("/community")) // chaine
+            {
+                if (_config.Verbose)
+                    _console.WriteLineInOrange("Community page");
+                IsValid = SourceStatus.Valid;
+                IsCommunity = true;
+            }
+            else if (Url.Contains("/featured")) // chaine
+            {
+                if (_config.Verbose)
+                    _console.WriteLineInOrange("Home page");
+                IsValid = SourceStatus.Valid;
+                IsHome = true;
             }
         }
 
