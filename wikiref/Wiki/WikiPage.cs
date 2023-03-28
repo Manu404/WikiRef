@@ -231,7 +231,7 @@ namespace WikiRef
             _console.WriteLine(String.Format("{0} reference found and {1} citation references. {2} url verified.", numberOfReference, numberOfcitation, checkedurls));
 
             if (References.Any(r => r.Status != SourceStatus.Valid))
-                _console.WriteLineInRed(String.Format("Some references seems invalid, check the error message and/or the wikicode for malformated refrerences"));
+                _console.WriteLineInRed(String.Format("Some references seems invalid, check the error message and/or the wikicode for malformated refrerences or invalid urls"));
             else
                 _console.WriteLineInGreen(String.Format("All references seems valid"));
         }

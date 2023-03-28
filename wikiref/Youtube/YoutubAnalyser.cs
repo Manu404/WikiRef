@@ -80,7 +80,7 @@ namespace WikiRef
         private void PrintErrors()
         {
             _console.WriteSection("Invalid references");
-            _console.WriteLineInRed(String.Format("Some references seems invalid, check the error message and/or the wikicode for malformated refrerences"));
+            _console.WriteLineInRed(String.Format("Some references seems invalid, check the error message and/or the wikicode for malformated refrerences or invalid urls"));
             foreach (var page in _wikiPageCache.WikiPages.Where(p => p.YoutubeUrls.Exists(v => v.IsValid == SourceStatus.Invalid || v.IsValid == SourceStatus.Undefined)))
             {
                 _console.WriteLine(String.Format("Page {0}", page.Name));
