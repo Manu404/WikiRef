@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web;
@@ -131,7 +133,7 @@ namespace WikiRef
                 {
                     if (_config.Throttle != 0)
                     {
-                        _console.WriteLine(String.Format("Waiting {0} for throttleling...", _config.Throttle));
+                        _console.WriteLine($"Waiting {_config.Throttle} for throttleling...");
                         Thread.Sleep(1000 * _config.Throttle);
                     }
                                                             
@@ -140,33 +142,27 @@ namespace WikiRef
 
                     string pageContent = client.DownloadString(Url);
 
-                    var matches = _regexHelper.ExtractYoutubeVideoNameFromPageRegex.Matches(pageContent);
+                    string title = _regexHelper.ExtractYoutubeVideoNameFromPageRegex.Matches(pageContent).FirstOrDefault()?.Groups["name"].Value;
 
-                    string title = String.Empty;
-                    foreach (Match match in matches)
-                        title = HttpUtility.HtmlDecode(match.Groups["name"].Value);
+                    StringBuilder stripedTitleBuilder = new StringBuilder();
+                    if (title.ToLower().EndsWith("youtube"))
+                        stripedTitleBuilder.Append(string.Join("-", title.Split('-').SkipLast(1)));
 
-                    string stripedTitle = String.Empty;
-                    if (title.ToLower().EndsWith("- youtube"))
-                        foreach (var part in title.Split('-').SkipLast(1).ToList())
-                            stripedTitle += part;
-
-                    Name = stripedTitle;
+                    Name = stripedTitleBuilder.ToString();
 
                     if(_config.Verbose)
-                        _console.WriteLineInGray(String.Format("Retreiving name for {0} - Name : {1}", Url, Name));
+                        _console.WriteLineInGray($"Retreiving name for {Url} - Name : {Name}");
                 }
                 catch (WebException ex)
                 {
-                    HttpWebResponse response = (System.Net.HttpWebResponse)ex.Response;
-                    if (response.StatusCode == HttpStatusCode.TooManyRequests)
-                        _console.WriteLineInRed(String.Format("URL: {0} - Erreur: {1} - Retry in {2}sec", Url, ex.Message, 5000));
+                    if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.TooManyRequests)
+                        _console.WriteLineInRed($"URL: {Url} - Erreur: {ex.Message} - Retry in 50 seconds");
                     else
-                        _console.WriteLineInRed(String.Format("URL: {0} - Erreur: {1}", Url, ex.Message));
+                        _console.WriteLineInRed($"URL: {Url} - Erreur: {ex.Message}");
                 }
                 catch (Exception e)
                 {
-                    _console.WriteLineInRed(String.Format("URL: {0} - Erreur: {1}", Url, e.Message));
+                    _console.WriteLineInRed($"URL: {Url} - Erreur: {e.Message}");
                 }
             } 
         }
@@ -174,10 +170,8 @@ namespace WikiRef
         public void GetSourceUrlFromEmbededVideo(WebClient client)
         {
             string pageContent = client.DownloadString(Url);
-             var matches = _regexHelper.ExtractYoutubeUrlFromEmbededVideoRegex.Matches(pageContent);
-
-            foreach (Match match in matches)
-                Url = HttpUtility.HtmlDecode(match.Groups["url"].Value);
+            var matches = _regexHelper.ExtractYoutubeUrlFromEmbededVideoRegex.Match(pageContent);
+            Url = HttpUtility.HtmlDecode(matches.Groups["url"].Value);
         }
 
         private void GenerateFileName()
@@ -186,13 +180,17 @@ namespace WikiRef
                 return;
 
             // Make video name valid for use as path
-            var name = Name;
-            foreach (char c in System.IO.Path.GetInvalidFileNameChars())            
-                name = name.Replace(c, '_');
-            
-            name = name.Replace(' ', '_');
-            FileName = name;
+            FileName = (Path.GetInvalidFileNameChars().Aggregate(Name, (current, c) => current.Replace(c, '_'))).Replace(' ', '_');
 
+            //add videoId at the end
+            FileName = $"{FileName}_[{GetvideoId()}]";
+
+            if (_config.Verbose)
+                _console.WriteLineInGray($"Filename for url {Url} - {FileName}");
+        }
+
+        private string GetvideoId()
+        {
             var videoId = String.Empty;
 
             var matches = _regexHelper.YoutubeVideoIdFromUrlRegex.Matches(Url);
@@ -200,15 +198,11 @@ namespace WikiRef
             foreach (Match match in matches)
                 videoId = HttpUtility.HtmlDecode(match.Groups["videoid"].Value);
 
-            if(videoId.Contains('?'))
+            if (videoId.Contains('?'))
                 videoId = videoId.Split('?').ToList().First();
-            if(videoId.Contains("&"))
+            if (videoId.Contains("&"))
                 videoId = videoId.Split('&').ToList().First();
-
-            FileName = String.Format("{0}_[{1}]", name, videoId);
-
-            if(_config.Verbose)
-                _console.WriteLineInGray(String.Format("Filename for url {0} - {1}", Url, FileName));
+            return videoId;
         }
     }
 }
