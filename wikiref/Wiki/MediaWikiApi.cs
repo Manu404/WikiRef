@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 
 namespace WikiRef
 {
@@ -12,15 +11,18 @@ namespace WikiRef
         private WhitelistHandler _whitelistHandler;
         private AppConfiguration _config;
         private RegexHelper _regexHelper;
+        NetworkHelper _networkHelper;
+
         public string ServerUrl { get; private set; }
 
-        public MediaWikiApi(string serverUrl, ConsoleHelper consoleHelper, AppConfiguration config, WhitelistHandler whitelistHandler, RegexHelper regexHelper)
+        public MediaWikiApi(string serverUrl, ConsoleHelper consoleHelper, AppConfiguration config, WhitelistHandler whitelistHandler, RegexHelper regexHelper, NetworkHelper networkHelper)
         {
             ServerUrl = serverUrl;
             _console = consoleHelper;
             _whitelistHandler = whitelistHandler;
             _config = config;
             _regexHelper = regexHelper;
+            _networkHelper = networkHelper;    
         }
 
         public IEnumerable<WikiPage> GetWikiPages()
@@ -30,14 +32,14 @@ namespace WikiRef
             try {
                 // If query page
                 if (String.IsNullOrEmpty(_config.Category))
-                    return new[] { new WikiPage(_config.Page, _console, this, _config, _whitelistHandler, _regexHelper) };
+                    return new[] { new WikiPage(_config.Page, _console, this, _config, _whitelistHandler, _regexHelper, _networkHelper) };
 
                 // if query category
                 string queryUrl = $"{ServerUrl}/w/api.php?action=query&list=categorymembers&cmtitle=Category:{_config.Category}&cmlimit=500&format=json";
-                string json = new WebClient().DownloadString(queryUrl);
+                string json = _networkHelper.GetContent(queryUrl).Result; 
                 JObject jsonObject = JObject.Parse(json);
                 foreach (var page in jsonObject["query"]["categorymembers"])
-                    pages.Add(new WikiPage((string)page["title"], _console, this, _config, _whitelistHandler, _regexHelper));
+                    pages.Add(new WikiPage((string)page["title"], _console, this, _config, _whitelistHandler, _regexHelper, _networkHelper));
                 return pages;
             }
             catch(Exception ex)
@@ -56,7 +58,7 @@ namespace WikiRef
 
                 var sanitizedPageName = pageName.Replace(" ", "_");
                 string queryUrl = $"{ServerUrl}/w/api.php?action=query&prop=revisions&titles={sanitizedPageName}&rvslots=*&rvprop=timestamp|user|comment|content&format=json";
-                string json = new WebClient().DownloadString(queryUrl);
+                string json = _networkHelper.GetContent(queryUrl).Result;
 
                 JObject jsonObject = JObject.Parse(json);
                 JToken content = jsonObject.Descendants()

@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -24,6 +23,7 @@ namespace WikiRef
         private AppConfiguration _config;
         private WhitelistHandler _blacklistHandler;
         private RegexHelper _regexHelper;
+        private NetworkHelper _networkHelper;
 
         // Public data
         [JsonProperty] public string Name { get; private set; }
@@ -37,7 +37,7 @@ namespace WikiRef
 
         }
 
-        public WikiPage(string name, ConsoleHelper consoleHelper, MediaWikiApi api, AppConfiguration configuration, WhitelistHandler blacklistHandler, RegexHelper regexHelper)
+        public WikiPage(string name, ConsoleHelper consoleHelper, MediaWikiApi api, AppConfiguration configuration, WhitelistHandler blacklistHandler, RegexHelper regexHelper, NetworkHelper networkHelper)
         {
             YoutubeUrls = new List<YoutubeUrl>();
             AggregatedYoutubeUrls = new List<YoutubeUrl>();
@@ -50,6 +50,7 @@ namespace WikiRef
             _config = configuration;
             _blacklistHandler = blacklistHandler;
             _regexHelper = regexHelper;
+            _networkHelper = networkHelper; 
 
             GetPageContentFromApi();
             BuildReferenceList();
@@ -109,7 +110,7 @@ namespace WikiRef
                         if (url.Contains("youtu.", StringComparison.InvariantCultureIgnoreCase) ||
                             url.Contains("youtube.", StringComparison.InvariantCultureIgnoreCase)) // youtu is used in shorten version of the youtube url
                         {
-                            var video = new YoutubeUrl(url, _console, _config, _regexHelper);
+                            var video = new YoutubeUrl(url, _console, _config, _regexHelper, _networkHelper);
                             YoutubeUrls.Add(video);
 
                             Thread.Sleep(500);
@@ -245,13 +246,9 @@ namespace WikiRef
                     return SourceStatus.Undefined;
                 }
 
-                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(url);
-                request.Method = "GET";
-                request.UserAgent = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:50.0) Gecko/20100101 Firefox/50.0";
-                request.AllowAutoRedirect = true;
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                var result = _networkHelper.GetStatus(url).Result;
 
-                return response.StatusCode == HttpStatusCode.OK ? SourceStatus.Valid : SourceStatus.Invalid;
+                return result == HttpStatusCode.OK ? SourceStatus.Valid : SourceStatus.Invalid;
             }
             catch (WebException ex)
             {
@@ -270,24 +267,21 @@ namespace WikiRef
 
         private SourceStatus CheckYoutubeUrlStatus(string url)
         {
-            using (WebClient client = new WebClient())
+            try
             {
-                try
-                {
-                    YoutubeUrl video = new YoutubeUrl(url, _console, _config, _regexHelper);
-                    this.YoutubeUrls.Add(video);
-                    return video.IsValid;
-                }
-                catch (WebException ex)
-                {
-                    _console.WriteLineInRed(String.Format("URL: {0} - Erreur: {1}", url, ex.Message));
-                    return SourceStatus.Undefined;
-                }
-                catch (Exception e)
-                {
-                    _console.WriteLineInRed(String.Format("URL: {0} - Erreur: {1}", url, e.Message));
-                    return SourceStatus.Invalid;
-                }
+                YoutubeUrl video = new YoutubeUrl(url, _console, _config, _regexHelper, _networkHelper);
+                this.YoutubeUrls.Add(video);
+                return video.IsValid;
+            }
+            catch (WebException ex)
+            {
+                _console.WriteLineInRed(String.Format("URL: {0} - Erreur: {1}", url, ex.Message));
+                return SourceStatus.Undefined;
+            }
+            catch (Exception e)
+            {
+                _console.WriteLineInRed(String.Format("URL: {0} - Erreur: {1}", url, e.Message));
+                return SourceStatus.Invalid;
             }
         }
 

@@ -2,7 +2,6 @@
 using System;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -15,6 +14,7 @@ namespace WikiRef
         ConsoleHelper _console;
         AppConfiguration _config;
         RegexHelper _regexHelper;
+        NetworkHelper _networkHelper;
 
         [JsonProperty] public string Url { get; private set; }
         [JsonProperty] public string UrlWithoutArguments { get; private set; }
@@ -34,13 +34,14 @@ namespace WikiRef
 
         }
 
-        public YoutubeUrl(string url, ConsoleHelper consoleHelper, AppConfiguration configuration, RegexHelper helper)
+        public YoutubeUrl(string url, ConsoleHelper consoleHelper, AppConfiguration configuration, RegexHelper helper, NetworkHelper networkHelper)
         {
             Url = url;
             
             _console = consoleHelper;
             _config = configuration;
             _regexHelper = helper;
+            _networkHelper = networkHelper;
 
             IsValid = SourceStatus.Valid;
 
@@ -127,49 +128,39 @@ namespace WikiRef
 
         private void RetreiveName()
         {
-            using (WebClient client = new WebClient())
+            try
             {
-                try
+                if (_config.Throttle != 0)
                 {
-                    if (_config.Throttle != 0)
-                    {
-                        _console.WriteLine($"Waiting {_config.Throttle} for throttleling...");
-                        Thread.Sleep(1000 * _config.Throttle);
-                    }
+                    _console.WriteLine($"Waiting {_config.Throttle} for throttleling...");
+                    Thread.Sleep(1000 * _config.Throttle);
+                }
                                                             
-                    if (Url.Contains("embed")) // mebed videos have no name in the title, but there's a reference to the orignal video that can be retrieved.
-                        GetSourceUrlFromEmbededVideo(client);
+                if (Url.Contains("embed")) // mebed videos have no name in the title, but there's a reference to the orignal video that can be retrieved.
+                    GetSourceUrlFromEmbededVideo();
 
-                    string pageContent = client.DownloadString(Url);
+                string pageContent = _networkHelper.GetYoutubeContent(Url).Result;
 
-                    string title = _regexHelper.ExtractYoutubeVideoNameFromPageRegex.Matches(pageContent).FirstOrDefault()?.Groups["name"].Value;
+                string title = _regexHelper.ExtractYoutubeVideoNameFromPageRegex.Matches(pageContent).FirstOrDefault()?.Groups["name"].Value;
 
-                    StringBuilder stripedTitleBuilder = new StringBuilder();
-                    if (title.ToLower().EndsWith("youtube"))
-                        stripedTitleBuilder.Append(string.Join("-", title.Split('-').SkipLast(1)));
+                StringBuilder stripedTitleBuilder = new StringBuilder();
+                if (title.ToLower().EndsWith("youtube"))
+                    stripedTitleBuilder.Append(string.Join("-", title.Split('-').SkipLast(1)));
 
-                    Name = stripedTitleBuilder.ToString();
+                Name = stripedTitleBuilder.ToString();
 
-                    if(_config.Verbose)
-                        _console.WriteLineInGray($"Retreiving name for {Url} - Name : {Name}");
-                }
-                catch (WebException ex)
-                {
-                    if (ex.Response is HttpWebResponse response && response.StatusCode == HttpStatusCode.TooManyRequests)
-                        _console.WriteLineInRed($"URL: {Url} - Erreur: {ex.Message} - Retry in 50 seconds");
-                    else
-                        _console.WriteLineInRed($"URL: {Url} - Erreur: {ex.Message}");
-                }
-                catch (Exception e)
-                {
-                    _console.WriteLineInRed($"URL: {Url} - Erreur: {e.Message}");
-                }
-            } 
+                if(_config.Verbose)
+                    _console.WriteLineInGray($"Retreiving name for {Url} - Name : {Name}");
+            }
+            catch (Exception e)
+            {
+                _console.WriteLineInRed($"URL: {Url} - Erreur: {e.Message}");
+            }
         }
 
-        public void GetSourceUrlFromEmbededVideo(WebClient client)
+        public void GetSourceUrlFromEmbededVideo()
         {
-            string pageContent = client.DownloadString(Url);
+            string pageContent = _networkHelper.GetContent(Url).Result;
             var matches = _regexHelper.ExtractYoutubeUrlFromEmbededVideoRegex.Match(pageContent);
             Url = HttpUtility.HtmlDecode(matches.Groups["url"].Value);
         }

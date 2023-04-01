@@ -20,6 +20,7 @@ namespace WikiRef
         RegexHelper _regexHelper;
         WikiPageCache _wikiPageCache;
         HtmlReportHelper _htmlReportBuilder;
+        NetworkHelper _networkHelper;
 
         // Initialize dependencies and config
         private void InitializeDependencies(DefaultOptions options)
@@ -27,10 +28,11 @@ namespace WikiRef
             _config = new AppConfiguration(options);
             _htmlReportBuilder = new HtmlReportHelper();
             _console = new ConsoleHelper(_config, _htmlReportBuilder);
+            _networkHelper = new NetworkHelper(_console);
             _fileHelper = new FileHelper(_console, _config);
             _whitelistHandler = new WhitelistHandler();
             _regexHelper = new RegexHelper();
-            _api = new MediaWikiApi(_config.WikiUrl, _console, _config, _whitelistHandler, _regexHelper);
+            _api = new MediaWikiApi(_config.WikiUrl, _console, _config, _whitelistHandler, _regexHelper, _networkHelper);
             _wikiPageCache = new WikiPageCache(_api);
         }
 
