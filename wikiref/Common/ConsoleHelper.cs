@@ -52,7 +52,7 @@ namespace WikiRef
         {
             TextBuffer.Add(text);
             if (_config.Silent) return;
-            if (_config.NoColor) WriteLine(text);
+            if (_config.NoColor) WriteLineInColor(text, ConsoleColor.White);
             else WriteLineInColor(text, color);
         }
 
