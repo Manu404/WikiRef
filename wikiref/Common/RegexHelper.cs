@@ -33,7 +33,7 @@ namespace WikiRef
             string embededYoutubeUrlExpression = "(<a href=\")(?<url>.*?)(\")"; // regex developped with regex101, regex and the texting datas available heree: s https://regex101.com/r/aqcAnR/1
             ExtractYoutubeUrlFromEmbededVideoRegex = new Regex(embededYoutubeUrlExpression, RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-            string youtubeUrlVideoIdFilder = @"(?<host>.*/)(?<watch>.*v=)?(?<videoid>.*)"; // regex developped with regex101, regex and the texting datas available heree:  https://regex101.com/r/0tLwmD/1
+            string youtubeUrlVideoIdFilder = @"(?<host>.*/)(?<watch>.*v=)?(?<videoid>[a-zA-Z0-9-_]+)"; // regex developped with regex101, regex and the texting datas available heree:  https://regex101.com/r/0tLwmD/1
             YoutubeVideoIdFromUrlRegex = new Regex(youtubeUrlVideoIdFilder, RegexOptions.Compiled | RegexOptions.IgnoreCase);
         }
     }
