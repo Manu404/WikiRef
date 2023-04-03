@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace WikiRef.Wiki
 {
@@ -16,14 +17,14 @@ namespace WikiRef.Wiki
         }
 
         // Main method for the analyze verb
-        public void AnalyseReferences()
+        public async Task AnalyseReferences()
         {
             if (!string.IsNullOrEmpty(_api.ServerUrl))
             {
                 foreach (var page in _wikiPageCache.WikiPages)
                 {
                     _console.WriteSection(string.Format("Analyzing page: {0}...", page.Name));
-                    page.CheckPageStatus();
+                    await page.CheckReferenceStatus();
                 }
             }
         }

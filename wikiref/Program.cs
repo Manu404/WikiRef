@@ -56,7 +56,7 @@ namespace WikiRef
                 .WithParsed<AnalyseOptions>(option =>
                 {
                     InitializeDependencies(option);
-                    new WikiAnalyser(_api, _console, _wikiPageCache).AnalyseReferences();
+                    new WikiAnalyser(_api, _console, _wikiPageCache).AnalyseReferences().Wait();
                 });
         }
 

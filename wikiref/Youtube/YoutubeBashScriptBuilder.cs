@@ -32,7 +32,7 @@ namespace WikiRef
                 var outputFolder = Path.Combine(Directory.GetCurrentDirectory(), _config.DownloadRootFolder, page.Name);
                 builder.AppendLine(String.Format("sudo mkdir -p \"{0}\"", outputFolder));
 
-                foreach (var video in page.AggregatedYoutubeUrls)
+                foreach (var video in page.YoutubeUrls)
                 {
                     builder.Append(ConstructBashInstruction(page.Name, video));
                 }
@@ -49,28 +49,28 @@ namespace WikiRef
         {
             if (video.IsValid == SourceStatus.Invalid)
             {
-                _console.WriteLineInOrange(String.Format("Download skipped. Invalid. Maybe private or violate TOS. {0} from {1}", video.Url, page));
+                _console.WriteLineInOrange(String.Format("Download skipped. Invalid. Maybe private or violate TOS. {0} from {1}", video.Urls, page));
                 return String.Empty;
             }
             if (video.IsChannels && !_config.DownloadChannel)
             {
-                _console.WriteLineInOrange(String.Format("Download skipped. Url is a channel {0} from {1}. Use --download-channel if you want to download it's content", video.Url, page));
+                _console.WriteLineInOrange(String.Format("Download skipped. Url is a channel {0} from {1}. Use --download-channel if you want to download it's content", video.Urls, page));
                 return String.Empty; 
             }
             if (video.IsPlaylist && !_config.DownloadPlaylist)
             {
-                _console.WriteLineInOrange(String.Format("Download skipped. Url is a playlist {0} from {1}. Use --download-playlist if you want to download it's content", video.Url, page));
+                _console.WriteLineInOrange(String.Format("Download skipped. Url is a playlist {0} from {1}. Use --download-playlist if you want to download it's content", video.Urls, page));
                 return String.Empty;
             }
             else if (video.IsAbout || video.IsCommunity || video.IsHome || video.IsUser)
             {
-                _console.WriteLineInOrange(String.Format("Download skipped. Url is valid a channel page {0} from {1} but not a video.", video.Url, page));
+                _console.WriteLineInOrange(String.Format("Download skipped. Url is valid a channel page {0} from {1} but not a video.", video.Urls, page));
                 return String.Empty;
             }
 
             StringBuilder builder = new StringBuilder();
 
-            var outputFileName = String.Format("{0}.mp4", video.FileName);
+            var outputFileName = String.Format("{0}.mp4", video.GetFileName());
             var destinationFile = GetFullFilePath(outputFileName, page);
 
             if (File.Exists(destinationFile) && !_config.DownloadRedownload)
@@ -89,7 +89,7 @@ namespace WikiRef
 
         private string FormatArguments(YoutubeUrl video, string outputFile, string page)
         {
-            return String.Format("{0} -o '{1}' {2}", _config.DownloadToolLocation, GetFullFilePath(outputFile, page).Replace("'", "_"), video.Url); ;
+            return String.Format("{0} -o '{1}' {2}", _config.DownloadToolLocation, GetFullFilePath(outputFile, page).Replace("'", "_"), video.Urls); ;
         }
 
         private string GetFullFilePath(string outputFile, string page)

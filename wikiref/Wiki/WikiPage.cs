@@ -28,7 +28,6 @@ namespace WikiRef
         // Public data
         [JsonProperty] public string Name { get; private set; }
         [JsonProperty] public List<YoutubeUrl> YoutubeUrls { get; private set; }
-        [JsonProperty] public List<YoutubeUrl> AggregatedYoutubeUrls { get; private set; }
         [JsonProperty] public List<Reference> References { get; private set; }
         [JsonProperty] public string Content { get; private set; }
 
@@ -40,7 +39,6 @@ namespace WikiRef
         public WikiPage(string name, ConsoleHelper consoleHelper, MediaWikiApi api, AppConfiguration configuration, WhitelistHandler blacklistHandler, RegexHelper regexHelper, NetworkHelper networkHelper)
         {
             YoutubeUrls = new List<YoutubeUrl>();
-            AggregatedYoutubeUrls = new List<YoutubeUrl>();
             References = new List<Reference>();
 
             Name = name;
@@ -55,6 +53,13 @@ namespace WikiRef
             GetPageContentFromApi();
             BuildReferenceList();
             ExtractUrlsFromReference();
+        }
+
+        private void GetPageContentFromApi()
+        {
+            if (isPageContentRetreivedFromApi) return;
+            Content = _api.GetPageContent(Name);
+            isPageContentRetreivedFromApi = true;
         }
 
         private void BuildReferenceList()
@@ -88,54 +93,44 @@ namespace WikiRef
             areUrlExtracteFromReferences = true;
         }
 
-        private void GetPageContentFromApi()
-        {
-            if (isPageContentRetreivedFromApi) return;
-            Content = _api.GetPageContent(Name);
-            isPageContentRetreivedFromApi = true;
-        }
+        //public int BuildYoutubeLinkList()
+        //{
+        //    YoutubeUrls.Clear();
 
-        public int BuildYoutubeLinkList()
-        {
-            YoutubeUrls.Clear();
-            AggregatedYoutubeUrls.Clear();
+        //    int youtubeLinkCount = 1;
 
-            int youtubeLinkCount = 1;
+        //    Parallel.ForEach(References, reference =>
+        //    {
+        //        Parallel.ForEach(reference.Urls, url =>
+        //        {
+        //            try
+        //            {
+        //                if (IsYoutubeUrl(url))
+        //                {
+        //                    var video = new YoutubeUrl(url, _console, _config, _regexHelper, _networkHelper);
+        //                    YoutubeUrls.Add(video);
 
-            Parallel.ForEach(References, reference => {
-                Parallel.ForEach(reference.Urls, url =>
-                {
-                    try
-                    {
-                        if (url.Contains("youtu.", StringComparison.InvariantCultureIgnoreCase) ||
-                            url.Contains("youtube.", StringComparison.InvariantCultureIgnoreCase)) // youtu is used in shorten version of the youtube url
-                        {
-                            var video = new YoutubeUrl(url, _console, _config, _regexHelper, _networkHelper);
-                            YoutubeUrls.Add(video);
+        //                    if (!YoutubeUrls.Exists(a => video.VideoId == a.VideoId))
+        //                        YoutubeUrls.Add(video);
 
-                            Thread.Sleep(500);
+        //                    if (_config.Verbose)
+        //                        if (video.IsValid == video.IsValid)
+        //                            _console.WriteLineInGray(String.Format("Found valid video {0} - {1}", video.Url, video.Name));
+        //                        else
+        //                            _console.WriteLineInOrange(String.Format("Found invalid video {0} - {1}", video.Url, video.Name));
 
-                            if (!AggregatedYoutubeUrls.Exists(a => video.Name == a.Name))
-                                AggregatedYoutubeUrls.Add(video);
+        //                    youtubeLinkCount += 1;
+        //                }
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                _console.WriteLineInRed(String.Format("#ERROR# URL: {0} - Erreur: {1}", url, ex.Message));
+        //            }
+        //        });
+        //    });
 
-                            if (_config.Verbose)
-                                if (video.IsValid == video.IsValid)
-                                    _console.WriteLineInGray(String.Format("Found valide video {0} - {1}", video.Url, video.Name));
-                                else
-                                    _console.WriteLineInOrange(String.Format("Found invalid video {0} - {1}", video.Url, video.Name));
-
-                            youtubeLinkCount += 1;
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        _console.WriteLineInRed(String.Format("#ERROR# URL: {0} - Erreur: {1}", url, ex.Message));
-                    }
-                });
-            });
-
-            return youtubeLinkCount;
-        }
+        //    return youtubeLinkCount;
+        //}
 
         public void CheckFormatting(Reference reference)
         {
@@ -187,27 +182,43 @@ namespace WikiRef
             }
         }
 
-        public void CheckPageStatus()
+
+        public async Task CheckReferenceStatus()
         {
             int numberOfcitation = References.Where(r => r.IsCitation).Count();
             int numberOfReference = References.Count - numberOfcitation;
             int checkedurls = 0;
 
-            Parallel.ForEach(References.Where(r => !r.IsCitation), (Action<Reference>)(reference =>
+            BuildAggregatedYoutubeUrl();
+
+
+            ParallelOptions parallelOptions = new()
+            {
+                MaxDegreeOfParallelism = 1
+            };
+
+            await Parallel.ForEachAsync(YoutubeUrls, parallelOptions, async (youtubeUrls, token) =>
+            {
+                await youtubeUrls.CheckIsValid();
+            });
+
+            // Check non youtube reference
+            await Parallel.ForEachAsync(References.Where(r => !r.IsCitation), async (reference, token) =>
             {
                 foreach (var url in reference.Urls)
                 {
                     try
                     {
-                        if (_config.Throttle != 0)
+                        if (IsYoutubeUrl(url))
                         {
-                            _console.WriteLine(string.Format("Waiting {0} for throttleling...", _config.Throttle));
-                            Thread.Sleep(1000 * _config.Throttle);
+                            string VideoId = YoutubeUrl.GetVideoId(url, _regexHelper);
+                            if (VideoId != null && YoutubeUrls.Any(v => v.VideoId == VideoId))
+                                reference.Status = YoutubeUrls.FirstOrDefault(v => v.VideoId == VideoId).IsValid;
+                            else if (YoutubeUrls.Any(v => v.Urls.Any(u => u == url)))
+                                reference.Status = YoutubeUrls.FirstOrDefault(v => v.Urls.Any(u => u == url)).IsValid;
+                            else
+                                reference.Status = SourceStatus.Invalid;
                         }
-
-                        if (url.Contains("youtu.", StringComparison.InvariantCultureIgnoreCase) ||
-                            url.Contains("youtube.", StringComparison.InvariantCultureIgnoreCase)) // youtu is used in shorten version of the youtube url
-                            reference.Status = CheckYoutubeUrlStatus(url);
                         else
                             reference.Status = CheckUrlStatus(url);
 
@@ -226,7 +237,7 @@ namespace WikiRef
                     checkedurls += 1;
                 }
                 CheckFormatting(reference);
-            }));
+            });
 
             _console.WriteLine(String.Format("{0} reference found and {1} citation references. {2} url verified.", numberOfReference, numberOfcitation, checkedurls));
 
@@ -265,39 +276,38 @@ namespace WikiRef
             }
         }
 
-        private SourceStatus CheckYoutubeUrlStatus(string url)
-        {
-            try
-            {
-                YoutubeUrl video = new YoutubeUrl(url, _console, _config, _regexHelper, _networkHelper);
-                this.YoutubeUrls.Add(video);
-                return video.IsValid;
-            }
-            catch (WebException ex)
-            {
-                _console.WriteLineInRed(String.Format("URL: {0} - Erreur: {1}", url, ex.Message));
-                return SourceStatus.Undefined;
-            }
-            catch (Exception e)
-            {
-                _console.WriteLineInRed(String.Format("URL: {0} - Erreur: {1}", url, e.Message));
-                return SourceStatus.Invalid;
-            }
-        }
-
-        public void AggregateYoutubUrl()
+        public void BuildAggregatedYoutubeUrl()
         {
             _console.WriteLine("Aggregating youtube links");
 
-            List<YoutubeUrl> aggregatedUrlList = new List<YoutubeUrl>();
-            foreach (var video in YoutubeUrls)
+            foreach(var reference in References.Where(r => !r.IsCitation))
             {
-                if (aggregatedUrlList.Exists(o => video.UrlWithoutArguments == o.UrlWithoutArguments))
-                    continue;
-                aggregatedUrlList.Add(video);
+                try
+                {
+                    foreach (var url in reference.Urls)
+                    {
+                        if (IsYoutubeUrl(url))
+                        {
+                            string VideoId = YoutubeUrl.GetVideoId(url, _regexHelper);
+                            if (!YoutubeUrls.Exists(o => o.VideoId == VideoId || String.IsNullOrEmpty(VideoId)))
+                                YoutubeUrls.Add(new YoutubeUrl(url, _console, _config, _regexHelper, _networkHelper));
+                            else
+                            {
+                                YoutubeUrls.FirstOrDefault(o => VideoId == o.VideoId).Urls.Add(url);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _console.WriteLineInRed($"URL: {reference.Content} - Erreur: {ex.Message}");
+                }
             }
-            YoutubeUrls.Clear();
-            YoutubeUrls = aggregatedUrlList;            
+        }
+
+        private bool IsYoutubeUrl(string url)
+        {
+            return (url.Contains("youtu.", StringComparison.InvariantCultureIgnoreCase) || url.Contains("youtube.", StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }
