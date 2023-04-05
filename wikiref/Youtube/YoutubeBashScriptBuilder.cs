@@ -24,16 +24,20 @@ namespace WikiRef
         public void ConstructBashScript()
         {
             StringBuilder builder = new StringBuilder();
+            int i = 0;
 
-            builder.AppendLine("#!/bin/sh");
+            builder.AppendLine("#!/bin/bash");
 
             foreach (var page in _wikiPageCache.WikiPages)
             {
                 foreach (var video in page.YoutubeUrls)
                 {
+                    i++;
                     builder.Append(ConstructBashInstruction(page.Name, video));
                 }
             }
+
+            _console.WriteLine($"{i} video treated");
 
             // Save script
             using (StreamWriter file = new StreamWriter(_config.DownloadOutpuScriptName))
@@ -46,22 +50,26 @@ namespace WikiRef
         {
             if (video.IsValid == SourceStatus.Invalid)
             {
-                _console.WriteLineInOrange(String.Format("Download skipped. Invalid. Maybe private or violate TOS. {0} from {1}", video.AggregatedUrls, page));
+                if(_config.Verbose)
+                    _console.WriteLineInOrange(String.Format("Download skipped. Invalid. Maybe private or violate TOS. {0} from {1}", video.AggregatedUrls, page));
                 return String.Empty;
             }
             if (video.IsChannels && !_config.DownloadChannel)
             {
-                _console.WriteLineInOrange(String.Format("Download skipped. Url is a channel {0} from {1}. Use --download-channel if you want to download it's content", video.AggregatedUrls, page));
+                if (_config.Verbose)
+                    _console.WriteLineInOrange(String.Format("Download skipped. Url is a channel {0} from {1}. Use --download-channel if you want to download it's content", video.AggregatedUrls, page));
                 return String.Empty; 
             }
             if (video.IsPlaylist && !_config.DownloadPlaylist)
             {
-                _console.WriteLineInOrange(String.Format("Download skipped. Url is a playlist {0} from {1}. Use --download-playlist if you want to download it's content", video.AggregatedUrls, page));
+                if (_config.Verbose)
+                    _console.WriteLineInOrange(String.Format("Download skipped. Url is a playlist {0} from {1}. Use --download-playlist if you want to download it's content", video.AggregatedUrls, page));
                 return String.Empty;
             }
             else if (video.IsAbout || video.IsCommunity || video.IsHome || video.IsUser)
             {
-                _console.WriteLineInOrange($"Download skipped. {video.AggregatedUrls} is valid a webpage page(s) from {page} but not a video.");
+                if (_config.Verbose)
+                    _console.WriteLineInOrange($"Download skipped. {video.AggregatedUrls} is valid a webpage page(s) from {page} but not a video.");
                 return String.Empty;
             }
 
@@ -72,11 +80,20 @@ namespace WikiRef
 
             if (File.Exists(desitnationFilename) && !_config.DownloadRedownload)
             {
+                if (_config.Verbose)
+                    _console.WriteLine($"{desitnationFilename} exist.");
                 return String.Empty;
             }
             else if(File.Exists(desitnationFilename) && _config.DownloadRedownload)
             {
+                if (_config.Verbose)
+                    _console.WriteLine($"remove and download {desitnationFilename}.");
                 builder.AppendLine($"rm -rf {desitnationFilename}");
+            }
+            else
+            {
+                if (_config.Verbose)
+                    _console.WriteLine($"{desitnationFilename} doesn't exist, add for download.");
             }
 
             builder.AppendLine($"{_config.DownloadToolLocation} {FormatArguments(video, filename, page)}");
@@ -109,7 +126,7 @@ namespace WikiRef
 
         private string FormatArguments(YoutubeUrl video, string outputFile, string page)
         {
-            return $"{_config.DownloadToolArguments} -o \"{GetOutputPath(outputFile, page).Replace("'", "_").Replace("\"", "_")}\" {GetUrlFromVideoId(video)}";
+            return $"{_config.DownloadToolArguments} -o \"{GetOutputPath(outputFile, page)}\" {GetUrlFromVideoId(video)}";
         }
 
         private string GetUrlFromVideoId(YoutubeUrl video)
@@ -119,7 +136,7 @@ namespace WikiRef
 
         private string GetOutputPath(string filename, string page)
         {
-            return Path.Combine(_config.DownloadRootFolder, GetValidPath(page), GetValidPath(filename));
+            return Path.Combine(_config.DownloadRootFolder, GetValidPath(page), GetValidPath(filename)).Replace("'", "_").Replace("\"", "_");
         }
 
         private string GetValidPath(string path)
