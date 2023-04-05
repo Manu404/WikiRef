@@ -11,17 +11,24 @@ namespace WikiRef
         [Option('s', "silent", Required = false, HelpText = "Produce no output in the console.")]
         public bool Silent { get; set; }
 
-        [Option('o', "log-output", Required = false, HelpText = "Write the console output in a file in the executing folder using the date and time as name")]
-        public bool LogOtuputToFile { get; set; }
-
-        [Option('b', "color-blind", Required = false, HelpText = "Disable coloring of input for certain terminal with compatibility issues.")]
+        [Option('b', "color-blind", Required = false, HelpText = "Disable coloring of output for compatibility issues with certain terminal.")]
         public bool NoColor { get; set; }
 
         [Option('t', "throttle", Required = false, HelpText = "Give a value in second to enable throttling to avoid '429 : Too Many Request' errors. Mainly for YouTube. That will slow down the speed of the too but avoid temporary banning.")]
         public int Throttle { get; set; }
 
-        [Option('h', "html-report", Required = false, HelpText = "Write the console output in a file in html format")]
-        public bool ConsoleToHtml { get; set; }
+        // Log and output 
+        [Option('l', Default = false, Required = false, HelpText = "Write the console output in a file in the executing folder using the date and time as name")]
+        public bool ConsoleOutputToDefaultFile { get; set; }
+
+        [Option("log", Required = false, HelpText = "Write the console output in a file in the executing folder using the date and time as name")]
+        public string ConsoleOutputToFile { get; set; }
+
+        [Option('h', Default = false, Required = false, HelpText = "Write the console output in a file in html format using the date and time as name")]
+        public bool ConsoleToDefaultHtmlFile { get; set; }
+
+        [Option("html", Required = false, HelpText = "Write the console output in a file in html format using the date and time as name")]
+        public string ConsoleToHtmlFile { get; set; }
     }
 
     [Verb("analyse", HelpText = "Provide analysis features regarding references. '--help analyze' for more informations.")]
@@ -36,8 +43,11 @@ namespace WikiRef
         [Option('p', "page", Required = true, HelpText = "The name of page a to analyse.", SetName = "page")]
         public string Page { get; set; }
 
-        [Option("output-json", Default = false, Required = false, HelpText = "Output the YouTube urls grouped by page in a file in json format for download")]
-        public bool OutputJson { get; set; }
+        [Option('j', Default = false, Required = false, HelpText = "Output the YouTube urls grouped by page in a file in json format for download")]
+        public bool OutputJsonToDefaultFile { get; set; }
+
+        [Option("json", Required = false, HelpText = "Output the YouTube urls grouped by page in a file in json format for download")]
+        public string OutputJsonToFile { get; set; }
     }
 
     [Verb("archive", HelpText = "Generate a wayback machine archive of non-video content. '--help archive' for more informations.")]
@@ -55,10 +65,10 @@ namespace WikiRef
         [Option("tool", Required = true, HelpText = "Location of yt-dlp.")]
         public string ToolLocation { get; set; }
 
-        [Option("directory", Required = true, HelpText = "Root folder where videos will be placed. A subfolder using the page name will be created to place the video.")]
+        [Option('d', "directory", Required = true, HelpText = "Root folder where videos will be placed. A subfolder using the page name will be created to place the video.")]
         public string OutputFolder { get; set; }
 
-        [Option("output-batch", Required = false, Default = "download.sh", HelpText = "Name of the output script.")]
+        [Option("output-script", Required = false, Default = "download.sh", HelpText = "Name of the output script.")]
         public string OutputScriptName { get; set; }
 
         [Option('a', "arguments", Default = "-S res,ext:mp4:m4a --recode mp4", HelpText = "Yt -dlp arguments. Default argument produce compressed mp4. Cfr. https://github.com/yt-dlp/yt-dlp for more information")]

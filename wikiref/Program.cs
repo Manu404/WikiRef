@@ -55,16 +55,22 @@ namespace WikiRef
                 });
         }
 
-        private void SaveTextBuffer()
+        private void SaveConsoleToLog()
         {
-            if (_config != null && _config.LogOutputToFile)
-                _fileHelper.SaveConsoleOutputToFile();
+            if (_config != null && (_config.ConsoleOutputToDefaultFile || !String.IsNullOrEmpty(_config.ConsoleOutputToFile)))
+                _fileHelper.SaveConsoleOutputToFile(_config.ConsoleOutputToDefaultFile ? String.Empty : _config.ConsoleOutputToFile);
         }
 
-        public void SaveReport()
+        public void SaveConsoleToHtml()
         {
-            if (_config != null && _config.ConsoleToHtml) 
-                _fileHelper.SaveConsoleOutputToHtmlFile(_htmlReportBuilder.BuildReportContent());
+            if (_config != null && (_config.ConsoleOutputToDefaultHtmlFile || !String.IsNullOrEmpty(_config.ConsoleOutputToHtmlFile))) 
+                _fileHelper.SaveConsoleOutputToHtmlFile(_htmlReportBuilder.BuildReportContent(), _config.ConsoleOutputToDefaultHtmlFile ? String.Empty : _config.ConsoleOutputToHtmlFile);
+        }
+
+        public void SaveWikiToJson()
+        {
+            if (_config != null && (_config.OutputJsonToDefaultFile || !String.IsNullOrEmpty(_config.OutputJsonToFile)))
+                _fileHelper.SaveWikiPagesToJsonFile(_wikiPageCache.WikiPages, _config.OutputJsonToDefaultFile ? String.Empty : _config.OutputJsonToFile);
         }
 
         static void Main(string[] args)
@@ -79,8 +85,9 @@ namespace WikiRef
             TimeSpan ts = stopWatch.Elapsed;
             p._console.WriteLine(String.Format("Runtime: {0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10));
 
-            p.SaveTextBuffer();
-            p.SaveReport();
+            p.SaveWikiToJson();
+            p.SaveConsoleToLog();
+            p.SaveConsoleToHtml();
         }
     }
 }

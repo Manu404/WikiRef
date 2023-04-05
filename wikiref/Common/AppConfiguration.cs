@@ -13,19 +13,26 @@
         // default options
         public bool Silent { get; private set; }
         public bool Verbose { get; private set; }
-        public bool LogOutputToFile { get; private set; }
         public bool NoColor { get; private set; }
         public int Throttle { get; private set; }
-        public bool ConsoleToHtml { get; private set; }
+
+        public bool ConsoleOutputToDefaultFile { get; private set; }
+        public bool ConsoleOutputToDefaultHtmlFile { get; private set; }
+        public string ConsoleOutputToFile { get; private set; }
+        public string ConsoleOutputToHtmlFile { get; private set; }
+
         public void InitalizeOptions(DefaultOptions options)
         {
             Verbose = options.Verbose;
             Silent = options.Silent;
-            LogOutputToFile = options.LogOtuputToFile;
             NoColor = options.NoColor;
             Throttle = options.Throttle;
-            ConsoleToHtml = options.ConsoleToHtml;
-            
+
+            ConsoleOutputToDefaultFile = options.ConsoleOutputToDefaultFile;
+            ConsoleOutputToDefaultHtmlFile = options.ConsoleToDefaultHtmlFile;
+            ConsoleOutputToFile = options.ConsoleOutputToFile;
+            ConsoleOutputToHtmlFile = options.ConsoleToHtmlFile;
+
             if (options is ArchiveOptions)
                 InitalizeOptions(options as ArchiveOptions);
             else if (options is YoutubeDownloadOption)
@@ -38,6 +45,8 @@
         public string WikiUrl { get; private set; }
         public string Category { get; private set; }
         public string Page { get; private set; }
+        public string OutputJsonToFile { get; private set; }
+        public bool OutputJsonToDefaultFile { get; private set; }
         public void InitalizeOptions(AnalyseOptions options)
         {
             Action = Action.Analyse;
@@ -45,10 +54,13 @@
             WikiUrl = options.Wiki;
             Page = options.Page;
             Category = options.Category;
+
+            OutputJsonToFile = options.OutputJsonToFile;
+            OutputJsonToDefaultFile = options.OutputJsonToDefaultFile;
         }
 
         // download-youtube verb argument
-        public string DownloadArguments { get; private set; }
+        public string DownloadToolArguments { get; private set; }
         public string DownloadToolLocation { get; private set; }
         public string DownloadRootFolder { get; private set; }
         public bool DownloadRedownload { get; private set; }
@@ -59,7 +71,7 @@
         public void InitalizeOptions(YoutubeDownloadOption options)
         {
             Action = Action.Backup;
-            DownloadArguments = options.Arguments;
+            DownloadToolArguments = options.Arguments;
             DownloadToolLocation = options.ToolLocation;
             DownloadRootFolder = options.OutputFolder;
             DownloadRedownload = options.Redownload;

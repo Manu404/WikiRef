@@ -16,9 +16,11 @@ namespace WikiRef
             _conf = conf;   
         }
 
-        public void SaveConsoleOutputToFile()
+        public void SaveConsoleOutputToFile(string filename)
         {
-            string filename = GenerateFileName(".log");
+            if (String.IsNullOrEmpty(filename))
+                filename = GenerateUniqueFileName(".log");
+
             try
             {
                 using (TextWriter textWritter = new StreamWriter(filename))
@@ -32,9 +34,11 @@ namespace WikiRef
             }
         }
 
-        public void SaveConsoleOutputToHtmlFile(string text)
+        public void SaveConsoleOutputToHtmlFile(string text, string filename)
         {
-            string filename = GenerateFileName(".html");
+            if (String.IsNullOrEmpty(filename))
+                filename = GenerateUniqueFileName(".html");
+
             try
             {
                 File.WriteAllText(filename, text);
@@ -46,13 +50,13 @@ namespace WikiRef
             }
         }
 
-        public void SaveWikiPagesToJsonFile(List<WikiPage> pages, string filename = "")
+        public void SaveWikiPagesToJsonFile(IEnumerable<WikiPage> pages, string filename = "")
         {
+            if (String.IsNullOrEmpty(filename))
+                filename = GenerateUniqueFileName(".json");
+
             try
             {
-                if (String.IsNullOrEmpty(filename))
-                    filename = GenerateFileName(".json");
-
                 using (TextWriter textWritter = new StreamWriter(filename))
                 {
                     string output = JsonConvert.SerializeObject(pages);
@@ -84,7 +88,7 @@ namespace WikiRef
             }
         }
 
-        private static string GenerateFileName(string extension)
+        private static string GenerateUniqueFileName(string extension)
         {
             string filenameWithtoutExtension = String.Format("output_{0}", DateTime.Now.ToString("yyyyMMddTHH-mm-ss"));
             string filenameWithExtension = String.Format("{0}{1}", filenameWithtoutExtension, extension);
