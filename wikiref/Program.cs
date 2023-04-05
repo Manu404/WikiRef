@@ -1,10 +1,6 @@
 ﻿using CommandLine;
-using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Diagnostics;
-using System.IO;
-using System.Text;
-using System.Threading;
 using WikiRef.Wiki;
 
 namespace WikiRef
@@ -42,6 +38,7 @@ namespace WikiRef
                 .WithParsed<ArchiveOptions>(option =>
                 {
                     InitializeDependencies(option);
+                    new WayBackMachineArchiver(_config, _console, _networkHelper, new JsonWikiPageCache(_fileHelper, _config)).Archive().Wait();
                 })
                 .WithParsed<YoutubeDownloadOption>(option =>
                 {

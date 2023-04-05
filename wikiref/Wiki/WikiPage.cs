@@ -93,45 +93,6 @@ namespace WikiRef
             areUrlExtracteFromReferences = true;
         }
 
-        //public int BuildYoutubeLinkList()
-        //{
-        //    YoutubeUrls.Clear();
-
-        //    int youtubeLinkCount = 1;
-
-        //    Parallel.ForEach(References, reference =>
-        //    {
-        //        Parallel.ForEach(reference.Urls, url =>
-        //        {
-        //            try
-        //            {
-        //                if (IsYoutubeUrl(url))
-        //                {
-        //                    var video = new YoutubeUrl(url, _console, _config, _regexHelper, _networkHelper);
-        //                    YoutubeUrls.Add(video);
-
-        //                    if (!YoutubeUrls.Exists(a => video.VideoId == a.VideoId))
-        //                        YoutubeUrls.Add(video);
-
-        //                    if (_config.Verbose)
-        //                        if (video.IsValid == video.IsValid)
-        //                            _console.WriteLineInGray(String.Format("Found valid video {0} - {1}", video.Url, video.Name));
-        //                        else
-        //                            _console.WriteLineInOrange(String.Format("Found invalid video {0} - {1}", video.Url, video.Name));
-
-        //                    youtubeLinkCount += 1;
-        //                }
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                _console.WriteLineInRed(String.Format("#ERROR# URL: {0} - Erreur: {1}", url, ex.Message));
-        //            }
-        //        });
-        //    });
-
-        //    return youtubeLinkCount;
-        //}
-
         public void CheckFormatting(Reference reference)
         {
             try
@@ -190,12 +151,6 @@ namespace WikiRef
             int checkedurls = 0;
 
             BuildAggregatedYoutubeUrl();
-
-
-            //ParallelOptions parallelOptions = new()
-            //{
-            //    MaxDegreeOfParallelism = 1
-            //};
 
             await Parallel.ForEachAsync(YoutubeUrls, async (youtubeUrls, token) =>
             {

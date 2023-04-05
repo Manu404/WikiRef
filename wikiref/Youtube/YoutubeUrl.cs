@@ -30,6 +30,9 @@ namespace WikiRef
         [JsonIgnore]
         public string AggregatedUrls => string.Join(" ", Urls);
 
+        [JsonIgnore]
+        public string VideoUrl => $"https://www.youtube.com/watch?v={VideoId}";
+
         public YoutubeUrl()
         {
 
@@ -164,7 +167,7 @@ namespace WikiRef
                 if (Urls.Contains("embed")) // emebed videos have no name in the title, but there's a reference to the orignal video that can be retrieved.
                     urlToVerify = GetSourceUrlFromEmbededVideo();
                 if (IsVideo)
-                    urlToVerify = $"https://www.youtube.com/watch?v={VideoId}";
+                    urlToVerify = VideoUrl;
                 else
                     urlToVerify = Urls.First();
 

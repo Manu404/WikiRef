@@ -53,7 +53,11 @@ namespace WikiRef
     [Verb("archive", HelpText = "Generate a wayback machine archive of non-video content. '--help archive' for more informations.")]
     class ArchiveOptions : DefaultOptions
     {
+        [Option('i', "input-json", Required = true, HelpText = "Input json source.")]
+        public string InputJson { get; set; }
 
+        [Option('w', "wait", Required = false, Default = false, HelpText = "Input json source.")]
+        public bool Wait { get; set; }
     }
 
     [Verb("script", HelpText = "Generate a bash script relying on yt-dlp to download youtube references. '--help script' for more informations.")]

@@ -18,7 +18,7 @@ namespace WikiRef.Wiki
 
         public JsonWikiPageCache(FileHelper helper, AppConfiguration config)
         {
-            WikiPages = helper.LoadJsonFromFile(config.DownloadInputJson);
+            WikiPages = helper.LoadJsonFromFile(config.Inputjson);
         }
     }
 }

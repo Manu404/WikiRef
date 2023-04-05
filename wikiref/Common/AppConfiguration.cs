@@ -41,7 +41,7 @@
                 InitalizeOptions(options as AnalyseOptions);
         }
 
-        // analyse ver options
+        // analyse verb options
         public string WikiUrl { get; private set; }
         public string Category { get; private set; }
         public string Page { get; private set; }
@@ -59,6 +59,9 @@
             OutputJsonToDefaultFile = options.OutputJsonToDefaultFile;
         }
 
+        // shared option
+        public string Inputjson { get; private set; }
+
         // download-youtube verb argument
         public string DownloadToolArguments { get; private set; }
         public string DownloadToolLocation { get; private set; }
@@ -66,7 +69,6 @@
         public bool DownloadRedownload { get; private set; }
         public bool DownloadPlaylist { get; private set; }
         public bool DownloadChannel { get; private set; }
-        public string DownloadInputJson { get; private set; }
         public string DownloadOutpuScriptName { get; private set; }
         public string DownloadVideoFileExtension { get; private set; }
         public void InitalizeOptions(YoutubeDownloadOption options)
@@ -76,19 +78,20 @@
             DownloadToolLocation = options.ToolLocation;
             DownloadRootFolder = options.OutputFolder;
             DownloadRedownload = options.Redownload;
-            DownloadInputJson = options.InputJson;
             DownloadPlaylist = options.DownloadPlaylist;
             DownloadChannel = options.DownloadChannel;
             DownloadOutpuScriptName = options.OutputScriptName;
             DownloadVideoFileExtension = options.Extension;
+            Inputjson = options.InputJson;
         }
 
         // archive verb option
+        public bool WaitForArchiving { get; private set; }
         public void InitalizeOptions(ArchiveOptions options)
         {
             Action = Action.Archive;
-            InitalizeOptions(options as DefaultOptions);
+            Inputjson = options.InputJson;
+            WaitForArchiving = options.Wait;
         }
-
     }
 }
