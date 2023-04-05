@@ -1,31 +1,24 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace WikiRef
 {
     class YoutubeUrl
     {
-        ConsoleHelper _console;
-        AppConfiguration _config;
-        RegexHelper _regexHelper;
-        NetworkHelper _networkHelper;
+        private ConsoleHelper _console;
+        private AppConfiguration _config;
+        private RegexHelper _regexHelper;
+        private NetworkHelper _networkHelper;
 
         [JsonProperty] public List<string> Urls { get; private set; }
         [JsonProperty] public string VideoId { get; private set; }
         [JsonProperty] public string Name { get; private set; }
-        [JsonProperty] public string FileName { get; private set; }
         [JsonProperty] public SourceStatus IsValid { get; private set; }
-
         [JsonProperty] public bool IsPlaylist { get; private set; }
         [JsonProperty] public bool IsUser { get; private set; }
         [JsonProperty] public bool IsCommunity { get; private set; }
@@ -33,6 +26,9 @@ namespace WikiRef
         [JsonProperty] public bool IsChannels { get; private set; }
         [JsonProperty] public bool IsHome { get; private set; }
         [JsonProperty] public bool IsVideo { get; private set; }
+
+        [JsonIgnore]
+        public string AggregatedUrls => string.Join(" ", Urls);
 
         public YoutubeUrl()
         {
@@ -122,7 +118,7 @@ namespace WikiRef
             else if (Urls.Any(n => n.Contains("/about"))) // chaine
             {
                 if (_config.Verbose)
-                    _console.WriteLineInOrange($"{Urls.First()} is ab bout page.");
+                    _console.WriteLineInOrange($"{Urls.First()} is an about page.");
                 IsAbout = true;
             }
             else if (Urls.Any(n => n.Contains("/community"))) // chaine
@@ -186,14 +182,14 @@ namespace WikiRef
                 if (title.ToLower().EndsWith("youtube"))
                     stripedTitleBuilder.Append(string.Join("-", title.Split('-').SkipLast(1)));
 
-                Name = stripedTitleBuilder.ToString();
+                Name = HttpUtility.HtmlDecode(stripedTitleBuilder.ToString());
 
                 if(_config.Verbose)
                     _console.WriteLineInGray($"Retreiving name for {urlToVerify} - Name : {Name}");
             }
             catch (Exception e)
             {
-                _console.WriteLineInRed($"URL: {Urls.First()} - Erreur: {e.Message}");
+                _console.WriteLineInRed($"URLs: {AggregatedUrls} - Erreur: {e.Message}");
             }
         }
 
@@ -202,27 +198,6 @@ namespace WikiRef
             string pageContent = _networkHelper.GetContent(Urls.First()).Result;
             var matches = _regexHelper.ExtractYoutubeUrlFromEmbededVideoRegex.Match(pageContent);
             return HttpUtility.HtmlDecode(matches.Groups["url"].Value);
-        }
-
-        public string GetFileName()
-        {
-            if (String.IsNullOrEmpty(Name) || IsValid == SourceStatus.Invalid || String.IsNullOrWhiteSpace(VideoId))
-            {
-                if (_config.Verbose)
-                    _console.WriteLineInRed($"Can't generate filename for {Urls}");
-                return Urls.First();
-            }
-
-            // Make video name valid for use as path
-            FileName = (Path.GetInvalidFileNameChars().Aggregate(Name, (current, c) => current.Replace(c, '_'))).Replace(' ', '_');
-
-            //add videoId at the end
-            FileName = $"{FileName}_[{VideoId}]";
-
-            if (_config.Verbose)
-                _console.WriteLineInGray($"Filename for url {Urls} - {FileName}");
-
-            return FileName;
         }
     }
 }

@@ -68,6 +68,7 @@
         public bool DownloadChannel { get; private set; }
         public string DownloadInputJson { get; private set; }
         public string DownloadOutpuScriptName { get; private set; }
+        public string DownloadVideoFileExtension { get; private set; }
         public void InitalizeOptions(YoutubeDownloadOption options)
         {
             Action = Action.Backup;
@@ -79,7 +80,7 @@
             DownloadPlaylist = options.DownloadPlaylist;
             DownloadChannel = options.DownloadChannel;
             DownloadOutpuScriptName = options.OutputScriptName;
-
+            DownloadVideoFileExtension = options.Extension;
         }
 
         // archive verb option
