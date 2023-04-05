@@ -62,7 +62,7 @@ namespace WikiRef
         {
             try
             {
-                var match = regexHelper.YoutubeVideoIdFromUrlRegex.Match(url);
+                var match = regexHelper.ExtractYoutubeVideoIdFromUrlRegex.Match(url);
                 return HttpUtility.HtmlDecode(match.Groups["videoid"].Value);
             }
             catch

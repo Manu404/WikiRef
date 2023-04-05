@@ -66,7 +66,7 @@ namespace WikiRef
         {
             if (isReferenceListBuilt) return;
             
-            MatchCollection matches = _regexHelper.ExtractReferenceREgex.Matches(Content);
+            MatchCollection matches = _regexHelper.ExtractReferenceFromPageRegex.Matches(Content);
 
             foreach (Match match in matches)
                 References.Add(new Reference(match.Value));
@@ -192,12 +192,12 @@ namespace WikiRef
             BuildAggregatedYoutubeUrl();
 
 
-            ParallelOptions parallelOptions = new()
-            {
-                MaxDegreeOfParallelism = 1
-            };
+            //ParallelOptions parallelOptions = new()
+            //{
+            //    MaxDegreeOfParallelism = 1
+            //};
 
-            await Parallel.ForEachAsync(YoutubeUrls, parallelOptions, async (youtubeUrls, token) =>
+            await Parallel.ForEachAsync(YoutubeUrls, async (youtubeUrls, token) =>
             {
                 await youtubeUrls.CheckIsValid();
             });
