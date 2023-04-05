@@ -31,7 +31,7 @@ namespace WikiRef
         public string ConsoleToHtmlFile { get; set; }
     }
 
-    [Verb("analyse", HelpText = "Provide analysis features regarding references. '--help analyze' for more informations.")]
+    [Verb("analyse", HelpText = "Provide analysis features regarding references. '--help analyse' for more informations.")]
     public class AnalyseOptions : DefaultOptions
     {
         [Option('w', "wiki", Required = true, HelpText = "Url of the wiki to analyze, for eg: https://wikipedia.com - Required")]
@@ -56,7 +56,7 @@ namespace WikiRef
 
     }
 
-    [Verb("script", HelpText = "Generate a bash script relying  on yt-dlp to download youtube references. '--help backup' for more informations.")]
+    [Verb("script", HelpText = "Generate a bash script relying on yt-dlp to download youtube references. '--help script' for more informations.")]
     class YoutubeDownloadOption : DefaultOptions
     {
         [Option('i', "input-json", Required = true, HelpText = "Input json source.")]
