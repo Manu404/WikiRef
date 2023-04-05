@@ -25,10 +25,8 @@
             NoColor = options.NoColor;
             Throttle = options.Throttle;
             ConsoleToHtml = options.ConsoleToHtml;
-
-            if (options is YoutubeOptions)
-                InitalizeOptions(options as YoutubeOptions);
-            else if (options is ArchiveOptions)
+            
+            if (options is ArchiveOptions)
                 InitalizeOptions(options as ArchiveOptions);
             else if (options is YoutubeDownloadOption)
                 InitalizeOptions(options as YoutubeDownloadOption);
@@ -47,24 +45,6 @@
             WikiUrl = options.Wiki;
             Page = options.Page;
             Category = options.Category;
-        }
-
-        // youtube verb argument
-        public string YoutubeListDestinationFile { get; private set; }
-        public bool AggrgateYoutubeUrl { get; private set; }
-        public string YoutubeAnalysisOutputFilename { get; private set; }
-        public bool DisplayYoutubeUrlList { get; private set; }
-        public void InitalizeOptions(YoutubeOptions options)
-        {
-            Action = Action.Youtube;
-
-            WikiUrl = options.Wiki;
-            Page = options.Page;
-            Category = options.Category;
-
-            AggrgateYoutubeUrl = options.Aggregate;
-            YoutubeAnalysisOutputFilename = options.OutputJson;
-            DisplayYoutubeUrlList = options.Display;
         }
 
         // download-youtube verb argument

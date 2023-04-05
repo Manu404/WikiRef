@@ -38,15 +38,10 @@ namespace WikiRef
 
         private void ParseCommandlineArgument(string[] args)
         {
-            Parser.Default.ParseArguments<ArchiveOptions, YoutubeOptions, AnalyseOptions, YoutubeDownloadOption>(args)
+            Parser.Default.ParseArguments<ArchiveOptions, AnalyseOptions, YoutubeDownloadOption>(args)
                 .WithParsed<ArchiveOptions>(option =>
                 {
                     InitializeDependencies(option);
-                })
-                .WithParsed<YoutubeOptions>(option =>
-                {
-                    InitializeDependencies(option);
-                    new YoutubAnalyser(_console,  _api, _config, _fileHelper, _wikiPageCache).AnalyseYoutubeVideos();
                 })
                 .WithParsed<YoutubeDownloadOption>(option =>
                 {

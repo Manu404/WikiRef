@@ -40,28 +40,6 @@ namespace WikiRef
         public bool OutputJson { get; set; }
     }
 
-    [Verb("youtube", HelpText = "Generate a list of youtube video links used in references. '--help youtube' for more informations.")]
-    class YoutubeOptions : DefaultOptions
-    {
-        [Option('w', "wiki", Required = true, HelpText = "Url of the wiki to analyze, for eg: https://wikipedia.com - Required")]
-        public string Wiki { get; set; }
-
-        [Option('c', "category", Required = true, HelpText = "The category to analyse, without the 'Category:' prefix.", SetName = "category")]
-        public string Category { get; set; }
-
-        [Option('p', "page", Required = true, HelpText = "The name of page a to analyse.", SetName = "page")]
-        public string Page { get; set; }
-
-        [Option('a', "aggregate", Default = false, Required = false, HelpText = "Display an aggregated view of YouTube reference based on VideoId")]
-        public bool Aggregate { get; set; }
-
-        [Option("output-json", Default = "", Required = false, HelpText = "Output the YouTube urls grouped by page in a file in json format used by youtube-download")]
-        public string OutputJson { get; set; }
-
-        [Option('d', "display", Default = true, Required = false, HelpText = "Display complete list of YouTube references. Default: true")]
-        public bool Display { get; set; }
-    }
-
     [Verb("archive", HelpText = "Generate a wayback machine archive of non-video content. '--help archive' for more informations.")]
     class ArchiveOptions : DefaultOptions
     {
