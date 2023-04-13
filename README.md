@@ -24,7 +24,7 @@ If you need anything, have any ideas or find any bugs or issues, let me know thr
 
 The core of the tool is the analyse mode, who analyse reference and links then produce json used as input for the other modes.
 
-![Overview_Archi.drawio](C:\git\WikiRef\doc\Overview_Archi.drawio.png)
+![Overview_Archi.drawio](https://github.com/Manu404/WikiRef/blob/master/doc/Overview_Archi.drawio.png)
 
 ### The 'analyse' mode
 
