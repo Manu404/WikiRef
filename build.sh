@@ -6,7 +6,6 @@ projectVersion="1.0.0.0"
 projetFile="./wikiref/WikiRef.csproj"
 projectName="wikiref"
 buildScript="multiplateform_build.sh"
-embed=false
 
 rm -f $buildScript
 curl https://raw.githubusercontent.com/Manu404/MultiplateformDotNetCoreBuildScript/main/multiplateform_build.sh --output $buildScript
@@ -15,7 +14,7 @@ chmod 755 $buildScript
 #
 # PARSE COMMAND PARAMETER
 #
-VALID_ARGS=$(getopt -o as -l all:single: -- "$@")
+VALID_ARGS=$(getopt -o ase -l all:single:embedded -- "$@")
 if [[ $? -ne 0 ]]; then
     exit 1;
 fi
@@ -30,6 +29,11 @@ while [ : ]; do
         ;;
 	-s | --single)
 		target="one"
+        echo "Build sepecitific plateform"
+        break 
+        ;;
+	-e | --embedded)
+		embeded=true
         echo "Build sepecitific plateform"
         break 
         ;;
@@ -58,10 +62,10 @@ fi
 #
 # REQUEST FOR PORTABLE OR MULTIFILE
 #
-if [ $target = "one" ]
+if [ $target = "one" ] && [ ! -n "$embeded" ]
 then
 	echo "Portable or multifile ?"
-	PS3=Your choice: 
+	PS3="Your choice: "
 	kind=("portable" "multi")
 	select p in "${kind[@]}"; do
 		case $p in
@@ -76,16 +80,18 @@ then
 			*)
 		esac
 	done
-	
+fi
+
+if [ $target = "one" ]
+then
 	#
 	# REQUEST COMPILATION
 	#
-	if $embeded
+	if [ -n $embeded ] && $embedded
 	then
 		./$buildScript -p $projetFile -n $projectName -v $projectVersion -e
 	else
 		./$buildScript -p $projetFile -n $projectName -v $projectVersion
 	fi	
 fi
-
 			
