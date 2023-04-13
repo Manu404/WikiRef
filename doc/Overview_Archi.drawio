@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-04-13T08:10:34.020Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0" etag="67SAOgI7zA0WRqOdfr-Q" version="21.1.7" type="github">
+<mxfile host="app.diagrams.net" modified="2023-04-13T08:11:10.950Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0" etag="ypBMqcHM-Vi-REQJhYQJ" version="21.1.7" type="github">
   <diagram name="Page-1" id="VJtyxQ2RTHAD36A3p6ny">
     <mxGraphModel dx="1372" dy="779" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -8,7 +8,7 @@
           <mxGeometry x="50" y="270" width="260" height="60" as="geometry" />
         </mxCell>
         <mxCell id="R2AB_OP7W7jM0Jj_TJfU-1" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/MediaWiki-2020-logo.svg/1200px-MediaWiki-2020-logo.svg.png;" parent="1" vertex="1">
-          <mxGeometry x="40" y="35.56" width="188" height="208.89" as="geometry" />
+          <mxGeometry x="100" y="74.45" width="118" height="131.11" as="geometry" />
         </mxCell>
         <mxCell id="R2AB_OP7W7jM0Jj_TJfU-2" value="Analyse mode" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;sketch=1;curveFitting=1;jiggle=2;" parent="1" vertex="1">
           <mxGeometry x="270" y="110" width="120" height="60" as="geometry" />
