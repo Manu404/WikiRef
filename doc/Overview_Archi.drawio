@@ -1,9 +1,12 @@
-<mxfile host="app.diagrams.net" modified="2023-04-13T08:02:00.677Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0" etag="L4mVG-16dQICeBMPha0p" version="21.1.7" type="github">
+<mxfile host="app.diagrams.net" modified="2023-04-13T08:09:08.516Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:109.0) Gecko/20100101 Firefox/112.0" etag="nws0P5VIiAgO4FQnMzh3" version="21.1.7" type="github">
   <diagram name="Page-1" id="VJtyxQ2RTHAD36A3p6ny">
-    <mxGraphModel dx="1372" dy="822" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1372" dy="779" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="B_pbxZE5xbWOFdOlRSbC-5" value="" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="270" width="260" height="60" as="geometry" />
+        </mxCell>
         <mxCell id="R2AB_OP7W7jM0Jj_TJfU-1" value="" style="shape=image;verticalLabelPosition=bottom;labelBackgroundColor=default;verticalAlign=top;aspect=fixed;imageAspect=0;image=https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/MediaWiki-2020-logo.svg/1200px-MediaWiki-2020-logo.svg.png;" parent="1" vertex="1">
           <mxGeometry x="40" y="35.56" width="188" height="208.89" as="geometry" />
         </mxCell>
@@ -60,6 +63,15 @@
             <mxPoint x="470" y="270" as="sourcePoint" />
             <mxPoint x="520" y="220" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="B_pbxZE5xbWOFdOlRSbC-2" value="Wikiref" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="130" y="290" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="B_pbxZE5xbWOFdOlRSbC-3" value="&lt;div style=&quot;font-size: 11px;&quot;&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;Input&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 11px;&quot;&gt;&lt;font style=&quot;font-size: 11px;&quot;&gt;Output&lt;font style=&quot;font-size: 11px;&quot;&gt;&lt;br&gt;&lt;/font&gt;&lt;/font&gt;&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=8;" vertex="1" parent="1">
+          <mxGeometry x="240" y="277.5" width="45" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="B_pbxZE5xbWOFdOlRSbC-4" value="Caption:" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="50" y="285" width="70" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
