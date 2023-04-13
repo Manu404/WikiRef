@@ -8,8 +8,8 @@ projectName="wikiref"
 buildScript="multiplateform_build.sh"
 embed=false
 
-#rm -f $buildScript
-#curl https://raw.githubusercontent.com/Manu404/MultiplateformDotNetCoreBuildScript/main/multiplateform_build.sh --output $buildScript
+rm -f $buildScript
+curl https://raw.githubusercontent.com/Manu404/MultiplateformDotNetCoreBuildScript/main/multiplateform_build.sh --output $buildScript
 chmod 755 $buildScript
 
 #
