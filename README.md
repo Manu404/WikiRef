@@ -26,6 +26,13 @@ The core of the tool is the analysis mode, which analyze references and links, t
 
 ![Overview_Archi.drawio](https://github.com/Manu404/WikiRef/blob/master/doc/Overview_Archi.drawio.png)
 
+### Available binaries
+
+There are two kind of available binaries:
+
+- *Self-contained*, or "portable", the software is a single file with no other dependencies than yt-dlp for building the tool.
+- *Normal*, require the DotNet 7 runtime to be installed on the machine, but lighter in weight.
+
 ### The 'analyse' mode
 
 This mode analyzes references and checks the validity of the urls used.
@@ -98,7 +105,7 @@ Note: Under windows, wikiref will be replaced by wikiref‧exe
 
 ### The 'archive' mode
 
-Those options are available for every mode.
+Those options are available for every mode. YouTube links are not archived through wayback-machine, due to YouTube not allowing it.
 
 |      |           | Flag | Required |      | Description                            |
 | ---- | --------- | :--: | :------: | ---- | -------------------------------------- |
@@ -131,18 +138,18 @@ For now, supported systems are:
 - Linux ARM (Linux distributions running on Arm like Raspbian on Raspberry Pi Model 2+)
 - Linux ARM64 (Linux distributions running on 64-bit Arm like Ubuntu Server 64-bit on Raspberry Pi Model 3+) 
 
+Remarks: Supported platforms have been tested. Tons of platforms can be technically already supported, but without guarantee and feedback it works on those systems, I prefer to let them in the "not yet supported system" by caution. If you have any feedback about a system not listed on which the tools run, feel free to contact me.
+
 #### Not yet supported system
 
 - MacOS support will be coming soon, after testing can be done.
 - RHEL systems low to no chances to be supported. (CentOS and Fedora are tho)
 
-Remarks: Supported platforms have been tested. Tons of platforms can be technically already supported, but without guarantee and feedback it works on those systems, I prefer to let them in the "not yet supported system" by caution. If you have any feedback about a system not listed on which the tools run, feel free to contact me.
-
 In any case, if you need to build the solution for an architecture or system not supported, see the "Build for not officially supported system" section at the end of this page.
 
 #### Tested systems
 
-The tool have been tested under those systems:
+The tool have been tested and working under those systems:
 
 - Windows
   - Windows 10 Pro 64 bits 22H2
@@ -165,9 +172,7 @@ The tool have been tested under those systems:
 
 ### Building the tool
 
-There are two kind of available binaries, portable and 'normal', the normal on require the DotNet 7 runtime to be installed on the machine, while the portable one doesn't require any external dependencies other than yt-dlp.
-
-##### Dependencies
+#### Dependencies
 
 Build is done on Windows using gitbash (normally provided with git). You don't need any IDE like Visual Studio or similar. What you need is:
 
@@ -177,7 +182,7 @@ Build is done on Windows using gitbash (normally provided with git). You don't n
 
 But build can be done on a linux box with the DotNet 7 sdk installed.
 
-##### Compilation
+#### Compilation
 
 Once the dependencies are installed, you're ready to compile by yourself the project.
 
@@ -185,11 +190,11 @@ The compilation rely on two compile script:
 
 - *build.sh*: download a multiplateform script and call it. It can be given the following argument
   
-   | Parameter | Description                              |
-   | --------- | ---------------------------------------- |
-   | -s        | Compile for a single plateform (default) |
-   | -a        | Compile for all plateform                |
-   | -e        | Project name used for the zip file       |
+   | Parameter | Description                                          |
+   | --------- | ---------------------------------------------------- |
+   | -s        | Compile for a single plateform (default)             |
+   | -a        | Compile for all plateform, normal and self-contained |
+   | -e        | Specify to build a self-contained assembly.          |
 
 - *multiplateform_build.sh*: the "real" compile script, it can be given the following parameter:
 
@@ -213,12 +218,12 @@ The zip name use the folllowing convention:
 <name>_<versoin>_<plateform>.zip
 ```
 
-###### Remarks
+#### Remarks
 
 - On linux a 'chmod 755 wikiref' might be required to have it work.
 - Sadly, WSL has compatibility issues with the "dotnet" command, prohibiting it to being used.
 
-##### Build for not officially supported system
+#### Build for not officially supported system
 
 You can build for 'unofficially supported system' using the -p parameter of the build script and using for a platform available in the list [here](https://learn.microsoft.com/en-us/dotnet/core/rid-catalog)
 
@@ -226,6 +231,8 @@ Example, building for macOS 13 Ventura ARM 64 : "./multiplateform_build -p osx.1
 
 #### Beerz, greetz and personal words
 
-If you like this tool, let me know, it's always appreciated. As well, if you have any comments or would like any request, I'm totally open for it.
+If you like this tool, let me know, it's always appreciated, [contact@emmmanuelistace.be](mailto:contact@emmmanuelistace.be) . 
 
-I would like to give a big hug to [BadMulch](https://twitter.com/badmulch), [BienfaitsPourTous](https://bienfaitspourtous.fr/) and their [communities](https://discord.gg/VA3kbYjCMn) around the [PolitiWiki project](https://politiwiki.fr/), for their support, greetz, ideas and for whom this tool was developed and gave me company during the development of this tool I streamed on their discord server.
+As well, if you have any comments or would like any request, I'm totally open for them.
+
+I would like to give a big hug to [BadMulch](https://twitter.com/badmulch), [BienfaitsPourTous](https://bienfaitspourtous.fr/) and their [communities](https://discord.gg/VA3kbYjCMn) around the [PolitiWiki project](https://politiwiki.fr/), for their support, greetz, ideas and for whom this tool was developed and gave me company during the development when I was streaming it on their discord server.
