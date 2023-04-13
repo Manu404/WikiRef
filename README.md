@@ -7,23 +7,26 @@ In the case of errors, like dead links, duplicated references, malformed referen
 
 Feature overview:
  - Analyze references for specific page or all pages in specific categories
- - Check reference urls are valid and accessible
- - Check YouTube videos are still online and visible
- - Generate a list of url used, that can be aggregated (for instance YouTube url containing timestamp)
- - Output YouTube url list as JSON file for use by other tools
+ - Check reference if urls are valid and accessible
+ - Check if YouTube videos are still online and accessible
+ - Generate a script to download video used as reference
  - Archive non-video sources using WayBack Machine service (not yet implemented, but coming)
 
-Some false positives are possible, for instance a website with a faulty SSL certificate will trigger an error, or some websites like LinkedIn fight against bot accessing their content. A "whitelist" system is being developed to allow to ignore certain url or domains.
+Some false positives are possible, for instance a website with a faulty SSL certificate will trigger an error, or some websites like LinkedIn fight against bot accessing their content. A "whitelist" system is being developed to ignore certain url or domains.
 
-This tool, yet already working well for pointing out issues, is still in early stage, tested only on one project and missing features I haven't talked about until they are done. But it allowed us to fix a few dozens of issues on a few dozen pages. 
+This tool, yet already working well for pointing out issues, is still in early stage, but working and tested. It already allowed us to fix dozens of issues on dozens of pages. 
 
 If you need anything, have any ideas or find any bugs or issues, let me know through the issue tracker, I'm totally open to new suggestions !
 
 ##  Functionality of the software
 
+### General Overview
 
+The core of the tool is the analyse mode, who analyse reference and links then produce json used as input for the other modes.
 
-### The 'analyze' mode
+![Overview_Archi.drawio](C:\git\WikiRef\doc\Overview_Archi.drawio.png)
+
+### The 'analyse' mode
 
 This mode analyzes references and checks the validity of the urls used.
 
@@ -34,13 +37,13 @@ All these parameters are used and compatible in the other modes.
 Analyze all references from pages in the category Science on the wiki https://demowiki.com/
 
 ```
-wikiref analyze -w https://demowiki.com/ -c Science
+wikiref analyse -w https://demowiki.com/ -c Science
 ```
 
 Analyze all references from the page Informatic on the wiki https://demowiki.com/
 
 ```
-wikiref analyze -w https://demowiki.com/ -p Informatic
+wikiref analyse -w https://demowiki.com/ -p Informatic
 ```
 
 Analyze all references from pages in the category Science on the wiki https://demowiki.com/; put the output in a file and output nothing in the console
@@ -49,73 +52,75 @@ Analyze all references from pages in the category Science on the wiki https://de
 wikiref analyze -w https://demowiki.com/ -c Science -o -s
 ```
 
-
+This mode produce also a JSON file used as data source for other modes.
 
 #### Parameter reference
 
-| -w | --wiki |  | x | The url of the wiki to analyze |
-|---|---|:-:|:-:|---|
-| -c | --category |  | x (but mutually exclusive with page parameter) | The name of the category to analyze |
-|  |  | Flag | Required | Description |
-| -p | --page |  | x (but mutually exclusive with category parameter) | The name of the page to analyze |
-| -o | --file-output | x |  | Output the analysis to a file with a generated name based on the date in the executing folder |
-| -v | --verbose | x |  | Verbose output |
-| -s | --silent | x |  | Produce no output in the console |
-|  | --no-color | x |  | Disable coloring of the output for terminal having trouble with the coloring of the text |
-|  | --throttle |  |  | Give a value in second to enable throttling to avoid '429 : Too Many Request' errors. Mainly for YouTube. That will slow down the speed but avoid temporary banning. |
+|      |            | Flag |                      Required                      | Description                                                  |
+| ---- | ---------- | :--: | :------------------------------------------------: | ------------------------------------------------------------ |
+| -w   | --wiki     |      |                         x                          | The url of the wiki to analyze                               |
+| -c   | --category |      |   x (but mutually exclusive with page parameter)   | The name of the category to analyze                          |
+| -p   | --page     |      | x (but mutually exclusive with category parameter) | The name of the page to analyze                              |
+| -j   |            |  x   |                                                    | Output the analysis to a file with a generated name based on the date in the executing folder |
+|      | --json     |      |                                                    | Same as "-j" but allow to choose the output filename.        |
 
-### The 'YouTube' mode
+### The 'Script' mode
 
-Those options are a superset of arguments for the YouTube mode. 
+This more rely on the output of the analyze mode and use yt-dlp for downloading, but other tools can be used as well.
+
+This mode relies on a free, open-source and multiplatform, the usage of the tool [yt-dlp](https://github.com/yt-dlp/yt-dlp). Check their document for installation depending on your system [here](https://github.com/yt-dlp/yt-dlp/wiki/Installation).
+
+The filenames are composed of the the video name followed by the YouTube VideoId.
 
 #### Example usages
 
-Analyze all references from page Informatic on the wiki https://demowiki.com/ and find all YouTube videos, aggregate them and output them on the screen and in a JSON file
+Generate a script called download.sh to download all videos contained in the analyse file into the folder "video" using yt-dlp
 
 ```
-wikiref youtube -w https://demowiki.com/ -p Informatic -a --json-output -d
-```
-
-Analyze all references from page Informatic on the wiki https://demowiki.com/ and find all YouTube videos, whiteout aggregating , write the terminal output in a file but output nothing to the terminal
-
-```
-wikiref youtube -w https://demowiki.com/ -p Informatic --json-output -s -o
+wikiref script -i analyse.json -d ./videos/ --tool /bin/usr/yt-dlp --output-script download.sh
 ```
 
 Note: Under windows, wikiref will be replaced by wikiref‧exe
 
 #### Parameter reference
 
-|  |  | Flag | Required | Description |
-|---|---|:-:|:-:|---|
-| -d | --display | x |  | Display complete list of  YouTube references. Default behavior. |
-| -a | --aggregate | x |  | Display an aggregated view of YouTube reference based on VideoId. |
-|  | --json-output | x |  | Output the YouTube urls grouped by page in a file in JSON format for usage by other tools |
-|  | --valid-links | x | | Display or export only valid links. |
+|  |  | Flag | Required | Value | Description |
+|---|---|:-:|:-:|---|---|
+| -i   | --input-json        |      |    X     | Filename                       | Input JSON source to generate the download script file       |
+| -d   | --directory         |      |    X     | Path                           | The root folder where to put videos. They will then be placed in a subfolder based on the page name. |
+|      | --output-script     |      |          | Filename                       | Allow to change the default name of the output script        |
+|      | --tool              |      |    X     | Filename                       | Path to yt-dlp                                               |
+| -a   | --arguments         |      |          | Tool argument                  | Default arguments are  "-S res,ext:mp4:m4a --recode mp4" to download 480p verison of the videos. |
+| -e   | --extension         |      |          | File extension without the "." | Extension of the video file.                                 |
+|      | --redownload        |  X   |          |                                | Download the video, even if it already exist.                |
+|      | --download-playlist |  X   |          |                                | Download videos in playlist URLS                             |
+|      | --download-channel  |  X   |          |                                | Download videos in channel URLS                              |
 
 ### The 'archive' mode
 
-Currently, in development. TBD
+Those options are available for every mode.
 
-### The 'backup' mode
+|      |           | Flag | Required |      | Description                            |
+| ---- | --------- | :--: | :------: | ---- | -------------------------------------- |
+| -v   | --verbose |  X   |          |      | Output more information in the console |
+| -s   | --silent  |  X   |          |      | No console output                      |
 
-Those options are a superset of arguments for creating local backup of YouTube videos used as references. See example.
+### General options
 
-This mode relies on a free, open-source and multiplatform, the usage of the tool [yt-dlp](https://github.com/yt-dlp/yt-dlp). Check their document for installation depending on your system [here](https://github.com/yt-dlp/yt-dlp/wiki/Installation).
+This mode archive all urls on https://archive.org
 
-The videos a placed in a folder given as parameter. Within this folder, each page will create a folder, containing their related video.
+|      |               | Flag | Required |                    | Description                                                  |
+| ---- | ------------- | :--: | :------: | ------------------ | ------------------------------------------------------------ |
+| -i   | --input-json  |      |    x     |                    | Input JSON source to get URL to archive.                     |
+| -w   | --wait        |  x   |          |                    | Wait for confirmation of archival from Archive.org. Use with caution, archive.org might usually take a long time to archive pages. |
+| -b   | --color-blind |  X   |          |                    | Disable coloring of the console output - Compatibility for certain terminal; |
+| -t   | --throttle    |      |          | Duration in second | Enable throtteling between request. Required for youtube who blacklist ip making too many request too quickly (6second seems to work great) |
+| -l   |               |  X   |          |                    | Ouptut console to a log file with the date and time as name  |
+|      | --log         |      |          | Filename           | Same as -l but to a specific file                            |
+| -h   |               |  X   |          |                    | Output the console in an HTMl file with rendering close to the console rendering |
+|      | --html        |      |          | Filename           | Same as -h but to a specific file                            |
 
-The files use the video name followed by the YouTube VideoId.
-
-|      |                     | Flag | Required |      | Description                                                  |
-| ---- | ------------------- | :--: | :------: | ---- | ------------------------------------------------------------ |
-| -d   | --download          |  x   |    x     |      | Default to true. Download the videos. Might be useful to have it set to false for testing purposes. |
-|      | --redownload        |  x   |    x     |      | Redownload the video, even if they already exist locally.    |
-| -t   | --tool-path         |      |    x     |      | Location of yt-dlp tool.                                     |
-| -a   | --arguments         |      |          |      | Provide default argument "-S res,ext:mp4:m4a --recode mp4", that produces a good compromise between quality and weight, close to 480p format, our goal when developing the tool being mainly focused on audio. But feel free to provide the arguments that fit best your needs. Check the documentation [here](https://github.com/yt-dlp/yt-dlp#usage-and-options). Warning: The filename output parameter can't be changed as it's handled by the tool itself. Everything else can be adapted. |
-| -r   | --root-folder       |      |    x     |      | The folder in which the video will be saved                  |
-|      | --download-playlist |  x   |          |      | Download playlist url content. Default: false                |
-|      | --download-channel  |  x   |          |      | "Download channel url content. Default: false                |
+### 
 
 ### Multiplatform
 
@@ -123,19 +128,42 @@ The files use the video name followed by the YouTube VideoId.
 
 For now, supported systems are:
 
-- Windows 64 bits from 7 and above.
-- "Standard" Linux 64 bits like CentOS, Debian, Fedora, Ubuntu, and derivatives
+- Windows 64bits & 32bitsbits from 7 and above.
+- Linux 64 bits  (Most desktop distributions like CentOS, Debian, Fedora, Ubuntu, and derivatives)
+- Linux ARM (Linux distributions running on Arm like Raspbian on Raspberry Pi Model 2+)
+- Linux ARM64 (Linux distributions running on 64-bit Arm like Ubuntu Server 64-bit on Raspberry Pi Model 3+) 
 
 ##### Not yet supported system
 
 - MacOS support will be coming soon, after testing can be done.
-- Arm and arm64 architecture, both Linux and windows, will be supported in the future, for instance for raspberries.
-- There's no plan to support x86 architecture for any platform unless explicitly asked, let me know if it's the case. I consider this architecture to be totally outdated in 2023 and only remaining in niche sectors. 
-- RHEL systems low to no chances to be supported.
+- RHEL systems low to no chances to be supported. (CentOS and Fedora are tho)
 
-Remarks: I considered supported platform on which we have feedback of the software working. Tons of platforms can be technically already supported, but without guarantee and feedback it works on those systems, I prefer to let them in the "not yet supported system" by caution.
+Remarks: Supported platforms have been tested. Tons of platforms can be technically already supported, but without guarantee and feedback it works on those systems, I prefer to let them in the "not yet supported system" by caution. if you have any feebdack about a system not listed on which the tools run, feel free to contact me.
 
 In any case, if you need to build the solution for an architecture or system not supported, see "Build for not officially supported system" section at the end of this page.
+
+##### Tested systems
+
+The tool have been tested under those systems:
+
+- Windows
+  - Windows 10 Pro 64 bits 22H2
+  - Windows 11 [to complete]
+- Linux
+  - Debian-based
+    - Ubuntu Server 22.04
+    - Ubuntu Server 20.04
+    - Ubuntu Server 18.04
+    - Ubuntu Desktop 20.04
+    - Debian 11.6
+    - Debian 10.13
+  - Red Hat based
+    - Fedora Workstation 37.1	
+    - Fedora Server 37.1
+    - CentOS Server 7
+    - CentOS Desktop 7
+  - OpenSuse Tumbleweed
+  - Alpine Standard 3.17.3
 
 ### Building the tool
 
