@@ -19,6 +19,7 @@ namespace WikiRef
         public int Throttle { get; private set; }
         public bool Ipv4Only { get; private set; }
         public bool PutInSubDirectory { get; private set; } 
+        public bool ExportRefText { get; private set; } 
 
         public bool ConsoleOutputToDefaultFile { get; private set; }
         public bool ConsoleOutputToDefaultHtmlFile { get; private set; }
@@ -33,6 +34,7 @@ namespace WikiRef
             Throttle = options.Throttle;
             Ipv4Only = options.IpV4Only;
             PutInSubDirectory = options.PutInSubDirectory;
+            ExportRefText = options.ExportRefText;
 
             ConsoleOutputToDefaultFile = options.ConsoleOutputToDefaultFile;
             ConsoleOutputToDefaultHtmlFile = options.ConsoleToDefaultHtmlFile;

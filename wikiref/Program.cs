@@ -2,6 +2,8 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Text;
 using WikiRef.Wiki;
 
 namespace WikiRef
@@ -58,7 +60,7 @@ namespace WikiRef
             if (_config != null && (_config.ConsoleOutputToDefaultFile || !String.IsNullOrEmpty(_config.ConsoleOutputToFile)))
             {
                 string filename = _config.ConsoleOutputToDefaultFile ? String.Empty : _config.ConsoleOutputToFile;
-                string dirname = _config.PutInSubDirectory ? "log" : String.Empty;
+                string dirname = _config.PutInSubDirectory ? ".log" : String.Empty;
                 _fileHelper.SaveConsoleOutputToFile(filename, dirname);
             }
         }
@@ -68,7 +70,7 @@ namespace WikiRef
             if (_config != null && (_config.ConsoleOutputToDefaultHtmlFile || !String.IsNullOrEmpty(_config.ConsoleOutputToHtmlFile)))
             {
                 string filename = _config.ConsoleOutputToDefaultHtmlFile ? String.Empty : _config.ConsoleOutputToHtmlFile;
-                string dirname = _config.PutInSubDirectory ? "html" : String.Empty;
+                string dirname = _config.PutInSubDirectory ? ".html" : String.Empty;
                 _fileHelper.SaveConsoleOutputToHtmlFile(_htmlReportBuilder.BuildReportContent(), filename, dirname);
             }
         }
@@ -78,8 +80,21 @@ namespace WikiRef
             if (_config != null && (_config.OutputJsonToDefaultFile || !String.IsNullOrEmpty(_config.OutputJsonToFile)))
             {
                 string filename = _config.OutputJsonToDefaultFile ? String.Empty : _config.OutputJsonToFile;
-                string dirname = _config.PutInSubDirectory ? "json" : String.Empty;
+                string dirname = _config.PutInSubDirectory ? ".json" : String.Empty;
                 _fileHelper.SaveWikiPagesToJsonFile(_wikiPageCache.WikiPages, filename, dirname);
+            }
+        }
+
+        public void SaveRefText()
+        {
+            if (_config != null && _config.ExportRefText)
+            {
+                StringBuilder builder = new StringBuilder();
+                foreach (var reference in _wikiPageCache.WikiPages.SelectMany(p => p.References).Select(r => r.Content))
+                {
+                    builder.AppendLine(reference);
+                }
+                _fileHelper.SaveTextTofile(builder.ToString(), "", "", ".txt");
             }
         }
 
@@ -98,6 +113,7 @@ namespace WikiRef
             p.SaveWikiToJson();
             p.SaveConsoleToLog();
             p.SaveConsoleToHtml();
+            p.SaveRefText();
         }
     }
 }

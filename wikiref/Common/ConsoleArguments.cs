@@ -35,6 +35,9 @@ namespace WikiRef
 
         [Option("subdir", Required = false, HelpText = "Put output files in subdirectory")]
         public bool PutInSubDirectory { get; set; }
+
+        [Option("export-ref-text", Required = false, HelpText = "Export reference in text file - mostly for debug")]
+        public bool ExportRefText { get; set; }
     }
 
     [Verb("analyse", HelpText = "Provide analysis features regarding references. '--help analyse' for more informations.")]

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
@@ -30,6 +31,11 @@ namespace WikiRef
         [JsonProperty] public List<YoutubeUrl> YoutubeUrls { get; private set; }
         [JsonProperty] public List<Reference> References { get; private set; }
         [JsonProperty] public string Content { get; private set; }
+
+
+        [JsonIgnore] public int MalformedDates { get; set; }
+        [JsonIgnore] public int DatesCount { get; set; }
+        [JsonIgnore] public int WikiLinks { get; set; }
 
         public WikiPage()
         {
@@ -114,6 +120,17 @@ namespace WikiRef
                     reference.FormattingIssue = true;
                 }
 
+                // check date format
+                if (!reference.Urls.Any(u => u.Contains("wikipedia")))
+                {                    
+                    CheckDateIsValid(reference);
+                }
+                else
+                {
+                    DatesCount += 1;
+                    WikiLinks += 1;
+                }
+
                 Parallel.ForEach(reference.Urls, url =>
                 {
                     try
@@ -143,6 +160,59 @@ namespace WikiRef
             }
         }
 
+        private bool CheckDateIsValid(Reference reference)
+        {
+            try
+            {
+
+                // check format DESC - DATE - URL
+                DatesCount += 1;
+
+                var metaWithoutUrl = _regexHelper.ExtractMetaFromReferencelRegex.Match(reference.Content).Groups["meta"].ToString();
+
+                var dateString = metaWithoutUrl.Split("-").Last().Split("–").Last().Split(",").Last();
+
+                if (metaWithoutUrl == String.Empty)
+                {
+                    var split = reference.Content.Split(" ");
+                    if(split.Length > 1)
+                        dateString = split[split.Length - 2];
+                }
+
+                // correct ortho
+                if (dateString.ToLower().Contains("aout"))
+                    dateString = dateString.ToLower().Replace("u", "û");
+                if (dateString.ToLower().Contains("fevrier"))
+                    dateString = dateString.ToLower().Replace("fevrier", "Février");
+                if (dateString.ToLower().Contains("decembre"))
+                    dateString = dateString.ToLower().Replace("decembre", "Décembre");
+
+                dateString = dateString.Replace(".", " ").Replace("/", " ").Trim();
+
+                CultureInfo culture = new CultureInfo("fr-FR", true);
+                DateTimeStyles style = DateTimeStyles.None;
+                bool sucessed = false;
+                DateTime dateValue;
+                sucessed = DateTime.TryParseExact(dateString, "dd MMMM yyyy", culture, style, out dateValue);
+                if (!sucessed) sucessed = DateTime.TryParseExact(dateString, "dd MMMM yyyy", culture, style, out dateValue);
+                if (!sucessed) sucessed = DateTime.TryParseExact(dateString, "d MMMM yyyy", culture, style, out dateValue);
+                if (!sucessed) sucessed = DateTime.TryParseExact(dateString, "dd MM yyyy", culture, style, out dateValue);
+                if (!sucessed) sucessed = DateTime.TryParseExact(dateString, "dd MMM yyyy", culture, style, out dateValue);
+                if (!sucessed) sucessed = DateTime.TryParseExact(dateString, "dd MM y", culture, style, out dateValue);
+                if (!sucessed)
+                {
+                    _console.WriteLineInGray(String.Format("Maformed date reference in {0}", reference.Content));
+                    MalformedDates += 1;
+                }
+
+                return sucessed;
+            }
+            catch (Exception ex)
+            {
+                _console.WriteLineInRed($"Error parsing date {ex.Message}");
+                return false;
+            }
+        }
 
         public async Task CheckReferenceStatus()
         {

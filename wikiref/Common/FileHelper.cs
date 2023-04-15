@@ -35,16 +35,28 @@ namespace WikiRef
             }
         }
 
-
-        public void SaveConsoleOutputToHtmlFile(string text, string filename, string subfolder)
+        public void SaveTextTofile(string text, string filename, string subfolder, string extension = "")
         {
-            filename = GenerateOutputFilePath(filename, subfolder, ".html");
+            filename = GenerateOutputFilePath(filename, subfolder, extension);
 
             try
             {
                 CreateDirecotoryIfNotExist(subfolder);
 
                 File.WriteAllText(filename, text);
+            }
+            catch (Exception e)
+            {
+                _consoleHelper.WriteLineInRed(String.Format("An error occured while saving console output to file {0}", filename));
+                _consoleHelper.WriteLineInRed(e.Message);
+            }
+        }
+
+        public void SaveConsoleOutputToHtmlFile(string text, string filename, string subfolder)
+        {
+            try
+            {
+                SaveTextTofile(text, filename, subfolder, ".html");
             }
             catch (Exception e)
             {

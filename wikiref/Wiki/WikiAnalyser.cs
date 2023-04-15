@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace WikiRef.Wiki
@@ -27,6 +28,14 @@ namespace WikiRef.Wiki
                     await page.CheckReferenceStatus();
                 }
             }
+
+            _console.WriteSection("Analysis summary");
+            _console.WriteLineInGray($"Total reference: {_wikiPageCache.WikiPages.Sum(p => p.References.Count)}");
+            _console.WriteLineInGray($"Total citation refs: {_wikiPageCache.WikiPages.SelectMany(r => r.References).Where(r => r.IsCitation).Count()}");
+            _console.WriteLineInGray($"Reference with formating issues: {_wikiPageCache.WikiPages.SelectMany(r => r.References).Where(r => r.FormattingIssue).Count()}");
+            _console.WriteLineInGray($"Wikilinks total: {_wikiPageCache.WikiPages.Sum(p => p.WikiLinks)}");
+            _console.WriteLineInGray($"Date total: {_wikiPageCache.WikiPages.Sum(p => p.DatesCount)}");
+            _console.WriteLineInGray($"Malformed date: {_wikiPageCache.WikiPages.Sum(p => p.MalformedDates)}");
         }
     }
 }
