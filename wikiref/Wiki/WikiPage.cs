@@ -177,13 +177,7 @@ namespace WikiRef
                         else
                             reference.Status = CheckUrlStatus(url);
 
-                        if (reference.Status != SourceStatus.Valid || _config.Verbose)
-                        {
-                            if (reference.Status == SourceStatus.Invalid)
-                                _console.WriteLineInRed(string.Format("Invalid reference: {0} -> {1}", url, reference.Status.ToString()));
-                            else
-                                _console.WriteLineInGray(string.Format("Valid reference: {0} -> {1}", url, reference.Status.ToString()));
-                        }
+                        DisplayreferencesStatus(reference, url);
                     }
                     catch (Exception ex)
                     {
@@ -200,6 +194,18 @@ namespace WikiRef
                 _console.WriteLineInRed(String.Format("Some references seems invalid, check the error message and/or the wikicode for malformated refrerences or invalid urls"));
             else
                 _console.WriteLineInGreen(String.Format("All references seems valid"));
+        }
+
+        private void DisplayreferencesStatus(Reference reference, string url)
+        {
+            if (reference.Status != SourceStatus.Valid || _config.Verbose)
+            {
+                string displayedUrl = IsYoutubeUrl(url) ? $"VideoID: {YoutubeUrl.GetVideoId(url, _regexHelper)}" : url;
+                if (reference.Status == SourceStatus.Invalid)
+                    _console.WriteLineInRed(string.Format("Invalid reference: {0} -> {1}", displayedUrl, reference.Status.ToString()));
+                else
+                    _console.WriteLineInGray(string.Format("Valid reference: {0} -> {1}", displayedUrl, reference.Status.ToString()));
+            }
         }
 
         private SourceStatus CheckUrlStatus(string url)
