@@ -225,7 +225,7 @@ A zip containing the build output is placed in *"./output/zip/\<plateform\>.zip"
 The zip name use the folllowing convention: 
 
 ```
-<name>_<versoin>_<plateform>.zip
+<name>_<version>_<plateform>.zip
 ```
 
 #### Remarks
@@ -240,8 +240,8 @@ Example, building for macOS 13 Ventura ARM 64 : "./multiplateform_build -p osx.1
 
 ### Beerz, greetz and personal words
 
-If you like this tool, let me know, it's always appreciated, [contact@emmmanuelistace.be](mailto:contact@emmmanuelistace.be) . 
+If you like this tool, let me know, it's always appreciated, you can contact me [by mail](mailto:contact@emmmanuelistace.be) . 
 
-As well, if you have any comments or would like any request, I'm totally open for them.
+As well, if you have any comments or would like any request, I'm totally open for them, open an issue or send me [mail](mailto:contact@emmmanuelistace.be) . 
 
 I would like to give a big hug to [BadMulch](https://twitter.com/badmulch), [BienfaitsPourTous](https://bienfaitspourtous.fr/) and their [communities](https://discord.gg/VA3kbYjCMn) around the [PolitiWiki project](https://politiwiki.fr/), for their support, greetz, ideas and for whom this tool was developed and gave me company during the development when I was streaming it on their discord server and overall moral support.
