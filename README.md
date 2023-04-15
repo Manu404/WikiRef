@@ -31,7 +31,25 @@ The core of the tool is the analysis mode, which analyze references and links, t
 There are two kind of available binaries:
 
 - *Self-contained*, or "portable", the software is a single file with no other dependencies than yt-dlp for building the tool.
+
 - *Normal*, require the DotNet 7 runtime to be installed on the machine, but lighter in weight.
+
+### General options
+
+These options apply to all modes
+
+  |      |               | Flag | Required |                    | Description                                                  |
+  | ---- | ------------- | :--: | :------: | ------------------ | ------------------------------------------------------------ |
+  | -i   | --input-json  |      |    x     |                    | Input JSON source to get URL to archive.                     |
+  | -w   | --wait        |  x   |          |                    | Wait for confirmation of archival from Archive.org. Use with caution, archive.org might usually take a long time to archive pages. |
+  | -b   | --color-blind |  X   |          |                    | Disable coloring of the console output - Compatibility for certain terminal; |
+  | -t   | --throttle    |      |          | Duration in second | Enable throtteling between request. Required for youtube who blacklist ip making too many request too quickly (6second seems to work great) |
+  | -l   |               |  X   |          |                    | Ouptut console to a log file with the date and time as name  |
+  |      | --log         |      |          | Filename           | Same as -l but to a specific file                            |
+  | -h   |               |  X   |          |                    | Output the console in an HTMl file with rendering close to the console rendering |
+  |      | --html        |      |          | Filename           | Same as -h but to a specific file                            |
+
+  ### 
 
 ### The 'analyse' mode
 
@@ -111,21 +129,6 @@ Those options are available for every mode. YouTube links are not archived throu
 | ---- | --------- | :--: | :------: | ---- | -------------------------------------- |
 | -v   | --verbose |  X   |          |      | Output more information in the console |
 | -s   | --silent  |  X   |          |      | No console output                      |
-
-### General options
-
-This mode archive all urls on https://archive.org
-
-|      |               | Flag | Required |                    | Description                                                  |
-| ---- | ------------- | :--: | :------: | ------------------ | ------------------------------------------------------------ |
-| -i   | --input-json  |      |    x     |                    | Input JSON source to get URL to archive.                     |
-| -w   | --wait        |  x   |          |                    | Wait for confirmation of archival from Archive.org. Use with caution, archive.org might usually take a long time to archive pages. |
-| -b   | --color-blind |  X   |          |                    | Disable coloring of the console output - Compatibility for certain terminal; |
-| -t   | --throttle    |      |          | Duration in second | Enable throtteling between request. Required for youtube who blacklist ip making too many request too quickly (6second seems to work great) |
-| -l   |               |  X   |          |                    | Ouptut console to a log file with the date and time as name  |
-|      | --log         |      |          | Filename           | Same as -l but to a specific file                            |
-| -h   |               |  X   |          |                    | Output the console in an HTMl file with rendering close to the console rendering |
-|      | --html        |      |          | Filename           | Same as -h but to a specific file                            |
 
 ### Multiplatforming
 
