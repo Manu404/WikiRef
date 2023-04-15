@@ -1,20 +1,20 @@
 # WikiRef
 
 
-WikiRef is a public domain multiplatform tool built to analyze MediaWiki references, identifies errors, archive webpage references with WaybackMachine service and create local copies of YouTube references.
+WikiRef is a GPLv3 multiplatform tool built to analyze MediaWiki references, identifies errors, archive webpage references with WaybackMachine service and create local copies of YouTube references.
 
-In the case of errors, like dead links, duplicated references, malformed references, etc. The tool will issue an error or warning message, allowing you to act and improve the quality of the sourcing of your wiki. This tool doesn't fix the issues, it shows them.
+In the case of errors, like dead links, duplicated references, malformed references, etc. The tool will issue an error or warning message, allowing you to act and improve the quality of the sourcing of your wiki. This tool doesn't fix the issues, it shows them, it's a reporting tool.
 
 Feature overview:
  - Analyze references for specific page or all pages in specific categories
  - Check reference if urls are valid and accessible
  - Check if YouTube videos are still online and accessible
  - Generate a script to download video used as reference
- - Archive non-video sources using the WayBack Machine service (not yet implemented, but coming)
+ - Archive non-video sources using the WayBack Machine service
 
 Some false positives are possible, for instance a website with a faulty SSL certificate will trigger an error, or some websites like LinkedIn fight against bot accessing their content. A "whitelist" system is being developed to ignore certain url or domains.
 
-This tool, yet already working well for pointing out issues, is still in early stage, but working and tested. It already allowed us to fix dozens of issues on dozens of pages in our wiki. 
+This tool already allowed us to fix dozens of issues on dozens of pages in our wiki. 
 
 If you need anything, have any ideas or find any bugs or issues, let me know through the issue tracker, I'm totally open to new suggestions ! Open an issue or contact me by [mail](mailto:contact@emmanuelistace.be).
 
@@ -48,7 +48,7 @@ These options apply to all modes
 | -v   | --verbose     |  ⬤   |                    | Output more information in the console                       |
 | -s   | --silent      |  ⬤   |                    | No console output                                            |
 | -b   | --color-blind |  ⬤   |                    | Disable coloring of the console output - Compatibility for certain terminal; |
-| -t   | --throttle    |      | Duration in second | Enable throtteling between request. Required for youtube who blacklist ip making too many request too quickly (6second seems to work great) |
+| -t   | --throttle    |      | Duration in second | Enable throtteling between request. Required for youtube who blacklist ip making too many request too quickly from datacenters (6second seems to work great) |
 | -l   |               |  ⬤   |                    | Ouptut console to a log file with the date and time as name. |
 |      | --log         |      | Filename           | Same as -l but with a specific filename                      |
 | -h   |               |  ⬤   |                    | Output the console in an HTMl file with rendering close to colored the console output. |
@@ -86,13 +86,13 @@ This mode produce also a JSON file used as data source for other modes.
 
 #### Parameter reference
 
-|      |            | Flag |                    Required                    | Description                                                  |
-| ---- | ---------- | :--: | :--------------------------------------------: | ------------------------------------------------------------ |
-| -w   | --wiki     |      |                       x                        | The url of the wiki to analyze                               |
-| -c   | --category |      |   x (mutually exclusive with page parameter)   | The name of the category to analyze                          |
-| -p   | --page     |      | x (mutually exclusive with category parameter) | The name of the page to analyze                              |
-| -j   |            |  ⬤   |                                                | Output the analysis to a file with a generated name based on the date |
-|      | --json     |      |                                                | Same as -h but with a specific filename                      |
+|      |            | Flag |                      Required                       | Description                                                  |
+| ---- | ---------- | :--: | :-------------------------------------------------: | ------------------------------------------------------------ |
+| -w   | --wiki     |      |                          ⬤                          | The url of the wiki to analyze                               |
+| -c   | --category |      |   ⬤<br />(mutually exclusive with page parameter)   | The name of the category to analyze                          |
+| -p   | --page     |      | ⬤<br />(mutually exclusive with category parameter) | The name of the page to analyze                              |
+| -j   |            |  ⬤   |                                                     | Output the analysis to a file with a generated name based on the date |
+|      | --json     |      |                      Filename                       | Same as -h but with a specific filename                      |
 
 ### The 'Script' mode
 
