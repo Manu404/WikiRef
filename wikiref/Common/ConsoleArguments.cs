@@ -32,6 +32,9 @@ namespace WikiRef
 
         [Option('4', "ipv4", Required = false, HelpText = "Default request to ipv4 (compatbilibyt)")]
         public bool IpV4Only { get; set; }
+
+        [Option("subdir", Required = false, HelpText = "Put output files in subdirectory")]
+        public bool PutInSubDirectory { get; set; }
     }
 
     [Verb("analyse", HelpText = "Provide analysis features regarding references. '--help analyse' for more informations.")]

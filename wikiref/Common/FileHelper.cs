@@ -16,7 +16,7 @@ namespace WikiRef
             _conf = conf;   
         }
 
-        public void SaveConsoleOutputToFile(string filename, string subfolder = "")
+        public void SaveConsoleOutputToFile(string filename, string subfolder)
         {
             filename = GenerateOutputFilePath(filename, subfolder, ".log");
 
@@ -36,7 +36,7 @@ namespace WikiRef
         }
 
 
-        public void SaveConsoleOutputToHtmlFile(string text, string filename, string subfolder = "")
+        public void SaveConsoleOutputToHtmlFile(string text, string filename, string subfolder)
         {
             filename = GenerateOutputFilePath(filename, subfolder, ".html");
 
@@ -53,7 +53,7 @@ namespace WikiRef
             }
         }
 
-        public void SaveWikiPagesToJsonFile(IEnumerable<WikiPage> pages, string filename = "", string subfolder = "")
+        public void SaveWikiPagesToJsonFile(IEnumerable<WikiPage> pages, string filename, string subfolder)
         {
             filename = GenerateOutputFilePath(filename, subfolder, ".json");
 
@@ -77,6 +77,9 @@ namespace WikiRef
 
         private void CreateDirecotoryIfNotExist(string subfolder)
         {
+            if (String.IsNullOrEmpty(subfolder))
+                return;
+
             if (!Directory.Exists(subfolder))
                 Directory.CreateDirectory(subfolder);
         }
@@ -101,7 +104,7 @@ namespace WikiRef
         private string GenerateOutputFilePath(string filename, string subfolder, string extension)
         {
             if (String.IsNullOrEmpty(filename))
-                filename = Path.Combine(subfolder, GenerateUniqueFileName(extension));
+                filename = String.IsNullOrEmpty(subfolder) ? GenerateUniqueFileName(extension) : Path.Combine(subfolder, GenerateUniqueFileName(extension));
             return filename;
         }
 

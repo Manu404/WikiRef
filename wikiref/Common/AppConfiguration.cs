@@ -17,7 +17,8 @@ namespace WikiRef
         public bool Verbose { get; private set; }
         public bool NoColor { get; private set; }
         public int Throttle { get; private set; }
-        public bool Ipv4Only { get; set; }
+        public bool Ipv4Only { get; private set; }
+        public bool PutInSubDirectory { get; private set; } 
 
         public bool ConsoleOutputToDefaultFile { get; private set; }
         public bool ConsoleOutputToDefaultHtmlFile { get; private set; }
@@ -30,6 +31,8 @@ namespace WikiRef
             Silent = options.Silent;
             NoColor = options.NoColor;
             Throttle = options.Throttle;
+            Ipv4Only = options.IpV4Only;
+            PutInSubDirectory = options.PutInSubDirectory;
 
             ConsoleOutputToDefaultFile = options.ConsoleOutputToDefaultFile;
             ConsoleOutputToDefaultHtmlFile = options.ConsoleToDefaultHtmlFile;
@@ -57,7 +60,6 @@ namespace WikiRef
             WikiUrl = options.Wiki;
             Page = options.Page;
             Category = options.Category;
-            Ipv4Only = options.IpV4Only;
 
             OutputJsonToFile = options.OutputJsonToFile;
             OutputJsonToDefaultFile = options.OutputJsonToDefaultFile;

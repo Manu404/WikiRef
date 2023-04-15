@@ -56,19 +56,31 @@ namespace WikiRef
         private void SaveConsoleToLog()
         {
             if (_config != null && (_config.ConsoleOutputToDefaultFile || !String.IsNullOrEmpty(_config.ConsoleOutputToFile)))
-                _fileHelper.SaveConsoleOutputToFile(_config.ConsoleOutputToDefaultFile ? String.Empty : _config.ConsoleOutputToFile, subfolder: "log");
+            {
+                string filename = _config.ConsoleOutputToDefaultFile ? String.Empty : _config.ConsoleOutputToFile;
+                string dirname = _config.PutInSubDirectory ? "log" : String.Empty;
+                _fileHelper.SaveConsoleOutputToFile(filename, dirname);
+            }
         }
 
         public void SaveConsoleToHtml()
         {
             if (_config != null && (_config.ConsoleOutputToDefaultHtmlFile || !String.IsNullOrEmpty(_config.ConsoleOutputToHtmlFile)))
-                _fileHelper.SaveConsoleOutputToHtmlFile(_htmlReportBuilder.BuildReportContent(), _config.ConsoleOutputToDefaultHtmlFile ? String.Empty : _config.ConsoleOutputToHtmlFile, subfolder: "html");
+            {
+                string filename = _config.ConsoleOutputToDefaultHtmlFile ? String.Empty : _config.ConsoleOutputToHtmlFile;
+                string dirname = _config.PutInSubDirectory ? "html" : String.Empty;
+                _fileHelper.SaveConsoleOutputToHtmlFile(_htmlReportBuilder.BuildReportContent(), filename, dirname);
+            }
         }
 
         public void SaveWikiToJson()
         {
             if (_config != null && (_config.OutputJsonToDefaultFile || !String.IsNullOrEmpty(_config.OutputJsonToFile)))
-                _fileHelper.SaveWikiPagesToJsonFile(_wikiPageCache.WikiPages, _config.OutputJsonToDefaultFile ? String.Empty : _config.OutputJsonToFile, subfolder: "json");
+            {
+                string filename = _config.OutputJsonToDefaultFile ? String.Empty : _config.OutputJsonToFile;
+                string dirname = _config.PutInSubDirectory ? "json" : String.Empty;
+                _fileHelper.SaveWikiPagesToJsonFile(_wikiPageCache.WikiPages, filename, dirname);
+            }
         }
 
         static void Main(string[] args)
