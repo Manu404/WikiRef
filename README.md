@@ -14,9 +14,9 @@ Feature overview:
 
 Some false positives are possible, for instance a website with a faulty SSL certificate will trigger an error, or some websites like LinkedIn fight against bot accessing their content. A "whitelist" system is being developed to ignore certain url or domains.
 
-This tool, yet already working well for pointing out issues, is still in early stage, but working and tested. It already allowed us to fix dozens of issues on dozens of pages. 
+This tool, yet already working well for pointing out issues, is still in early stage, but working and tested. It already allowed us to fix dozens of issues on dozens of pages in our wiki. 
 
-If you need anything, have any ideas or find any bugs or issues, let me know through the issue tracker, I'm totally open to new suggestions !
+If you need anything, have any ideas or find any bugs or issues, let me know through the issue tracker, I'm totally open to new suggestions ! Open an issue or contact me by [mail](mailto:contact@emmanuelistace.be).
 
 ##  Functionality of the software
 
@@ -30,26 +30,31 @@ The core of the tool is the analysis mode, which analyze references and links, t
 
 There are two kind of available binaries:
 
-- *Self-contained*, or "portable", the software is a single file with no other dependencies than yt-dlp for building the tool.
+- *Self-contained*, or "portable", the software is a single file with no other dependencies than yt-dlp for downloading youtube videos.
 
 - *Normal*, require the DotNet 7 runtime to be installed on the machine, but lighter in weight.
+
+#### Note
+
+- On Windows, wikiref will be replaced by wikiref.exe
+- On Linux a 'chmod 755 wikiref' might be required to have it work.
 
 ### General options
 
 These options apply to all modes
 
-  |      |               | Flag | Required |                    | Description                                                  |
-  | ---- | ------------- | :--: | :------: | ------------------ | ------------------------------------------------------------ |
-  | -i   | --input-json  |      |    x     |                    | Input JSON source to get URL to archive.                     |
-  | -w   | --wait        |  x   |          |                    | Wait for confirmation of archival from Archive.org. Use with caution, archive.org might usually take a long time to archive pages. |
-  | -b   | --color-blind |  X   |          |                    | Disable coloring of the console output - Compatibility for certain terminal; |
-  | -t   | --throttle    |      |          | Duration in second | Enable throtteling between request. Required for youtube who blacklist ip making too many request too quickly (6second seems to work great) |
-  | -l   |               |  X   |          |                    | Ouptut console to a log file with the date and time as name  |
-  |      | --log         |      |          | Filename           | Same as -l but to a specific file                            |
-  | -h   |               |  X   |          |                    | Output the console in an HTMl file with rendering close to the console rendering |
-  |      | --html        |      |          | Filename           | Same as -h but to a specific file                            |
-
-  ### 
+|      |               | Flag | Value              | Description                                                  |
+| ---- | ------------- | :--: | ------------------ | ------------------------------------------------------------ |
+| -v   | --verbose     |  ⬤   |                    | Output more information in the console                       |
+| -s   | --silent      |  ⬤   |                    | No console output                                            |
+| -b   | --color-blind |  ⬤   |                    | Disable coloring of the console output - Compatibility for certain terminal; |
+| -t   | --throttle    |      | Duration in second | Enable throtteling between request. Required for youtube who blacklist ip making too many request too quickly (6second seems to work great) |
+| -l   |               |  ⬤   |                    | Ouptut console to a log file with the date and time as name. |
+|      | --log         |      | Filename           | Same as -l but with a specific filename                      |
+| -h   |               |  ⬤   |                    | Output the console in an HTMl file with rendering close to colored the console output. |
+|      | --html        |      | Filename           | Same as -h but with a specific filename                      |
+|      | --subdir      |  ⬤   |                    | Place output files in dedicated folders (json, html, log)    |
+| -4   | -ipv4         |  ⬤   |                    | Force ipv4 DNS resolution and queries for compatibility in certain corner case |
 
 ### The 'analyse' mode
 
@@ -74,20 +79,20 @@ wikiref analyse -w https://demowiki.com/ -p Informatic
 Analyze all references from pages in the category Science on the wiki https://demowiki.com/; put the output in a file and output nothing in the console
 
 ```
-wikiref analyze -w https://demowiki.com/ -c Science -o -s
+wikiref analyze -w https://demowiki.com/ -c Science -j -s
 ```
 
 This mode produce also a JSON file used as data source for other modes.
 
 #### Parameter reference
 
-|      |            | Flag |                      Required                      | Description                                                  |
-| ---- | ---------- | :--: | :------------------------------------------------: | ------------------------------------------------------------ |
-| -w   | --wiki     |      |                         x                          | The url of the wiki to analyze                               |
-| -c   | --category |      |   x (but mutually exclusive with page parameter)   | The name of the category to analyze                          |
-| -p   | --page     |      | x (but mutually exclusive with category parameter) | The name of the page to analyze                              |
-| -j   |            |  x   |                                                    | Output the analysis to a file with a generated name based on the date in the executing folder |
-|      | --json     |      |                                                    | Same as "-j" but allow to choose the output filename.        |
+|      |            | Flag |                    Required                    | Description                                                  |
+| ---- | ---------- | :--: | :--------------------------------------------: | ------------------------------------------------------------ |
+| -w   | --wiki     |      |                       x                        | The url of the wiki to analyze                               |
+| -c   | --category |      |   x (mutually exclusive with page parameter)   | The name of the category to analyze                          |
+| -p   | --page     |      | x (mutually exclusive with category parameter) | The name of the page to analyze                              |
+| -j   |            |  ⬤   |                                                | Output the analysis to a file with a generated name based on the date |
+|      | --json     |      |                                                | Same as -h but with a specific filename                      |
 
 ### The 'Script' mode
 
@@ -111,24 +116,28 @@ Note: Under windows, wikiref will be replaced by wikiref‧exe
 
 |  |  | Flag | Required | Value | Description |
 |---|---|:-:|:-:|---|---|
-| -i   | --input-json        |      |    X     | Filename                       | Input JSON source to generate the download script file       |
-| -d   | --directory         |      |    X     | Path                           | The root folder where to put videos. They will then be placed in a subfolder based on the page name. |
+| -i   | --input-json        |      |    ⬤    | Filename                       | Input JSON source to generate the download script file       |
+| -d   | --directory         |      |    ⬤    | Path                           | The root folder where to put videos. They will then be placed in a subfolder based on the page name. |
 |      | --output-script     |      |          | Filename                       | Allow to change the default name of the output script        |
-|      | --tool              |      |    X     | Filename                       | Path to yt-dlp                                               |
-| -a   | --arguments         |      |          | Tool argument                  | Default arguments are  "-S res,ext:mp4:m4a --recode mp4" to download 480p verison of the videos. |
+|      | --tool              |      |    ⬤    | Filename                       | Path to yt-dlp                                               |
+| -a   | --arguments         |      |          | Tool arguments                 | Default arguments are  "-S res,ext:mp4:m4a --recode mp4" to download 480p verison of the videos. |
 | -e   | --extension         |      |          | File extension without the "." | Extension of the video file.                                 |
-|      | --redownload        |  X   |          |                                | Download the video, even if it already exist.                |
-|      | --download-playlist |  X   |          |                                | Download videos in playlist URLS                             |
-|      | --download-channel  |  X   |          |                                | Download videos in channel URLS                              |
+|      | --redownload        |  ⬤  |          |                                | Download the video, even if it already exist.                |
+|      | --download-playlist |  ⬤  |          |                                | Download videos in playlist URLS                             |
+|      | --download-channel  |  ⬤  |          |                                | Download videos in channel URLS                              |
 
 ### The 'archive' mode
 
-Those options are available for every mode. YouTube links are not archived through wayback-machine, due to YouTube not allowing it.
+This mode archive URL through WaybackMachine. YouTube links are not archived through WaybackMachine, due to YouTube not allowing it.
 
-|      |           | Flag | Required |      | Description                            |
-| ---- | --------- | :--: | :------: | ---- | -------------------------------------- |
-| -v   | --verbose |  X   |          |      | Output more information in the console |
-| -s   | --silent  |  X   |          |      | No console output                      |
+```
+wikiref archive -i analyse.json
+```
+
+|      |              | Flag | Required | Value    | Description                                                  |
+| ---- | ------------ | :--: | :------: | -------- | ------------------------------------------------------------ |
+| -i   | --input-json |      |    ⬤     | Filename | Input JSON source to get URL to archive.                     |
+| -w   | --wait       |  ⬤   |          |          | Wait for confirmation of archival from Archive.org. Use with caution, archive.org might usually take a long time to archive pages. Sometimes many minutes. |
 
 ### Multiplatforming
 
@@ -177,13 +186,11 @@ The tool have been tested and working under those systems:
 
 #### Dependencies
 
-Build is done on Windows using gitbash (normally provided with git). You don't need any IDE like Visual Studio or similar. What you need is:
+Build is done on Windows using gitbash (normally provided with git) or on Linux. You don't need any IDE like Visual Studio or similar. What you need is:
 
 - Git for Windows: https://git-scm.com/download/win
 - DotNet 7 SDK: https://dotnet.microsoft.com/en-us/download/dotnet/7.0
 - Zip and bzip2 2 need to be added to your gitbash if you're on windows, (it's really easy to install); here's a straight forward tutorial: https://ranxing.wordpress.com/2016/12/13/add-zip-into-git-bash-on-windows/
-
-But build can be done on a linux box with the DotNet 7 sdk installed.
 
 #### Compilation
 
@@ -201,13 +208,13 @@ The compilation rely on two compile script:
 
 - *multiplateform_build.sh*: the "real" compile script, it can be given the following parameter:
 
-  | Parameter |           | Description                                        |
-  | --------- | --------- | -------------------------------------------------- |
-  | -t        | --target  | The target plateteforme (cfr suppported plateform) |
-  | -p        | --project | Path to the project file                           |
-  | -n        | --name    | Project name used for the zip file                 |
-  | -v        | --version | Version use for the zip file                       |
-  | -e        |           | Produce a SelfContained file (default false)       |
+  | Parameter |           | Description                                               |
+  | --------- | --------- | --------------------------------------------------------- |
+  | -t        | --target  | The target plateteforme (cfr suppported plateform)        |
+  | -p        | --project | Path to the project file                                  |
+  | -n        | --name    | Project name used for the zip file                        |
+  | -v        | --version | Version use for the zip file                              |
+  | -e        |           | Produce a SelfContained ("portable") file (default false) |
 
 A clean is done before each build.
 
@@ -223,7 +230,6 @@ The zip name use the folllowing convention:
 
 #### Remarks
 
-- On linux a 'chmod 755 wikiref' might be required to have it work.
 - Sadly, WSL has compatibility issues with the "dotnet" command, prohibiting it to being used.
 
 #### Build for not officially supported system
