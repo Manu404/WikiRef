@@ -228,7 +228,7 @@ namespace WikiRef
             });
 
             // Check non youtube reference
-            Parallel.ForEach(References.Where(r => !r.IsCitation), async (reference) =>
+            Parallel.ForEach(References, async (reference) =>
             {
                 foreach (var url in reference.Urls)
                 {
@@ -250,6 +250,8 @@ namespace WikiRef
 
                         url.IsValid = status == SourceStatus.Valid;
 
+                        reference.Status = status;
+
                         DisplayreferencesStatus(reference.Status, url.Url);
                     }
                     catch (Exception ex)
@@ -258,8 +260,11 @@ namespace WikiRef
                     }
                     checkedurls += 1;
                 }
-                CheckFormatting(reference);
+
+                if(!reference.IsCitation)
+                    CheckFormatting(reference);
             });
+
 
             _console.WriteLine(String.Format("{0} reference found and {1} citation references. {2} url verified.", numberOfReference, numberOfcitation, checkedurls));
 
