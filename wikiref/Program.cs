@@ -1,6 +1,7 @@
 ﻿using CommandLine;
 using System;
 using System.Diagnostics;
+using System.IO;
 using WikiRef.Wiki;
 
 namespace WikiRef
@@ -55,19 +56,19 @@ namespace WikiRef
         private void SaveConsoleToLog()
         {
             if (_config != null && (_config.ConsoleOutputToDefaultFile || !String.IsNullOrEmpty(_config.ConsoleOutputToFile)))
-                _fileHelper.SaveConsoleOutputToFile(_config.ConsoleOutputToDefaultFile ? String.Empty : _config.ConsoleOutputToFile);
+                _fileHelper.SaveConsoleOutputToFile(_config.ConsoleOutputToDefaultFile ? String.Empty : _config.ConsoleOutputToFile, subfolder: "log");
         }
 
         public void SaveConsoleToHtml()
         {
-            if (_config != null && (_config.ConsoleOutputToDefaultHtmlFile || !String.IsNullOrEmpty(_config.ConsoleOutputToHtmlFile))) 
-                _fileHelper.SaveConsoleOutputToHtmlFile(_htmlReportBuilder.BuildReportContent(), _config.ConsoleOutputToDefaultHtmlFile ? String.Empty : _config.ConsoleOutputToHtmlFile);
+            if (_config != null && (_config.ConsoleOutputToDefaultHtmlFile || !String.IsNullOrEmpty(_config.ConsoleOutputToHtmlFile)))
+                _fileHelper.SaveConsoleOutputToHtmlFile(_htmlReportBuilder.BuildReportContent(), _config.ConsoleOutputToDefaultHtmlFile ? String.Empty : _config.ConsoleOutputToHtmlFile, subfolder: "html");
         }
 
         public void SaveWikiToJson()
         {
             if (_config != null && (_config.OutputJsonToDefaultFile || !String.IsNullOrEmpty(_config.OutputJsonToFile)))
-                _fileHelper.SaveWikiPagesToJsonFile(_wikiPageCache.WikiPages, _config.OutputJsonToDefaultFile ? String.Empty : _config.OutputJsonToFile);
+                _fileHelper.SaveWikiPagesToJsonFile(_wikiPageCache.WikiPages, _config.OutputJsonToDefaultFile ? String.Empty : _config.OutputJsonToFile, subfolder: "json");
         }
 
         static void Main(string[] args)

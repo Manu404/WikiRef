@@ -16,13 +16,14 @@ namespace WikiRef
             _conf = conf;   
         }
 
-        public void SaveConsoleOutputToFile(string filename)
+        public void SaveConsoleOutputToFile(string filename, string subfolder = "")
         {
-            if (String.IsNullOrEmpty(filename))
-                filename = GenerateUniqueFileName(".log");
+            filename = GenerateOutputFilePath(filename, subfolder, ".log");
 
             try
             {
+                CreateDirecotoryIfNotExist(subfolder);
+
                 using (TextWriter textWritter = new StreamWriter(filename))
                     foreach (String line in _consoleHelper.TextBuffer)
                         textWritter.WriteLine(line);
@@ -34,13 +35,15 @@ namespace WikiRef
             }
         }
 
-        public void SaveConsoleOutputToHtmlFile(string text, string filename)
+
+        public void SaveConsoleOutputToHtmlFile(string text, string filename, string subfolder = "")
         {
-            if (String.IsNullOrEmpty(filename))
-                filename = GenerateUniqueFileName(".html");
+            filename = GenerateOutputFilePath(filename, subfolder, ".html");
 
             try
             {
+                CreateDirecotoryIfNotExist(subfolder);
+
                 File.WriteAllText(filename, text);
             }
             catch (Exception e)
@@ -50,13 +53,14 @@ namespace WikiRef
             }
         }
 
-        public void SaveWikiPagesToJsonFile(IEnumerable<WikiPage> pages, string filename = "")
+        public void SaveWikiPagesToJsonFile(IEnumerable<WikiPage> pages, string filename = "", string subfolder = "")
         {
-            if (String.IsNullOrEmpty(filename))
-                filename = GenerateUniqueFileName(".json");
+            filename = GenerateOutputFilePath(filename, subfolder, ".json");
 
             try
             {
+                CreateDirecotoryIfNotExist(subfolder);
+
                 using (TextWriter textWritter = new StreamWriter(filename))
                 {
                     string output = JsonConvert.SerializeObject(pages);
@@ -69,6 +73,12 @@ namespace WikiRef
                 _consoleHelper.WriteLineInRed(String.Format("An error occured while saving console output to file {0}", filename));
                 _consoleHelper.WriteLineInRed(e.Message);
             }
+        }
+
+        private void CreateDirecotoryIfNotExist(string subfolder)
+        {
+            if (!Directory.Exists(subfolder))
+                Directory.CreateDirectory(subfolder);
         }
 
         public List<WikiPage> LoadJsonFromFile(string filename)
@@ -88,7 +98,14 @@ namespace WikiRef
             }
         }
 
-        private static string GenerateUniqueFileName(string extension)
+        private string GenerateOutputFilePath(string filename, string subfolder, string extension)
+        {
+            if (String.IsNullOrEmpty(filename))
+                filename = Path.Combine(subfolder, GenerateUniqueFileName(extension));
+            return filename;
+        }
+
+        private string GenerateUniqueFileName(string extension)
         {
             string filenameWithtoutExtension = String.Format("output_{0}", DateTime.Now.ToString("yyyyMMddTHH-mm-ss"));
             string filenameWithExtension = String.Format("{0}{1}", filenameWithtoutExtension, extension);
