@@ -32,8 +32,8 @@ namespace WikiRef
             {
                 await Parallel.ForEachAsync(page.References.Where(r => !r.IsCitation), async (reference, token) =>
                 {
-                    foreach (var url in reference.Urls.Where(url => !IsYoutubeUrl(url)))
-                        await AnalyseUrl(url);
+                    foreach (var url in reference.Urls.Where(url => !IsYoutubeUrl(url.Url)))
+                        await AnalyseUrl(url.Url);
                 });
                 await Parallel.ForEachAsync(page.YoutubeUrls, async (video, token) =>
                 {

@@ -6,7 +6,7 @@ namespace WikiRef
     class Reference
     {
         public string Content { get; set; }
-        public List<string> Urls { get; set; }
+        public List<ReferenceUrl> Urls { get; set; }
         public SourceStatus Status { get; set; }
         public bool FormattingIssue { get; set; }
         public int InvalidUrls { get; set; }
@@ -20,7 +20,7 @@ namespace WikiRef
         public Reference(string content)
         {
             Content = content;
-            Urls = new List<string>();
+            Urls = new List<ReferenceUrl>();
             FormattingIssue = false;    
         }
     }

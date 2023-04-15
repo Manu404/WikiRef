@@ -30,12 +30,14 @@ namespace WikiRef.Wiki
             }
 
             _console.WriteSection("Analysis summary");
-            _console.WriteLineInGray($"Total reference: {_wikiPageCache.WikiPages.Sum(p => p.References.Count)}");
-            _console.WriteLineInGray($"Total citation refs: {_wikiPageCache.WikiPages.SelectMany(r => r.References).Where(r => r.IsCitation).Count()}");
-            _console.WriteLineInGray($"Reference with formating issues: {_wikiPageCache.WikiPages.SelectMany(r => r.References).Where(r => r.FormattingIssue).Count()}");
-            _console.WriteLineInGray($"Wikilinks total: {_wikiPageCache.WikiPages.Sum(p => p.WikiLinks)}");
-            _console.WriteLineInGray($"Date total: {_wikiPageCache.WikiPages.Sum(p => p.DatesCount)}");
-            _console.WriteLineInGray($"Malformed date: {_wikiPageCache.WikiPages.Sum(p => p.MalformedDates)}");
+            _console.WriteLineInGray($"References: {_wikiPageCache.WikiPages.Sum(p => p.References.Count)}");
+            _console.WriteLineInGray($"Citation references: {_wikiPageCache.WikiPages.SelectMany(r => r.References).Where(r => r.IsCitation).Count()}");
+            _console.WriteLineInGray($"Urls: {_wikiPageCache.WikiPages.SelectMany(r => r.References).SelectMany(u => u.Urls).Count()}");
+            _console.WriteLineInGray($"Invalid or undefined urls: {_wikiPageCache.WikiPages.SelectMany(r => r.References).SelectMany(u => u.Urls).Where(u => !u.IsValid).Count()}");
+            _console.WriteLineInGray($"Reference wihtout metadata: {_wikiPageCache.WikiPages.SelectMany(r => r.References).Where(r => r.FormattingIssue).Count()}");
+            _console.WriteLineInGray($"Dates: {_wikiPageCache.WikiPages.Sum(p => p.DatesCount)}");
+            _console.WriteLineInGray($"Misformed or missing dates: {_wikiPageCache.WikiPages.Sum(p => p.MalformedDates)}");
+            _console.WriteLineInGray($"Wikipedia links: {_wikiPageCache.WikiPages.Sum(p => p.WikiLinks)}");
         }
     }
 }

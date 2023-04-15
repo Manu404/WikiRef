@@ -93,7 +93,7 @@ namespace WikiRef
                     if (match.Groups["url"].Value.Contains(','))
                         _console.WriteLineInOrange(String.Format("This reference contains multiple urls. Reference: {0}", reference.Content));
 
-                    reference.Urls.Add(HttpUtility.UrlDecode(match.Groups["url"].Value));
+                    reference.Urls.Add(new ReferenceUrl(HttpUtility.UrlDecode(match.Groups["url"].Value)));
                 });
             });
             areUrlExtracteFromReferences = true;
@@ -113,7 +113,7 @@ namespace WikiRef
                 // check if meta once url removed an ref tags
                 string meta = reference.Content.Replace("<ref>", "").Replace("</ref>", "");
                 foreach (var url in reference.Urls)
-                    meta = meta.Replace(url, "");
+                    meta = meta.Replace(url.Url, "");
                 if (String.IsNullOrEmpty(meta))
                 {
                     _console.WriteLineInOrange(String.Format("No metadata for reference {0} in page {1}", reference.Content, Name));
@@ -121,7 +121,7 @@ namespace WikiRef
                 }
 
                 // check date format
-                if (!reference.Urls.Any(u => u.Contains("wikipedia")))
+                if (!reference.Urls.Any(u => u.Url.Contains("wikipedia")))
                 {                    
                     CheckDateIsValid(reference);
                 }
@@ -136,13 +136,13 @@ namespace WikiRef
                     try
                     {
                         // check nowiki tag in refs
-                        if (url.Contains("</nowiki>"))
+                        if (url.Url.Contains("</nowiki>"))
                         {
                             _console.WriteLineInOrange(String.Format("<nowiki> tag for reference {0} in page {1}", url, Name));
                             reference.FormattingIssue = true;
                         }
                         // check multiple urls in bracket
-                        if (url.EndsWith(']'))
+                        if (url.Url.EndsWith(']'))
                         {
                             _console.WriteLineInOrange(String.Format("Multiple links in the same ref tag : {0} in page {1}", url, Name));
                             reference.FormattingIssue = true;
@@ -228,30 +228,33 @@ namespace WikiRef
             });
 
             // Check non youtube reference
-            await Parallel.ForEachAsync(References.Where(r => !r.IsCitation), async (reference, token) =>
+            Parallel.ForEach(References.Where(r => !r.IsCitation), async (reference) =>
             {
                 foreach (var url in reference.Urls)
                 {
                     try
                     {
-                        if (IsYoutubeUrl(url))
+                        SourceStatus status = SourceStatus.Valid;
+                        if (IsYoutubeUrl(url.Url))
                         {
-                            string VideoId = YoutubeUrl.GetVideoId(url, _regexHelper);
+                            string VideoId = YoutubeUrl.GetVideoId(url.Url, _regexHelper);
                             if (VideoId != null && YoutubeUrls.Any(v => v.VideoId == VideoId))
-                                reference.Status = YoutubeUrls.FirstOrDefault(v => v.VideoId == VideoId).IsValid;
-                            else if (YoutubeUrls.Any(v => v.Urls.Any(u => u == url)))
-                                reference.Status = YoutubeUrls.FirstOrDefault(v => v.Urls.Any(u => u == url)).IsValid;
+                                status = YoutubeUrls.FirstOrDefault(v => v.VideoId == VideoId).IsValid;
+                            else if (YoutubeUrls.Any(v => v.Urls.Any(u => u == url.Url)))
+                                status = YoutubeUrls.FirstOrDefault(v => v.Urls.Any(u => u == url.Url)).IsValid;
                             else
-                                reference.Status = SourceStatus.Invalid;
+                                status = SourceStatus.Invalid;
                         }
                         else
-                            reference.Status = CheckUrlStatus(url);
+                            status = CheckUrlStatus(url.Url);
 
-                        DisplayreferencesStatus(reference.Status, url);
+                        url.IsValid = status == SourceStatus.Valid;
+
+                        DisplayreferencesStatus(reference.Status, url.Url);
                     }
                     catch (Exception ex)
                     {
-                        _console.WriteLineInRed(string.Format("URL: {0} - Erreur: {1}", url, ex.Message));
+                        _console.WriteLineInRed(string.Format("URL: {0} - Erreur: {1}", url.Url, ex.Message));
                     }
                     checkedurls += 1;
                 }
@@ -317,14 +320,14 @@ namespace WikiRef
                 {
                     foreach (var url in reference.Urls)
                     {
-                        if (IsYoutubeUrl(url))
+                        if (IsYoutubeUrl(url.Url))
                         {
-                            string VideoId = YoutubeUrl.GetVideoId(url, _regexHelper);
+                            string VideoId = YoutubeUrl.GetVideoId(url.Url, _regexHelper);
                             if (!YoutubeUrls.Exists(o => o.VideoId == VideoId || String.IsNullOrEmpty(VideoId)))
-                                YoutubeUrls.Add(new YoutubeUrl(url, _console, _config, _regexHelper, _networkHelper));
+                                YoutubeUrls.Add(new YoutubeUrl(url.Url, _console, _config, _regexHelper, _networkHelper));
                             else
                             {
-                                YoutubeUrls.FirstOrDefault(o => VideoId == o.VideoId).Urls.Add(url);
+                                YoutubeUrls.FirstOrDefault(o => VideoId == o.VideoId).Urls.Add(url.Url);
                             }
                         }
                     }
