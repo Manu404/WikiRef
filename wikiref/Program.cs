@@ -24,7 +24,7 @@ namespace WikiRef
             _config = new AppConfiguration(options);
             _htmlReportBuilder = new HtmlReportHelper();
             _console = new ConsoleHelper(_config, _htmlReportBuilder);
-            _networkHelper = new NetworkHelper(_console);
+            _networkHelper = new NetworkHelper(_console, _config);
             _fileHelper = new FileHelper(_console, _config);
             _whitelistHandler = new WhitelistHandler();
             _regexHelper = new RegexHelper();

@@ -11,56 +11,71 @@ namespace WikiRef
     internal class NetworkHelper
     {
         private ConsoleHelper _console;
+        AppConfiguration _config;
 
         private HttpClient _httpClient;
         private HttpClient _httpClientCookieless;
         Func<SocketsHttpConnectionContext, CancellationToken, ValueTask<Stream>> _ipv4ConnetionCallback;
 
-        public NetworkHelper(ConsoleHelper console)
+        public NetworkHelper(ConsoleHelper console, AppConfiguration config)
         {
-            // source: https://www.meziantou.net/forcing-httpclient-to-use-ipv4-or-ipv6-addresses.htm
-            _ipv4ConnetionCallback = async (context, cancellationToken) =>
+            _console = console;
+            _config = config;
+            if (_config.Ipv4Only)
             {
-                // Use DNS to look up the IP addresses of the target host:
-                // - IP v4: AddressFamily.InterNetwork
-                // - IP v6: AddressFamily.InterNetworkV6
-                // - IP v4 or IP v6: AddressFamily.Unspecified
-                // note: this method throws a SocketException when there is no IP address for the host
-                var entry = await Dns.GetHostEntryAsync(context.DnsEndPoint.Host, AddressFamily.InterNetwork, cancellationToken);
-
-                // Open the connection to the target host/port
-                var socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
-
-                // Turn off Nagle's algorithm since it degrades performance in most HttpClient scenarios.
-                socket.NoDelay = true;
-
-                try
+                // source: https://www.meziantou.net/forcing-httpclient-to-use-ipv4-or-ipv6-addresses.htm
+                _ipv4ConnetionCallback = async (context, cancellationToken) =>
                 {
-                    await socket.ConnectAsync(entry.AddressList, context.DnsEndPoint.Port, cancellationToken);
-                    return new NetworkStream(socket, ownsSocket: true);
-                }
-                catch
+                    // Use DNS to look up the IP addresses of the target host:
+                    // - IP v4: AddressFamily.InterNetwork
+                    // - IP v6: AddressFamily.InterNetworkV6
+                    // - IP v4 or IP v6: AddressFamily.Unspecified
+                    // note: this method throws a SocketException when there is no IP address for the host
+                    var entry = await Dns.GetHostEntryAsync(context.DnsEndPoint.Host, AddressFamily.InterNetwork, cancellationToken);
+
+                    // Open the connection to the target host/port
+                    var socket = new Socket(SocketType.Stream, ProtocolType.Tcp);
+
+                    // Turn off Nagle's algorithm since it degrades performance in most HttpClient scenarios.
+                    socket.NoDelay = true;
+
+                    try
+                    {
+                        await socket.ConnectAsync(entry.AddressList, context.DnsEndPoint.Port, cancellationToken);
+                        return new NetworkStream(socket, ownsSocket: true);
+                    }
+                    catch
+                    {
+                        socket.Dispose();
+                        throw;
+                    }
+                };
+
+                _httpClient = new HttpClient(new SocketsHttpHandler()
                 {
-                    socket.Dispose();
-                    throw;
-                }
-            };
+                    ConnectCallback = _ipv4ConnetionCallback
+                });
 
-            _httpClient = new HttpClient(new SocketsHttpHandler()
-            {
-                ConnectCallback = _ipv4ConnetionCallback
-            });
+                _httpClientCookieless = new HttpClient(new SocketsHttpHandler()
+                {
+                    UseCookies = false,
+                    ConnectCallback = _ipv4ConnetionCallback
+                });
 
-            _httpClientCookieless = new HttpClient(new SocketsHttpHandler()
+            }
+            else
             {
-                UseCookies = false,
-                ConnectCallback = _ipv4ConnetionCallback
-            });
+                _httpClient = new HttpClient();
+                _httpClientCookieless = new HttpClient(new SocketsHttpHandler()
+                {
+                    UseCookies = false,
+                });
+            }
+
 
             ConfigureHttpClientHeaders(_httpClient);
             ConfigureHttpClientHeaders(_httpClientCookieless);
 
-            _console = console;
         }
 
         private void ConfigureHttpClientHeaders(HttpClient httpclient)

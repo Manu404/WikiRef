@@ -11,7 +11,7 @@ namespace WikiRef
         [Option('s', "silent", Required = false, HelpText = "No console output.")]
         public bool Silent { get; set; }
 
-        [Option('b', "color-blind", Required = false, HelpText = "Disable console coloring for compatibility with certain terminal.")]
+        [Option('b', "color-blind", Required = false, HelpText = "Disable console coloring (compability).")]
         public bool NoColor { get; set; }
 
         [Option('t', "throttle", Required = false, HelpText = "Give a value in second for throttling to avoid '429 : Too Many Request' errors. Mainly for YouTube. That will slow down the speed of the too but avoid temporary banning.")]
@@ -29,6 +29,9 @@ namespace WikiRef
 
         [Option("html", Required = false, HelpText = "Write the console output in a file in html format to the given file")]
         public string ConsoleToHtmlFile { get; set; }
+
+        [Option('4', "ipv4", Required = false, HelpText = "Default request to ipv4 (compatbilibyt)")]
+        public bool IpV4Only { get; set; }
     }
 
     [Verb("analyse", HelpText = "Provide analysis features regarding references. '--help analyse' for more informations.")]
