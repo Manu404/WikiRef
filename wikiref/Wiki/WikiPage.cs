@@ -123,7 +123,7 @@ namespace WikiRef
                 // check date format
                 if (!reference.Urls.Any(u => u.Url.Contains("wikipedia")))
                 {                    
-                    CheckDateIsValid(reference);
+                    GetDateFromReference(reference);
                 }
                 else
                 {
@@ -160,7 +160,7 @@ namespace WikiRef
             }
         }
 
-        private bool CheckDateIsValid(Reference reference)
+        private DateTime? GetDateFromReference(Reference reference)
         {
             try
             {
@@ -224,12 +224,12 @@ namespace WikiRef
                     MalformedDates += 1;
                 }
 
-                return sucessed;
+                return dateValue;
             }
             catch (Exception ex)
             {
                 _console.WriteLineInRed($"Error parsing date {ex.Message}");
-                return false;
+                return null;
             }
         }
 
