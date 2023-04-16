@@ -12,7 +12,7 @@ namespace WikiRef
         public Regex ExtractYoutubeVideoNameFromPageRegex { get; private set; }
         public Regex ExtractYoutubeUrlFromEmbededVideoRegex { get; private set; }
         public Regex ExtractYoutubeVideoIdFromUrlRegex { get; private set; }
-        public Regex ExtractMetaFromReferencelRegex { get; private set; }
+        public Regex ExtractMetaAndUrl { get; private set; }
 
         public RegexHelper()
         {
@@ -36,8 +36,8 @@ namespace WikiRef
             string youtubeUrlVideoIdFilder = @"(?<host>.*/)(?<watch>.*v=)?(?<videoid>[a-zA-Z0-9-_]+)"; // regex developped with regex101, regex and the test datas available heree:  https://regex101.com/r/xYS9aX/1
             ExtractYoutubeVideoIdFromUrlRegex = new Regex(youtubeUrlVideoIdFilder, RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
-            string extractMeta = @"(<ref)(?<meta>.*)([-|-].*https?.*)(<\/ref>)"; // regex developped with regex101, regex and the test datas available heree:  https://regex101.com/r/Oo9JR2/1
-            ExtractMetaFromReferencelRegex = new Regex(extractMeta, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+            string extractMetaAndUrl = @"([<]( *)(ref)( |.*)([>]))(?<meta>.*?)(?<url>http.*?)?([<]( *)(/ref)( *)[>])"; // regex developped with regex101, regex and the test datas available heree:  https://regex101.com/r/Oo9JR2/1
+            ExtractMetaAndUrl = new Regex(extractMetaAndUrl, RegexOptions.Compiled | RegexOptions.IgnoreCase);
         }
     }
 }

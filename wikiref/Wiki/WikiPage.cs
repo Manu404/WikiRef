@@ -168,15 +168,34 @@ namespace WikiRef
                 // check format DESC - DATE - URL
                 DatesCount += 1;
 
-                var metaWithoutUrl = _regexHelper.ExtractMetaFromReferencelRegex.Match(reference.Content).Groups["meta"].ToString();
+                var metaWithoutUrl = _regexHelper.ExtractMetaAndUrl.Match(reference.Content).Groups["meta"].ToString().Trim();
 
-                var dateString = metaWithoutUrl.Split("-").Last().Split("–").Last().Split(",").Last();
+                var dateString = String.Empty;
+                var split = new string[0];
 
-                if (metaWithoutUrl == String.Empty)
+                // parse regex
+                if (dateString == String.Empty)
                 {
-                    var split = reference.Content.Split(" ");
-                    if(split.Length > 1)
+                    split = metaWithoutUrl.Trim().Split(new [] {'-', ','});
+                    if (split.Length > 2)
                         dateString = split[split.Length - 2];
+                }
+                                
+                // parse manual
+                if (dateString == String.Empty)
+                {
+                    // temp buffer
+                    var tempSplit = new List<string>();
+                    // split by whitespace
+                    split = metaWithoutUrl.Split(new char[] { ' ', '/' });
+                    // remove white space and - from the list
+                    foreach (var element in split)
+                        if (!String.IsNullOrEmpty(element) && !(element == "-"))
+                            tempSplit.Add(element);
+                    split = tempSplit.ToArray();
+                    // reconstruct date
+                    if (split.Length > 3)
+                        dateString = String.Join(" ",split[split.Length - 3], split[split.Length - 2], split[split.Length - 1]);
                 }
 
                 // correct ortho
@@ -252,7 +271,7 @@ namespace WikiRef
 
                         reference.Status = status;
 
-                        DisplayreferencesStatus(reference.Status, url.Url);
+                        DisplayreferencesStatus(reference, url.Url);
                     }
                     catch (Exception ex)
                     {
@@ -274,15 +293,15 @@ namespace WikiRef
                 _console.WriteLineInGreen(String.Format("All references seems valid"));
         }
 
-        private void DisplayreferencesStatus(SourceStatus status, string url)
+        private void DisplayreferencesStatus(Reference reference, string url)
         {
-            if (status != SourceStatus.Valid || _config.Verbose)
+            if (reference.Status != SourceStatus.Valid || _config.Verbose)
             {
                 string displayedUrl = IsYoutubeUrl(url) ? $"VideoID: {YoutubeUrl.GetVideoId(url, _regexHelper)}" : url;
-                if (status == SourceStatus.Invalid)
-                    _console.WriteLineInRed(string.Format("Invalid reference: {0} -> {1}", displayedUrl, status.ToString()));
+                if (reference.Status == SourceStatus.Invalid)
+                    _console.WriteLineInRed($"Invalid reference: {displayedUrl} -> {reference.Status}{Environment.NewLine}{reference.Content}");
                 else
-                    _console.WriteLineInGray(string.Format("Valid reference: {0} -> {1}", displayedUrl, status.ToString()));
+                    _console.WriteLineInGray($"Valid reference: {displayedUrl} -> {reference.Status}");
             }
         }
 
