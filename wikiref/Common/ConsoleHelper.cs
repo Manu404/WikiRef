@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace WikiRef
 {
@@ -9,13 +10,13 @@ namespace WikiRef
         AppConfiguration _config;
         HtmlReportHelper _report;
 
-        public List<string> TextBuffer { get; set; }
+        public StringBuilder Builder { get; private set; }
 
         public ConsoleHelper(AppConfiguration config, HtmlReportHelper reportHelper)
         {
-            TextBuffer = new List<string>();
+            Builder = new StringBuilder();
             _report = reportHelper;
-            _config = config;  
+            _config = config;
         }
 
         public void WriteLine(string text)
@@ -43,35 +44,52 @@ namespace WikiRef
             WriteIn(text, ConsoleColor.DarkGray);
         }
 
+        public void WriteInGrey(string text)
+        {
+            WriteIn(text, ConsoleColor.DarkGray, false);
+        }
+
         public void WriteLineInDarkCyan(string text)
         {
             WriteIn(text, ConsoleColor.DarkCyan);
         }
 
-        private void WriteIn(string text, ConsoleColor color)
+        private void WriteIn(string text, ConsoleColor color, bool newLine = true)
         {
-            TextBuffer.Add(text);
+            Builder.Append(text);
             if (_config.Silent) return;
             if (_config.NoColor) WriteLineInColor(text, ConsoleColor.White);
-            else WriteLineInColor(text, color);
+            else WriteLineInColor(text, color, newLine);
         }
 
         public void WriteSection(string text)
         {
-            TextBuffer.Add(String.Format(new string('-', 20)));
-            TextBuffer.Add(text);
+            WriteLine(string.Format(new string('-', 20)));
+            WriteLine(text);
             if (_config.Silent) return;
-            WriteLine(String.Format(new string('-', 20)));
+            WriteLine(string.Format(new string('-', 20)));
             WriteLine(text);
         }
 
-        private void WriteLineInColor(string text, ConsoleColor color)
+        private void WriteInColor(string text, ConsoleColor color)
         {
             var previousForeGround = Console.ForegroundColor;
             Console.ForegroundColor = color;
-            Console.WriteLine(text);
-            _report.AddLine(text, color);
+            Console.Write(text);
+            Builder.Append(text);
+            _report.Add(text, color);
             Console.ForegroundColor = previousForeGround;
+        }
+
+        private void WriteLineInColor(string text, ConsoleColor color, bool newLine = true)
+        {
+            WriteInColor(text, color);
+            if (newLine)
+            {
+                Console.Write(Environment.NewLine);
+                _report.Add(Environment.NewLine, color);
+                Builder.Append(Environment.NewLine);
+            }
         }
     }
 }

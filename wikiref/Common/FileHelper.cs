@@ -23,10 +23,7 @@ namespace WikiRef
             try
             {
                 CreateDirecotoryIfNotExist(subfolder);
-
-                using (TextWriter textWritter = new StreamWriter(filename))
-                    foreach (String line in _consoleHelper.TextBuffer)
-                        textWritter.WriteLine(line);
+                File.WriteAllText(filename, _consoleHelper.Builder.ToString());
             }
             catch (Exception e)
             {
