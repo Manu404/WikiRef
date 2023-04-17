@@ -299,7 +299,7 @@ namespace WikiRef
             {
                 string displayedUrl = IsYoutubeUrl(url) ? $"VideoID: {YoutubeUrl.GetVideoId(url, _regexHelper)}" : url;
                 if (reference.Status == SourceStatus.Invalid)
-                    _console.WriteLineInRed($"Invalid reference: {displayedUrl} -> {reference.Status}{Environment.NewLine}{reference.Content}");
+                    _console.WriteLineInRed($"Invalid reference: {displayedUrl} -> {reference.Status}");
                 else
                     _console.WriteLineInGray($"Valid reference: {displayedUrl} -> {reference.Status}");
             }
