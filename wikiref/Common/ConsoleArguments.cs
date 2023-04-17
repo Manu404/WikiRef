@@ -43,7 +43,7 @@ namespace WikiRef
     [Verb("analyse", HelpText = "Provide analysis features regarding references. '--help analyse' for more informations.")]
     public class AnalyseOptions : DefaultOptions
     {
-        [Option('w', "wiki", Required = true, HelpText = "Url of the wiki to analyze, for eg: https://wikipedia.com - Required")]
+        [Option('w', "wiki-api", Required = true, HelpText = "Url of the wiki api to analyze, for eg: https://en.wikipedia.org/w/ - Required")]
         public string Wiki { get; set; }
 
         [Option('c', "category", Required = true, HelpText = "Name of the category to analyse, without the 'Category:' prefix.", SetName = "category")]
