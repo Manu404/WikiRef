@@ -88,7 +88,7 @@ This mode produce also a JSON file used as data source for other modes.
 
 |      |            | Flag |                      Required                       | Description                                                  |
 | ---- | ---------- | :--: | :-------------------------------------------------: | ------------------------------------------------------------ |
-| -w   | --wiki     |      |                          ⬤                          | The url of the wiki to analyze                               |
+| -w   | --wiki-api |      |                          ⬤                          | The api url of the wiki to analyze; This is the location where api.php is. |
 | -c   | --category |      |   ⬤<br />(mutually exclusive with page parameter)   | The name of the category to analyze                          |
 | -p   | --page     |      | ⬤<br />(mutually exclusive with category parameter) | The name of the page to analyze                              |
 | -j   |            |  ⬤   |                                                     | Output the analysis to a file with a generated name based on the date |
