@@ -7,15 +7,13 @@ using WikiRef.Wiki;
 
 namespace WikiRef
 {
-    class FileHelper : WikiRef.Commons.FileHelper
+    public class FileHelper : WikiRef.Commons.FileHelper
     {
         private ConsoleHelper _consoleHelper;
-        private AppConfiguration _conf;
 
-        public FileHelper(ConsoleHelper consoleHelper, AppConfiguration conf) : base(consoleHelper)
+        public FileHelper(ConsoleHelper consoleHelper) : base(consoleHelper)
         {
             _consoleHelper = consoleHelper;
-            _conf = conf;
         }
 
         public void SaveWikiPagesToJsonFile(IEnumerable<WikiPage> pages, string filename, string subfolder)

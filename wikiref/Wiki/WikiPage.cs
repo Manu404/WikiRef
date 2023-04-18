@@ -13,7 +13,7 @@ using WikiRef.Wiki;
 
 namespace WikiRef.Wiki
 {
-    class WikiPage : WikiPageData
+    public class WikiPage : WikiPageData
     {
         // Internal status flags
         private bool isReferenceListBuilt = false;
@@ -118,7 +118,7 @@ namespace WikiRef.Wiki
                 // check date format
                 if (!reference.Urls.Any(u => u.Url.Contains("wikipedia")))
                 {                    
-                    GetDateFromReference(reference);
+                    GetDateAndMetaFromReference(reference, _regexHelper, _console);
                 }
                 else
                 {
@@ -155,7 +155,7 @@ namespace WikiRef.Wiki
             }
         }
 
-        private DateTime? GetDateFromReference(Reference reference)
+        public Tuple<DateTime?, string> GetDateAndMetaFromReference(Reference reference, RegexHelper regexHelper, ConsoleHelper consoleHelper)
         {
             try
             {
@@ -163,17 +163,22 @@ namespace WikiRef.Wiki
                 // check format DESC - DATE - URL
                 DatesCount += 1;
 
-                var metaWithoutUrl = _regexHelper.ExtractMetaAndUrl.Match(reference.Content).Groups["meta"].ToString().Trim();
+                var metaWithoutUrl = regexHelper.ExtractMetaAndUrl.Match(reference.Content).Groups["meta"].ToString().Trim();
 
                 var dateString = String.Empty;
+                var meta = String.Empty;
                 var split = new string[0];
 
                 // parse regex
                 if (dateString == String.Empty)
                 {
-                    split = metaWithoutUrl.Trim().Split(new [] {'-', ','});
+                    split = metaWithoutUrl.Trim().Split(new[] { '-', ',' });
                     if (split.Length > 2)
+                    {
                         dateString = split[split.Length - 2];
+                        for (int i = 0; i < split.Length - 2; i++)
+                            meta += split[i];
+                    }
                 }
                                 
                 // parse manual
@@ -191,6 +196,8 @@ namespace WikiRef.Wiki
                     // reconstruct date
                     if (split.Length > 3)
                         dateString = String.Join(" ",split[split.Length - 3], split[split.Length - 2], split[split.Length - 1]);
+                    for (int i = 0; i < split.Length - 3; i++)
+                        meta += split[i];
                 }
 
                 // correct ortho
@@ -215,15 +222,15 @@ namespace WikiRef.Wiki
                 if (!sucessed) sucessed = DateTime.TryParseExact(dateString, "dd MM y", culture, style, out dateValue);
                 if (!sucessed)
                 {
-                    _console.WriteLineInGray(String.Format("Maformed date reference in {0}", reference.Content));
+                    consoleHelper.WriteLineInGray(String.Format("Maformed date reference in {0}", reference.Content));
                     MalformedDates += 1;
                 }
 
-                return dateValue;
+                return new Tuple<DateTime?, string>(dateValue, meta);
             }
             catch (Exception ex)
             {
-                _console.WriteLineInRed($"Error parsing date {ex.Message}");
+                consoleHelper.WriteLineInRed($"Error parsing date {ex.Message}");
                 return null;
             }
         }
@@ -258,6 +265,7 @@ namespace WikiRef.Wiki
                                 status = YoutubeUrls.FirstOrDefault(v => v.Urls.Any(u => u == url.Url)).IsValid;
                             else
                                 status = SourceStatus.Invalid;
+
                         }
                         else
                             status = CheckUrlStatus(url.Url);
@@ -358,7 +366,7 @@ namespace WikiRef.Wiki
             }
         }
 
-        private bool IsYoutubeUrl(string url)
+        public bool IsYoutubeUrl(string url)
         {
             return (url.Contains("youtu.", StringComparison.InvariantCultureIgnoreCase) || url.Contains("youtube.", StringComparison.InvariantCultureIgnoreCase));
         }

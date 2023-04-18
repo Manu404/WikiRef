@@ -4,7 +4,7 @@ using WikiRef.Commons.Data;
 
 namespace WikiRef
 {
-    class AppConfiguration : Commons.AppConfiguration
+    public class AppConfiguration : Commons.AppConfiguration
     {
         public Action Action { get; set; }
 
