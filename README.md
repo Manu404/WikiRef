@@ -184,6 +184,10 @@ The tool have been tested and working under those systems:
 
 ### Building the tool
 
+### Getting the code
+
+Retreive submodules when cloning the repository as WikiRef.Commons is in a separated repo due to being shared with other projects.
+
 #### Dependencies
 
 Build is done on Windows using gitbash (normally provided with git) or on Linux. You don't need any IDE like Visual Studio or similar. What you need is:
