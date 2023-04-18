@@ -184,7 +184,7 @@ The tool have been tested and working under those systems:
 
 ### Building the tool
 
-### Getting the code
+#### Getting the code
 
 Retreive submodules when cloning the repository as WikiRef.Commons is in a separated repo due to being shared with other projects.
 
