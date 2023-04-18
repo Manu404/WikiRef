@@ -155,7 +155,7 @@ namespace WikiRef.Wiki
             }
         }
 
-        public DateTime? GetDateFromReference(Reference reference)
+        public Tuple<DateTime?, string> GetDateAndMetaFromReference(Reference reference, RegexHelper regexHelper, ConsoleHelper consoleHelper)
         {
             try
             {
