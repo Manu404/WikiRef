@@ -5,33 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using WikiRef.Commons;
+using WikiRef.Commons.Data;
 
 namespace WikiRef
 {
-    class YoutubeUrl
+    class YoutubeUrl : YoutubeUrlData
     {
         private ConsoleHelper _console;
         private AppConfiguration _config;
         private RegexHelper _regexHelper;
         private NetworkHelper _networkHelper;
-
-        [JsonProperty] public List<string> Urls { get; private set; }
-        [JsonProperty] public string VideoId { get; private set; }
-        [JsonProperty] public string Name { get; private set; }
-        [JsonProperty] public SourceStatus IsValid { get; private set; }
-        [JsonProperty] public bool IsPlaylist { get; private set; }
-        [JsonProperty] public bool IsUser { get; private set; }
-        [JsonProperty] public bool IsCommunity { get; private set; }
-        [JsonProperty] public bool IsAbout { get; private set; }
-        [JsonProperty] public bool IsChannels { get; private set; }
-        [JsonProperty] public bool IsHome { get; private set; }
-        [JsonProperty] public bool IsVideo { get; private set; }
-
-        [JsonIgnore]
-        public string AggregatedUrls => string.Join(" ", Urls);
-
-        [JsonIgnore]
-        public string VideoUrl => $"https://www.youtube.com/watch?v={VideoId}";
 
         public YoutubeUrl()
         {

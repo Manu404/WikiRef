@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using WikiRef.Commons;
+using WikiRef.Commons.Data;
 
 namespace WikiRef.Wiki
 {

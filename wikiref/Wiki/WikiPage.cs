@@ -5,13 +5,15 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
+using WikiRef.Commons;
+using WikiRef.Commons.Data;
+using WikiRef.Wiki;
 
-namespace WikiRef
+namespace WikiRef.Wiki
 {
-    class WikiPage
+    class WikiPage : WikiPageData
     {
         // Internal status flags
         private bool isReferenceListBuilt = false;
@@ -26,13 +28,6 @@ namespace WikiRef
         private RegexHelper _regexHelper;
         private NetworkHelper _networkHelper;
 
-        // Public data
-        [JsonProperty] public string Name { get; private set; }
-        [JsonProperty] public List<YoutubeUrl> YoutubeUrls { get; private set; }
-        [JsonProperty] public List<Reference> References { get; private set; }
-        [JsonProperty] public string Content { get; private set; }
-
-
         [JsonIgnore] public int MalformedDates { get; set; }
         [JsonIgnore] public int DatesCount { get; set; }
         [JsonIgnore] public int WikiLinks { get; set; }
@@ -44,7 +39,7 @@ namespace WikiRef
 
         public WikiPage(string name, ConsoleHelper consoleHelper, MediaWikiApi api, AppConfiguration configuration, WhitelistHandler blacklistHandler, RegexHelper regexHelper, NetworkHelper networkHelper)
         {
-            YoutubeUrls = new List<YoutubeUrl>();
+            YoutubeUrls = new List<YoutubeUrlData>();
             References = new List<Reference>();
 
             Name = name;
@@ -243,7 +238,7 @@ namespace WikiRef
 
             await Parallel.ForEachAsync(YoutubeUrls, async (youtubeUrls, token) =>
             {
-                await youtubeUrls.CheckIsValid();
+                await (youtubeUrls as YoutubeUrl).CheckIsValid();
             });
 
             // Check non youtube reference

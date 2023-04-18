@@ -1,45 +1,22 @@
 ﻿using System.Runtime;
+using WikiRef.Commons;
+using WikiRef.Commons.Data;
 
 namespace WikiRef
 {
-    class AppConfiguration
+    class AppConfiguration : Commons.AppConfiguration
     {
         public Action Action { get; set; }
 
-        public AppConfiguration(DefaultOptions options)
+        public AppConfiguration(DefaultOptions options) : base(options)
         {
             Action = Action.Undefined;
             InitalizeOptions(options);
         }
 
-        // default options
-        public bool Silent { get; private set; }
-        public bool Verbose { get; private set; }
-        public bool NoColor { get; private set; }
-        public int Throttle { get; private set; }
-        public bool Ipv4Only { get; private set; }
-        public bool PutInSubDirectory { get; private set; } 
-        public bool ExportRefText { get; private set; } 
-
-        public bool ConsoleOutputToDefaultFile { get; private set; }
-        public bool ConsoleOutputToDefaultHtmlFile { get; private set; }
-        public string ConsoleOutputToFile { get; private set; }
-        public string ConsoleOutputToHtmlFile { get; private set; }
-
         public void InitalizeOptions(DefaultOptions options)
         {
-            Verbose = options.Verbose;
-            Silent = options.Silent;
-            NoColor = options.NoColor;
-            Throttle = options.Throttle;
-            Ipv4Only = options.IpV4Only;
-            PutInSubDirectory = options.PutInSubDirectory;
-            ExportRefText = options.ExportRefText;
-
-            ConsoleOutputToDefaultFile = options.ConsoleOutputToDefaultFile;
-            ConsoleOutputToDefaultHtmlFile = options.ConsoleToDefaultHtmlFile;
-            ConsoleOutputToFile = options.ConsoleOutputToFile;
-            ConsoleOutputToHtmlFile = options.ConsoleToHtmlFile;
+            base.InitalizeOptions(options);
 
             if (options is ArchiveOptions)
                 InitalizeOptions(options as ArchiveOptions);
@@ -50,7 +27,7 @@ namespace WikiRef
         }
 
         // analyse verb options
-        public string WikiUrl { get; private set; }
+        public string WikiApi { get; private set; }
         public string Category { get; private set; }
         public string Page { get; private set; }
         public string OutputJsonToFile { get; private set; }
@@ -59,7 +36,7 @@ namespace WikiRef
         {
             Action = Action.Analyse;
 
-            WikiUrl = options.Wiki;
+            WikiApi = options.Wiki;
             Page = options.Page;
             Category = options.Category;
 

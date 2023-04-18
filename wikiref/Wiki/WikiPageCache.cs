@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using WikiRef.Commons;
 
 namespace WikiRef.Wiki
 {

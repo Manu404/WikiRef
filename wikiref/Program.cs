@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using WikiRef.Commons;
 using WikiRef.Wiki;
 
 namespace WikiRef
@@ -11,27 +12,20 @@ namespace WikiRef
     class Program
     {
         //dependencies
+        BootStrapper _bootStrapper;
         AppConfiguration _config;
         MediaWikiApi _api;
-        ConsoleHelper _console;
         FileHelper _fileHelper;
-        WhitelistHandler _whitelistHandler;
-        RegexHelper _regexHelper;
         WikiPageCache _wikiPageCache;
-        HtmlReportHelper _htmlReportBuilder;
-        NetworkHelper _networkHelper;
+
 
         // Initialize dependencies and config
         private void InitializeDependencies(DefaultOptions options)
         {
+            (_bootStrapper = new BootStrapper()).InitializeDependencies(options);
             _config = new AppConfiguration(options);
-            _htmlReportBuilder = new HtmlReportHelper();
-            _console = new ConsoleHelper(_config, _htmlReportBuilder);
-            _networkHelper = new NetworkHelper(_console, _config);
-            _fileHelper = new FileHelper(_console, _config);
-            _whitelistHandler = new WhitelistHandler();
-            _regexHelper = new RegexHelper();
-            _api = new MediaWikiApi(_console, _config, _whitelistHandler, _regexHelper, _networkHelper);
+            _fileHelper = new FileHelper(_bootStrapper.ConsoleHelper, _config);
+            _api = new MediaWikiApi(_bootStrapper.ConsoleHelper, _config, _bootStrapper.WhitelistHandler, _bootStrapper.RegexHelper, _bootStrapper.NetworkHelper);
             _wikiPageCache = new WikiPageCache(_api);
         }
 
@@ -41,38 +35,18 @@ namespace WikiRef
                 .WithParsed<ArchiveOptions>(option =>
                 {
                     InitializeDependencies(option);
-                    new WayBackMachineArchiver(_config, _console, _networkHelper, new JsonWikiPageCache(_fileHelper, _config)).Archive().Wait();
+                    new WayBackMachineArchiver(_config, _bootStrapper.ConsoleHelper, _bootStrapper.NetworkHelper, new JsonWikiPageCache(_fileHelper, _config)).Archive().Wait();
                 })
                 .WithParsed<YoutubeDownloadOption>(option =>
                 {
                     InitializeDependencies(option);
-                    new YoutubeBashScriptBuilder(_config, _console, new JsonWikiPageCache(_fileHelper, _config)).ConstructBashScript();
+                    new YoutubeBashScriptBuilder(_config, _bootStrapper.ConsoleHelper, new JsonWikiPageCache(_fileHelper, _config)).ConstructBashScript();
                 })
                 .WithParsed<AnalyseOptions>(option =>
                 {
                     InitializeDependencies(option);
-                    new WikiAnalyser(_api, _console, _wikiPageCache).AnalyseReferences().Wait();
+                    new WikiAnalyser(_api, _bootStrapper.ConsoleHelper, _wikiPageCache).AnalyseReferences().Wait();
                 });
-        }
-
-        private void SaveConsoleToLog()
-        {
-            if (_config != null && (_config.ConsoleOutputToDefaultFile || !String.IsNullOrEmpty(_config.ConsoleOutputToFile)))
-            {
-                string filename = _config.ConsoleOutputToDefaultFile ? String.Empty : _config.ConsoleOutputToFile;
-                string dirname = _config.PutInSubDirectory ? ".log" : String.Empty;
-                _fileHelper.SaveConsoleOutputToFile(filename, dirname);
-            }
-        }
-
-        public void SaveConsoleToHtml()
-        {
-            if (_config != null && (_config.ConsoleOutputToDefaultHtmlFile || !String.IsNullOrEmpty(_config.ConsoleOutputToHtmlFile)))
-            {
-                string filename = _config.ConsoleOutputToDefaultHtmlFile ? String.Empty : _config.ConsoleOutputToHtmlFile;
-                string dirname = _config.PutInSubDirectory ? ".html" : String.Empty;
-                _fileHelper.SaveConsoleOutputToHtmlFile(_htmlReportBuilder.BuildReportContent(), filename, dirname);
-            }
         }
 
         public void SaveWikiToJson()
@@ -108,11 +82,11 @@ namespace WikiRef
 
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
-            p._console.WriteLine(String.Format("Runtime: {0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10));
+            p._bootStrapper.ConsoleHelper.WriteLine(String.Format("Runtime: {0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10));
 
             p.SaveWikiToJson();
-            p.SaveConsoleToLog();
-            p.SaveConsoleToHtml();
+            p._bootStrapper.SaveConsoleToHtml();
+            p._bootStrapper.SaveConsoleToLog();
             p.SaveRefText();
         }
     }

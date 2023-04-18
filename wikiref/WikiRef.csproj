@@ -8,12 +8,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="GenerateRef\**" />
+    <EmbeddedResource Remove="GenerateRef\**" />
+    <None Remove="GenerateRef\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="GenerateRef\" />
+    <ProjectReference Include="..\WikiRef.Commons\WikiRef.Commons.csproj" />
   </ItemGroup>
 
 </Project>

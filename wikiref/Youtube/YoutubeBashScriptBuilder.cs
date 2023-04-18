@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Xml.Linq;
+using WikiRef.Commons;
+using WikiRef.Commons.Data;
 using WikiRef.Wiki;
 
 namespace WikiRef
@@ -46,7 +48,7 @@ namespace WikiRef
             }
         }
 
-        public string ConstructBashInstruction(string page, YoutubeUrl video)
+        public string ConstructBashInstruction(string page, YoutubeUrlData video)
         {
             if (video.IsValid == SourceStatus.Invalid)
             {
@@ -101,7 +103,7 @@ namespace WikiRef
             return builder.ToString();
         }
 
-        public string GetFileName(YoutubeUrl video)
+        public string GetFileName(YoutubeUrlData video)
         {
             try
             {
@@ -124,12 +126,12 @@ namespace WikiRef
             }
         }
 
-        private string FormatArguments(YoutubeUrl video, string outputFile, string page)
+        private string FormatArguments(YoutubeUrlData video, string outputFile, string page)
         {
             return $"{_config.DownloadToolArguments} -o \"{GetOutputPath(outputFile, page)}\" {GetUrlFromVideoId(video)}";
         }
 
-        private string GetUrlFromVideoId(YoutubeUrl video)
+        private string GetUrlFromVideoId(YoutubeUrlData video)
         {
             return $"https://www.youtube.com/watch?v={video.VideoId}";
         }
