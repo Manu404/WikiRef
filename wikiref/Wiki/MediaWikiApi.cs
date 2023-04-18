@@ -7,7 +7,7 @@ using WikiRef.Commons;
 
 namespace WikiRef.Wiki
 {
-    class MediaWikiApi
+    public class MediaWikiApi
     {
         private ConsoleHelper _console;
         private WhitelistHandler _whitelistHandler;

@@ -24,7 +24,7 @@ namespace WikiRef
         {
             (_bootStrapper = new BootStrapper()).InitializeDependencies(options);
             _config = new AppConfiguration(options);
-            _fileHelper = new FileHelper(_bootStrapper.ConsoleHelper, _config);
+            _fileHelper = new FileHelper(_bootStrapper.ConsoleHelper);
             _api = new MediaWikiApi(_bootStrapper.ConsoleHelper, _config, _bootStrapper.WhitelistHandler, _bootStrapper.RegexHelper, _bootStrapper.NetworkHelper);
             _wikiPageCache = new WikiPageCache(_api);
         }

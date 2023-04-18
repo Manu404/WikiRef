@@ -23,7 +23,7 @@ namespace WikiRef
     }
 
     [Verb("archive", HelpText = "Generate a wayback machine archive of non-video content. '--help archive' for more informations.")]
-    class ArchiveOptions : DefaultOptions
+    public class ArchiveOptions : DefaultOptions
     {
         [Option('i', "input-json", Required = true, HelpText = "Input json source.")]
         public string InputJson { get; set; }
@@ -33,7 +33,7 @@ namespace WikiRef
     }
 
     [Verb("script", HelpText = "Generate a bash script relying on yt-dlp to download youtube references. '--help script' for more informations.")]
-    class YoutubeDownloadOption : DefaultOptions
+    public class YoutubeDownloadOption : DefaultOptions
     {
         [Option('i', "input-json", Required = true, HelpText = "Input json source.")]
         public string InputJson { get; set; }

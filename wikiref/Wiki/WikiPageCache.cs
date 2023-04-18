@@ -3,7 +3,7 @@ using WikiRef.Commons;
 
 namespace WikiRef.Wiki
 {
-    class WikiPageCache
+    public class WikiPageCache
     {
         public IEnumerable<WikiPage> WikiPages { get; private set; }
 
@@ -13,7 +13,7 @@ namespace WikiRef.Wiki
         }
     }
 
-    class JsonWikiPageCache
+    public class JsonWikiPageCache
     {
         public IEnumerable<WikiPage> WikiPages { get; private set; }
 

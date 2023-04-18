@@ -1,7 +1,16 @@
 obj
 bin
 *.exe
+<<<<<<< HEAD
 temp
 multiplateform_build.sh
+=======
+.vs
+output
+temp
+download.sh
+multiplateform_build.sh
+total.json
+>>>>>>> c28a3f170fae507be1133e0cbdf9b9aaa1ecf38d
 output_old.json
 .vs

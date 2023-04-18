@@ -11,7 +11,7 @@ using WikiRef.Wiki;
 
 namespace WikiRef
 {
-    internal class WayBackMachineArchiver
+    public class WayBackMachineArchiver
     {
         private ConsoleHelper _console;
         private AppConfiguration _config;
@@ -80,7 +80,7 @@ namespace WikiRef
             }
         }
 
-        private async Task<WayBakckMachineSnapshot> Getsnapshot(string url)
+        public async Task<WayBakckMachineSnapshot> Getsnapshot(string url)
         {
             string json = await _networkHelper.GetContent($"https://archive.org/wayback/available?url={url}");
             return new WayBakckMachineSnapshot(json);
