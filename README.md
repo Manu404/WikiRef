@@ -1,38 +1,40 @@
 # WikiRef
 
+WikiRef is a free/libre and open source cross-platform tool that helps you verify and archive the references on a [MediaWiki](https://www.mediawiki.org/wiki/MediaWiki) instance.
 
-WikiRef is a GPLv3 multiplatform tool built to analyze MediaWiki references, identifies errors, archive webpage references with WaybackMachine service and create local copies of YouTube references.
+WikiRef can analyze MediaWiki references, identify errors, archive webpage references with [WaybackMachine](https://archive.org/web/) service and locally archive YouTube references. To help you improve the quality of the sourcing of your instance, this tool can let you know if it finds any errors, like dead links, duplicated or malformed references and more. This tool is designed to identify issues in your content rather than fixing them. It provides a report of the identified issues, making it a useful reporting tool.
 
-In the case of errors, like dead links, duplicated references, malformed references, etc. The tool will issue an error or warning message, allowing you to act and improve the quality of the sourcing of your wiki. This tool doesn't fix the issues, it shows them, it's a reporting tool.
+## Key features
 
-Feature overview:
- - Analyze references for specific page or all pages in specific categories
- - Check reference if urls are valid and accessible
- - Check if YouTube videos are still online and accessible
- - Generate a script to download video used as reference
+ - Analyze references site-wise, for specific pages or categories
+ - Check if references URLs are valid and accessible, so you don't have to worry about dead links
+ - Verify the accessibility of YouTube video references, their online status and permissions
+ - Generate a script to download those videos if needed
  - Archive non-video sources using the WayBack Machine service
+
+### Limits
 
 Some false positives are possible, for instance a website with a faulty SSL certificate will trigger an error, or some websites like LinkedIn fight against bot accessing their content. A "whitelist" system is being developed to ignore certain url or domains.
 
-This tool already allowed us to fix dozens of issues on dozens of pages in our wiki. 
+## Support or contribute
 
 If you need anything, have any ideas or find any bugs or issues, let me know through the issue tracker, I'm totally open to new suggestions ! Open an issue or contact me by [mail](mailto:contact@emmanuelistace.be).
 
-##  Functionality of the software
+##  Usage
 
 ### General Overview
 
-The core of the tool is the analysis mode, which analyze references and links, then produces JSON used as input for the other modes.
+The core of the tool is analysis mode, which analyze references and links, then produces JSON used as input for the other modes.
 
 ![Overview_Archi.drawio](https://github.com/Manu404/WikiRef/blob/master/doc/Overview_Archi.drawio.png)
 
 ### Available binaries
 
-There are two kind of available binaries:
+Two kind of binaries are available:
 
-- *Self-contained*, or "portable", the software is a single file with no other dependencies than yt-dlp for downloading youtube videos.
+- *Self-contained*, or "portable": a single file with no other dependencies than yt-dlp for downloading youtube videos.
 
-- *Normal*, require the DotNet 7 runtime to be installed on the machine, but lighter in weight.
+- *Normal*: a lighter file that requires the DotNet 7 runtime to be installed on the machine.
 
 #### Note
 
@@ -41,7 +43,7 @@ There are two kind of available binaries:
 
 ### General options
 
-These options apply to all modes
+Here's the list of options that apply to all modes.
 
 |      |               | Flag | Value              | Description                                                  |
 | ---- | ------------- | :--: | ------------------ | ------------------------------------------------------------ |
@@ -56,11 +58,21 @@ These options apply to all modes
 |      | --subdir      |  ⬤   |                    | Place output files in dedicated folders (json, html, log)    |
 | -4   | -ipv4         |  ⬤   |                    | Force ipv4 DNS resolution and queries for compatibility in certain corner case |
 
-### The 'analyse' mode
+### Analyse mode
 
-This mode analyzes references and checks the validity of the urls used.
+This mode analyzes references and checks the validity of used URLs.
 
-All these parameters are used and compatible in the other modes.
+#### Options
+
+Here's the list of options for the Analyse mode.
+
+|      |            | Flag |                      Required                       | Description                                                  |
+| ---- | ---------- | :--: | :-------------------------------------------------: | ------------------------------------------------------------ |
+| -w   | --wiki-api |      |                          ⬤                          | The api url of the wiki to analyze; This is the location where api.php is. |
+| -c   | --category |      |   ⬤<br />(mutually exclusive with page parameter)   | The name of the category to analyze                          |
+| -p   | --page     |      | ⬤<br />(mutually exclusive with category parameter) | The name of the page to analyze                              |
+| -j   |            |  ⬤   |                                                     | Output the analysis to a file with a generated name based on the date |
+|      | --json     |      |                      Filename                       | Same as -h but with a specific filename                      |
 
 #### Example usages
 
@@ -84,35 +96,17 @@ wikiref analyze -w https://demowiki.com/ -c Science -j -s
 
 This mode produce also a JSON file used as data source for other modes.
 
-#### Parameter reference
-
-|      |            | Flag |                      Required                       | Description                                                  |
-| ---- | ---------- | :--: | :-------------------------------------------------: | ------------------------------------------------------------ |
-| -w   | --wiki-api |      |                          ⬤                          | The api url of the wiki to analyze; This is the location where api.php is. |
-| -c   | --category |      |   ⬤<br />(mutually exclusive with page parameter)   | The name of the category to analyze                          |
-| -p   | --page     |      | ⬤<br />(mutually exclusive with category parameter) | The name of the page to analyze                              |
-| -j   |            |  ⬤   |                                                     | Output the analysis to a file with a generated name based on the date |
-|      | --json     |      |                      Filename                       | Same as -h but with a specific filename                      |
-
-### The 'Script' mode
+### Script mode
 
 This mode relies on the output of the analyze mode and uses yt-dlp for downloading, but other tools can be used as well.
 
-This mode relies on a free, open-source and multiplatform, the usage of the tool [yt-dlp](https://github.com/yt-dlp/yt-dlp). Check their document for installation depending on your system [here](https://github.com/yt-dlp/yt-dlp/wiki/Installation).
+This mode relies on a free/libre open-source and cross-platform tool [yt-dlp](https://github.com/yt-dlp/yt-dlp). Check their document for installation depending on your system [here](https://github.com/yt-dlp/yt-dlp/wiki/Installation).
 
 The filenames are composed of the video name followed by the YouTube VideoId.
 
-#### Example usages
+#### Options
 
-Generate a script called download.sh to download all videos contained in the analyse file into the folder "video" using yt-dlp
-
-```
-wikiref script -i analyse.json -d ./videos/ --tool /bin/usr/yt-dlp --output-script download.sh
-```
-
-Note: Under windows, wikiref will be replaced by wikiref‧exe
-
-#### Parameter reference
+Here's the list of options for the Script mode.
 
 |  |  | Flag | Required | Value | Description |
 |---|---|:-:|:-:|---|---|
@@ -126,38 +120,53 @@ Note: Under windows, wikiref will be replaced by wikiref‧exe
 |      | --download-playlist |  ⬤  |          |                                | Download videos in playlist URLS                             |
 |      | --download-channel  |  ⬤  |          |                                | Download videos in channel URLS                              |
 
-### The 'archive' mode
+#### Example usages
+
+Generate a script called download.sh to download all videos contained in the analyse file into the folder "video" using yt-dlp
+
+```
+wikiref script -i analyse.json -d ./videos/ --tool /bin/usr/yt-dlp --output-script download.sh
+```
+
+Note: Under windows, wikiref will be replaced by wikiref‧exe
+
+### Archive mode
 
 This mode archive URL through WaybackMachine. YouTube links are not archived through WaybackMachine, due to YouTube not allowing it.
 
-```
-wikiref archive -i analyse.json
-```
+#### Options
+
+Here's the list of options for the Archive mode.
 
 |      |              | Flag | Required | Value    | Description                                                  |
 | ---- | ------------ | :--: | :------: | -------- | ------------------------------------------------------------ |
 | -i   | --input-json |      |    ⬤     | Filename | Input JSON source to get URL to archive.                     |
 | -w   | --wait       |  ⬤   |          |          | Wait for confirmation of archival from Archive.org. Use with caution, archive.org might usually take a long time to archive pages. Sometimes many minutes. |
 
-### Multiplatforming
 
-#### Supported system
+#### Example usage
 
-For now, supported systems are:
+```
+wikiref archive -i analyse.json
+```
 
-- Windows 64bits & 32bitsbits from 7 and above.
-- Linux 64 bits  (Most desktop distributions like CentOS, Debian, Fedora, Ubuntu, and derivatives)
-- Linux ARM (Linux distributions running on Arm like Raspbian on Raspberry Pi Model 2+)
-- Linux ARM64 (Linux distributions running on 64-bit Arm like Ubuntu Server 64-bit on Raspberry Pi Model 3+) 
+### Supported systems
 
-Remarks: Supported platforms have been tested. Tons of platforms can be technically already supported, but without guarantee and feedback it works on those systems, I prefer to let them in the "not yet supported system" by caution. If you have any feedback about a system not listed on which the tools run, feel free to contact me.
+Currently, supported systems are:
 
-#### Not yet supported system
+ - *Windows 64-bit* & *32-bit* from 7 and above.
+ - *Linux 64-bit*  (Most desktop distributions like CentOS, Debian, Fedora, Ubuntu, and derivatives)
+ - *Linux ARM* (Linux distributions running on Arm like Raspbian on Raspberry Pi Model 2+)
+ - *Linux ARM64* (Linux distributions running on 64-bit Arm like Ubuntu Server 64-bit on Raspberry Pi Model 3+) 
 
-- MacOS support will be coming soon, after testing can be done.
-- RHEL systems low to no chances to be supported. (CentOS and Fedora are tho)
+Remarks: Supported platforms have been tested. Although many platforms are theoretically supported, there is no guarantee that the tool will function optimally on all of them without proper feedback. As a precautionary measure, untested systems will be categorized as "not yet supported". If you have feedback about a system that is not currently listed as a supported platform, please do not hesitate to contact.
 
-In any case, if you need to build the solution for an architecture or system not supported, see the "Build for not officially supported system" section at the end of this page.
+#### Not yet supported
+
+- *MacOS*: Support for MacOS will be made available in the near future, once it has been tested.
+- *RHEL systems*: While CentOS and Fedora are supported systems, the likelihood of RHEL systems being supported is low.
+
+If you need to build the solution for a system or architecture that is not officially supported, please refer to the "Build for not officially supported system" section located at the end of the page for guidance.
 
 #### Tested systems
 
@@ -234,9 +243,9 @@ The zip name use the folllowing convention:
 
 #### Remarks
 
-- Sadly, WSL has compatibility issues with the "dotnet" command, prohibiting it to being used.
+- Sadly, WSL has compatibility issues with the "dotnet" command, so it can't being used.
 
-#### Build for not officially supported system
+#### Build for unofficially supported system
 
 You can build for 'unofficially supported system' using the -p parameter of the build script and using for a platform available in the list [here](https://learn.microsoft.com/en-us/dotnet/core/rid-catalog)
 
@@ -246,6 +255,6 @@ Example, building for macOS 13 Ventura ARM 64 : "./multiplateform_build -p osx.1
 
 If you like this tool, let me know, it's always appreciated, you can contact me [by mail](mailto:contact@emmmanuelistace.be) . 
 
-As well, if you have any comments or would like any request, I'm totally open for them, open an issue or send me [mail](mailto:contact@emmmanuelistace.be) . 
+Also, if you have any comments or would like any request, I'm totally open for them, [open an issue](https://github.com/Manu404/WikiRef/issues) or send me an [email](mailto:contact@emmmanuelistace.be).
 
-I would like to give a big hug to [BadMulch](https://twitter.com/badmulch), [BienfaitsPourTous](https://bienfaitspourtous.fr/) and their [communities](https://discord.gg/VA3kbYjCMn) around the [PolitiWiki project](https://politiwiki.fr/), for their support, greetz, ideas and for whom this tool was developed and gave me company during the development when I was streaming it on their discord server and overall moral support.
+I would like to shout-out [BadMulch](https://twitter.com/badmulch), [BienfaitsPourTous](https://bienfaitspourtous.fr/) and the [community](https://discord.gg/Y43NAEDCBy) around the [PolitiWiki project](https://politiwiki.fr/) for which this tool was developed, for their support, greetz, ideas, company during the development when I was streaming it on the discord server and overall moral support.
