@@ -155,7 +155,7 @@ namespace WikiRef.Wiki
             }
         }
 
-        private DateTime? GetDateFromReference(Reference reference)
+        public DateTime? GetDateFromReference(Reference reference)
         {
             try
             {
