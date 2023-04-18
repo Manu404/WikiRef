@@ -1,11 +1,7 @@
 obj
-Properties
 bin
-/*.exe
-/.vs
-/output
-/temp
-/download.sh
-/multiplateform_build.sh
-/total.json
+*.exe
+temp
+multiplateform_build.sh
 output_old.json
+.vs

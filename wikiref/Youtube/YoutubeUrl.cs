@@ -171,7 +171,9 @@ namespace WikiRef
 
                 Name = HttpUtility.HtmlDecode(stripedTitleBuilder.ToString());
 
-                if(_config.Verbose)
+                ChannelName = _regexHelper.ExtractChannelName.Matches(pageContent.Replace("\"", "")).FirstOrDefault()?.Groups["name"].Value;
+
+                if (_config.Verbose)
                     _console.WriteLineInGray($"Retreiving name for {urlToVerify} - Name : {Name}");
             }
             catch (Exception e)
