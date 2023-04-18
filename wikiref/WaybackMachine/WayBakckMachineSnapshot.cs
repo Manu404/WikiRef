@@ -9,6 +9,8 @@ namespace WikiRef
         public bool IsArchived { get; private set; }
         public DateTime Timestamp { get; private set; } 
         public int Status { get; private set; }
+        public string Url { get; private set; }
+        public bool IsAvailable { get; private set; }
         
         public WayBakckMachineSnapshot(string json)
         {
@@ -18,6 +20,8 @@ namespace WikiRef
             {
                 Timestamp = DateTime.ParseExact(jsonObject["archived_snapshots"]["closest"]["timestamp"].ToString(), "yyyyMMddHHmmss", CultureInfo.InvariantCulture);
                 Status = Int32.Parse(jsonObject["archived_snapshots"]["closest"]["status"].ToString());
+                Url = jsonObject["archived_snapshots"]["closest"]["url"].ToString();
+                IsAvailable = bool.Parse(jsonObject["archived_snapshots"]["closest"]["available"].ToString());
             }
         }
     }
