@@ -31,7 +31,7 @@ namespace WikiRef
             _fileHelper = new FileHelper(_console, _config);
             _whitelistHandler = new WhitelistHandler();
             _regexHelper = new RegexHelper();
-            _api = new MediaWikiApi(_config.WikiUrl, _console, _config, _whitelistHandler, _regexHelper, _networkHelper);
+            _api = new MediaWikiApi(_console, _config, _whitelistHandler, _regexHelper, _networkHelper);
             _wikiPageCache = new WikiPageCache(_api);
         }
 

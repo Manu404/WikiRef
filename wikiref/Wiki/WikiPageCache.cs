@@ -8,7 +8,7 @@ namespace WikiRef.Wiki
 
         public WikiPageCache(MediaWikiApi _api)
         {
-            WikiPages = _api.GetWikiPages();
+            WikiPages = _api.GetWikiPages().Result;
         }
     }
 

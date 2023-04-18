@@ -56,15 +56,15 @@ namespace WikiRef
             _regexHelper = regexHelper;
             _networkHelper = networkHelper; 
 
-            GetPageContentFromApi();
+            GetPageContentFromApi().Wait();
             BuildReferenceList();
             ExtractUrlsFromReference();
         }
 
-        private void GetPageContentFromApi()
+        private async Task GetPageContentFromApi()
         {
             if (isPageContentRetreivedFromApi) return;
-            Content = _api.GetPageContent(Name);
+            Content = await _api.GetPageContent(Name);
             isPageContentRetreivedFromApi = true;
         }
 
