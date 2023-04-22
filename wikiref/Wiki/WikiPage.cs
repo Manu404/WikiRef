@@ -77,6 +77,67 @@ namespace WikiRef.Wiki
             isReferenceListBuilt = true;
         }
 
+        public void CheckFormatting(Reference reference)
+        {
+            try
+            {
+                // multiple links
+                if (reference.Urls.Count > 1)
+                {
+                    _console.WriteLineInOrange(String.Format("Multiple link in the reference {0} in page {1}", reference.Content, Name)); ;
+                    reference.FormattingIssue = true;
+                }
+
+                // check if meta once url removed an ref tags
+                string meta = reference.Content.Replace("<ref>", "").Replace("</ref>", "");
+                foreach (var url in reference.Urls)
+                    meta = meta.Replace(url.Url, "");
+                if (String.IsNullOrEmpty(meta))
+                {
+                    _console.WriteLineInOrange(String.Format("No metadata for reference {0} in page {1}", reference.Content, Name));
+                    reference.FormattingIssue = true;
+                }
+
+                // check date format
+                if (!reference.Urls.Any(u => u.Url.Contains("wikipedia")))
+                {
+                    GetDateAndMetaFromReference(reference, _regexHelper, _console);
+                }
+                else
+                {
+                    DatesCount += 1;
+                    WikiLinks += 1;
+                }
+
+                Parallel.ForEach(reference.Urls, url =>
+                {
+                    try
+                    {
+                        // check nowiki tag in refs
+                        if (url.Url.Contains("</nowiki>"))
+                        {
+                            _console.WriteLineInOrange(String.Format("<nowiki> tag for reference {0} in page {1}", url, Name));
+                            reference.FormattingIssue = true;
+                        }
+                        // check multiple urls in bracket
+                        if (url.Url.EndsWith(']'))
+                        {
+                            _console.WriteLineInOrange(String.Format("Multiple links in the same ref tag : {0} in page {1}", url, Name));
+                            reference.FormattingIssue = true;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        _console.WriteLineInRed(String.Format("URL: {0} - Erreur: {1}", url, ex.Message));
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                _console.WriteLineInRed(String.Format("Erro checking reference {0} - {1}", reference.Content, ex.Message));
+            }
+        }
+
         public Tuple<DateTime?, string> GetDateAndMetaFromReference(Reference reference, RegexHelper regexHelper, ConsoleHelper consoleHelper)
         {
             try
