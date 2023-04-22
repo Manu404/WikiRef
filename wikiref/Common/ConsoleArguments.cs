@@ -20,6 +20,9 @@ namespace WikiRef
 
         [Option("json", Required = false, HelpText = "Output the analysis in a json file to the given filename")]
         public string OutputJsonToFile { get; set; }
+
+        [Option("white-list", Required = false, HelpText = "Json file containing white listed domain that will not be analyzed.")]
+        public string WhiteList { get; set; }
     }
 
     [Verb("archive", HelpText = "Generate a wayback machine archive of non-video content. '--help archive' for more informations.")]

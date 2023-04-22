@@ -38,7 +38,24 @@ namespace WikiRef
             }
         }
 
-        public List<WikiPage> LoadJsonFromFile(string filename)
+        public List<string> LoadWhitelistFromJsonFile(string filename)
+        {
+            try
+            {
+                string json = File.ReadAllText(filename);
+                List<string> whitelist = JsonConvert.DeserializeObject<List<string>>(json);
+                _consoleHelper.WriteLine(String.Format("Json load from: {0}", filename));
+                return whitelist;
+            }
+            catch (Exception e)
+            {
+                _consoleHelper.WriteLineInRed(String.Format("An error occured while loading {0}", filename));
+                _consoleHelper.WriteLineInRed(e.Message);
+                return new List<string>();
+            }
+        }
+
+        public List<WikiPage> LoadWikiPagesFromJsonFile(string filename)
         {
             try
             {
@@ -54,5 +71,7 @@ namespace WikiRef
                 return new List<WikiPage>();
             }
         }
+
+
     }
 }

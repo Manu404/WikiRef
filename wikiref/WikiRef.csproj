@@ -22,4 +22,10 @@
     <ProjectReference Include="..\WikiRef.Commons\WikiRef.Commons.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="whitelist.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

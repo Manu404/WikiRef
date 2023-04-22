@@ -34,7 +34,6 @@ namespace WikiRef
                 url
             };
 
-            CheckTypeOfUrl();
             if(IsVideo)
                 VideoId = GetVideoId(url, _regexHelper);
 
