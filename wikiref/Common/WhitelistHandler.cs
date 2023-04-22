@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace WikiRef.Commons
 {
@@ -15,11 +16,7 @@ namespace WikiRef.Commons
 
         public bool CheckIfWebsiteIsWhitelisted(string url)
         {
-            bool isWhiteList = false;
-            foreach (var website in WhitelistWebsite)
-                if (url.ToLower().StartsWith(website.ToLower(), StringComparison.InvariantCultureIgnoreCase))
-                    isWhiteList = true;
-            return isWhiteList;
+            return WhitelistWebsite.Any(u => url.ToLower().StartsWith(u.ToLower(), StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }
