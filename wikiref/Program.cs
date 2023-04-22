@@ -17,7 +17,7 @@ namespace WikiRef
         MediaWikiApi _api;
         FileHelper _fileHelper;
         WikiPageCache _wikiPageCache;
-
+        WhitelistHandler _whitelistHandler;
 
         // Initialize dependencies and config
         private void InitializeDependencies(DefaultOptions options)
@@ -25,7 +25,8 @@ namespace WikiRef
             (_bootStrapper = new BootStrapper()).InitializeDependencies(options);
             _config = new AppConfiguration(options);
             _fileHelper = new FileHelper(_bootStrapper.ConsoleHelper);
-            _api = new MediaWikiApi(_bootStrapper.ConsoleHelper, _config, _bootStrapper.WhitelistHandler, _bootStrapper.RegexHelper, _bootStrapper.NetworkHelper);
+            _whitelistHandler = new WhitelistHandler(_config, _fileHelper);
+            _api = new MediaWikiApi(_bootStrapper.ConsoleHelper, _config, _whitelistHandler, _bootStrapper.RegexHelper, _bootStrapper.NetworkHelper);
             _wikiPageCache = new WikiPageCache(_api);
         }
 

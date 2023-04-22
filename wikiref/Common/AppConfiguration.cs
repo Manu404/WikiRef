@@ -32,6 +32,8 @@ namespace WikiRef
         public string Page { get; private set; }
         public string OutputJsonToFile { get; private set; }
         public bool OutputJsonToDefaultFile { get; private set; }
+        public string WhiteList { get; private set; }
+
         public void InitalizeOptions(AnalyseOptions options)
         {
             Action = Action.Analyse;
@@ -39,6 +41,7 @@ namespace WikiRef
             WikiApi = options.Wiki;
             Page = options.Page;
             Category = options.Category;
+            WhiteList = options.WhiteList;
 
             OutputJsonToFile = options.OutputJsonToFile;
             OutputJsonToDefaultFile = options.OutputJsonToDefaultFile;

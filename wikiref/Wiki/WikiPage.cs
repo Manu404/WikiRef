@@ -24,20 +24,21 @@ namespace WikiRef.Wiki
         private ConsoleHelper _console;
         private MediaWikiApi _api;
         private AppConfiguration _config;
-        private WhitelistHandler _blacklistHandler;
+        private WhitelistHandler _whitelist;
         private RegexHelper _regexHelper;
         private NetworkHelper _networkHelper;
 
         [JsonIgnore] public int MalformedDates { get; set; }
         [JsonIgnore] public int DatesCount { get; set; }
         [JsonIgnore] public int WikiLinks { get; set; }
+        [JsonIgnore] public int WhiteListLinks { get; set; }
 
         public WikiPage()
         {
 
         }
 
-        public WikiPage(string name, ConsoleHelper consoleHelper, MediaWikiApi api, AppConfiguration configuration, WhitelistHandler blacklistHandler, RegexHelper regexHelper, NetworkHelper networkHelper)
+        public WikiPage(string name, ConsoleHelper consoleHelper, MediaWikiApi api, AppConfiguration configuration, WhitelistHandler whiteList, RegexHelper regexHelper, NetworkHelper networkHelper)
         {
             YoutubeUrls = new List<YoutubeUrlData>();
             References = new List<Reference>();
@@ -47,7 +48,7 @@ namespace WikiRef.Wiki
             _console = consoleHelper;
             _api = api;
             _config = configuration;
-            _blacklistHandler = blacklistHandler;
+            _whitelist = whiteList;
             _regexHelper = regexHelper;
             _networkHelper = networkHelper; 
 
@@ -86,7 +87,7 @@ namespace WikiRef.Wiki
                 Parallel.ForEach(matches, match =>
                 {
                     if (match.Groups["url"].Value.Contains(','))
-                        _console.WriteLineInOrange(String.Format("This reference contains multiple urls. Reference: {0}", reference.Content));
+                        _console.WriteLineInOrange(String.Format("#This reference contains multiple urls. Reference: {0}", reference.Content));
 
                     reference.Urls.Add(new ReferenceUrl(HttpUtility.UrlDecode(match.Groups["url"].Value)));
                 });
@@ -112,6 +113,7 @@ namespace WikiRef.Wiki
             {
                 foreach (var url in reference.Urls)
                 {
+                    SourceStatus referenceStats = SourceStatus.Valid;
                     try
                     {
                         SourceStatus status = SourceStatus.Valid;
@@ -122,6 +124,12 @@ namespace WikiRef.Wiki
                                 status = YoutubeUrls.FirstOrDefault(v => v.VideoId == VideoId).IsValid;
                             else if (YoutubeUrls.Any(v => v.Urls.Any(u => u == url.Url)))
                                 status = YoutubeUrls.FirstOrDefault(v => v.Urls.Any(u => u == url.Url)).IsValid;
+                            else if (reference.IsCitation) // if url contained in citation
+                            {
+                                var citationVideo = new YoutubeUrl(url.Url, _console, _config, _regexHelper, _networkHelper);
+                                await citationVideo.CheckIsValid();
+                                status = citationVideo.IsValid;
+                            }
                             else
                                 status = SourceStatus.Invalid;
 
@@ -129,15 +137,16 @@ namespace WikiRef.Wiki
                         else
                             status = CheckUrlStatus(url.Url);
 
-                        url.IsValid = status == SourceStatus.Valid;
-
-                        reference.Status = status;
+                        url.SourceStatus = status;
+                        
+                        // take the worst case scenario
+                        reference.Status = (SourceStatus)Math.Max((int)status, (int)reference.Status);
 
                         DisplayreferencesStatus(reference, url.Url);
                     }
                     catch (Exception ex)
                     {
-                        _console.WriteLineInRed(string.Format("URL: {0} - Erreur: {1}", url.Url, ex.Message));
+                        _console.WriteLineInRed(string.Format("URL: {0} - Erreur: {1}", url.Url, ex.Message.Trim()));
                     }
                     checkedurls += 1;
                 }
@@ -146,7 +155,7 @@ namespace WikiRef.Wiki
 
             _console.WriteLine(String.Format("{0} reference found and {1} citation references. {2} url verified.", numberOfReference, numberOfcitation, checkedurls));
 
-            if (References.Any(r => r.Status != SourceStatus.Valid))
+            if (References.Any(r => r.Status == SourceStatus.Invalid))
                 _console.WriteLineInRed(String.Format("Some references seems invalid, check the error message and/or the wikicode for malformated refrerences or invalid urls"));
             else
                 _console.WriteLineInGreen(String.Format("All references seems valid"));
@@ -156,11 +165,16 @@ namespace WikiRef.Wiki
         {
             if (reference.Status != SourceStatus.Valid || _config.Verbose)
             {
-                string displayedUrl = IsYoutubeUrl(url) ? $"VideoID: {YoutubeUrl.GetVideoId(url, _regexHelper)}" : url;
+                string displayedUrl = IsYoutubeUrl(url) ? $"VideoID: {YoutubeUrl.GetVideoId(url, _regexHelper)}" : url.Trim();
                 if (reference.Status == SourceStatus.Invalid)
-                    _console.WriteLineInRed($"Invalid reference: {displayedUrl} -> {reference.Status}");
+                {
+                    _console.WriteLineInRed($"#> Invalid reference: {displayedUrl} -> {reference.Status}");
+                    _console.WriteLineInRed($"Content: {reference.Content}");
+                }
+                else if (reference.Status == SourceStatus.WhiteListed)
+                    _console.WriteLineInOrange($"> #The url {url} is whitelited and wasn't checked.");
                 else
-                    _console.WriteLineInGray($"Valid reference: {displayedUrl} -> {reference.Status}");
+                    _console.WriteLineInGray($"#> Valid reference but might have some issues: {displayedUrl} -> {reference.Status}");
             }
         }
 
@@ -168,11 +182,8 @@ namespace WikiRef.Wiki
         {
             try
             {
-                if (!_blacklistHandler.CheckIfWebsiteIsWhitelisted(url))
-                {
-                    _console.WriteLineInOrange(String.Format("The url {0} can't be checked for technical reason due to service provider blocking requests.", url));
-                    return SourceStatus.Undefined;
-                }
+                if (_whitelist.CheckIfWebsiteIsWhitelisted(url))
+                    return SourceStatus.WhiteListed;
 
                 var result = _networkHelper.GetStatus(url).Result;
 
