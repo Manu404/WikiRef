@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33516.290
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WikiRef", "WikiRef.csproj", "{F8D9E200-4BD0-4A97-B0EC-8A87A4BA2C67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WikiRef", "WikiRef\WikiRef.csproj", "{F8D9E200-4BD0-4A97-B0EC-8A87A4BA2C67}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WikiRef.Commons", "..\WikiRef.Commons\WikiRef.Commons.csproj", "{E0BCD880-6088-4BE3-88D7-35E7DB3A0C41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WikiRef.Commons", "WikiRef.Commons\WikiRef.Commons.csproj", "{E0BCD880-6088-4BE3-88D7-35E7DB3A0C41}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
