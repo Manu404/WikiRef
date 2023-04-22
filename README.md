@@ -66,13 +66,14 @@ This mode analyzes references and checks the validity of used URLs.
 
 Here's the list of options for the Analyse mode.
 
-|      |            | Flag |                      Required                       | Description                                                  |
-| ---- | ---------- | :--: | :-------------------------------------------------: | ------------------------------------------------------------ |
-| -w   | --wiki-api |      |                          ⬤                          | The api url of the wiki to analyze; This is the location where api.php is. |
-| -c   | --category |      |   ⬤<br />(mutually exclusive with page parameter)   | The name of the category to analyze                          |
-| -p   | --page     |      | ⬤<br />(mutually exclusive with category parameter) | The name of the page to analyze                              |
-| -j   |            |  ⬤   |                                                     | Output the analysis to a file with a generated name based on the date |
-|      | --json     |      |                      Filename                       | Same as -h but with a specific filename                      |
+|      |             | Flag |                      Required                       | Description                                                  |
+| ---- | ----------- | :--: | :-------------------------------------------------: | ------------------------------------------------------------ |
+| -w   | --wiki-api  |      |                          ⬤                          | The api url of the wiki to analyze; This is the location where api.php is. |
+| -c   | --category  |      |   ⬤<br />(mutually exclusive with page parameter)   | The name of the category to analyze                          |
+| -p   | --page      |      | ⬤<br />(mutually exclusive with category parameter) | The name of the page to analyze                              |
+| -j   |             |  ⬤   |                                                     | Output the analysis to a file with a generated name based on the date |
+|      | --json      |      |                      Filename                       | Same as -h but with a specific filename                      |
+|      | --whitelist |      |                                                     | Filename of a json file containing domain to whitelist.      |
 
 #### Example usages
 
@@ -95,6 +96,14 @@ wikiref analyze -w https://demowiki.com/ -c Science -j -s
 ```
 
 This mode produce also a JSON file used as data source for other modes.
+
+#### Whitelisting
+
+A whitelising system is present to avoid checking domain that prevent tools like this to check their page status. You can provide a json file using the following format:
+
+`[ "https://google.com", "https://www.linkedin.com/", "www.odysee.com" ]`
+
+The URLS starting with these addresses will not be checked by the system to avoid false positive in the report.
 
 ### Script mode
 
