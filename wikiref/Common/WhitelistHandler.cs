@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace WikiRef.Commons
 {
     public class WhitelistHandler

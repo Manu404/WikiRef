@@ -7,6 +7,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
+using WikiRef;
 using WikiRef.Commons;
 using WikiRef.Commons.Data;
 using WikiRef.Wiki;
@@ -76,6 +77,86 @@ namespace WikiRef.Wiki
             isReferenceListBuilt = true;
         }
 
+        public Tuple<DateTime?, string> GetDateAndMetaFromReference(Reference reference, RegexHelper regexHelper, ConsoleHelper consoleHelper)
+        {
+            try
+            {
+
+                // check format DESC - DATE - URL
+                DatesCount += 1;
+
+                var metaWithoutUrl = regexHelper.ExtractMetaAndUrl.Match(reference.Content).Groups["meta"].ToString().Trim();
+
+                var dateString = String.Empty;
+                var meta = String.Empty;
+                var split = new string[0];
+
+                // parse regex
+                if (dateString == String.Empty)
+                {
+                    split = metaWithoutUrl.Trim().Split(new[] { '-', ',' });
+                    if (split.Length > 2)
+                    {
+                        dateString = split[split.Length - 2];
+                        for (int i = 0; i < split.Length - 2; i++)
+                            meta += split[i];
+                    }
+                }
+
+                // parse manual
+                if (dateString == String.Empty)
+                {
+                    // temp buffer
+                    var tempSplit = new List<string>();
+                    // split by whitespace
+                    split = metaWithoutUrl.Split(new char[] { ' ', '/' });
+                    // remove white space and - from the list
+                    foreach (var element in split)
+                        if (!String.IsNullOrEmpty(element) && !(element == "-"))
+                            tempSplit.Add(element);
+                    split = tempSplit.ToArray();
+                    // reconstruct date
+                    if (split.Length > 3)
+                        dateString = String.Join(" ", split[split.Length - 3], split[split.Length - 2], split[split.Length - 1]);
+                    for (int i = 0; i < split.Length - 3; i++)
+                        meta += split[i];
+                }
+
+                // correct ortho
+                if (dateString.ToLower().Contains("aout"))
+                    dateString = dateString.ToLower().Replace("u", "û");
+                if (dateString.ToLower().Contains("fevrier"))
+                    dateString = dateString.ToLower().Replace("fevrier", "Février");
+                if (dateString.ToLower().Contains("decembre"))
+                    dateString = dateString.ToLower().Replace("decembre", "Décembre");
+
+                dateString = dateString.Replace(".", " ").Replace("/", " ").Trim();
+
+                CultureInfo culture = new CultureInfo("fr-FR", true);
+                DateTimeStyles style = DateTimeStyles.None;
+                bool sucessed = false;
+                DateTime dateValue;
+                sucessed = DateTime.TryParseExact(dateString, "dd MMMM yyyy", culture, style, out dateValue);
+                if (!sucessed) sucessed = DateTime.TryParseExact(dateString, "dd MMMM yyyy", culture, style, out dateValue);
+                if (!sucessed) sucessed = DateTime.TryParseExact(dateString, "d MMMM yyyy", culture, style, out dateValue);
+                if (!sucessed) sucessed = DateTime.TryParseExact(dateString, "dd MM yyyy", culture, style, out dateValue);
+                if (!sucessed) sucessed = DateTime.TryParseExact(dateString, "dd MMM yyyy", culture, style, out dateValue);
+                if (!sucessed) sucessed = DateTime.TryParseExact(dateString, "dd MM y", culture, style, out dateValue);
+                if (!sucessed)
+                {
+                    consoleHelper.WriteLineInGray(String.Format("Maformed date reference in {0}", reference.Content));
+                    MalformedDates += 1;
+                }
+
+                return new Tuple<DateTime?, string>(dateValue, meta);
+            }
+            catch (Exception ex)
+            {
+                consoleHelper.WriteLineInRed($"Error parsing date {ex.Message}");
+                return null;
+            }
+        }
+        
         private void ExtractUrlsFromReference()
         {
             if (areUrlExtracteFromReferences) return;
