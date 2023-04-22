@@ -156,7 +156,7 @@ namespace WikiRef.Wiki
                 return null;
             }
         }
-
+        
         private void ExtractUrlsFromReference()
         {
             if (areUrlExtracteFromReferences) return;
