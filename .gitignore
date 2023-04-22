@@ -6,11 +6,11 @@ output
 *.exe
 .vs
 *.bak
+/wikiref/Properties/*.json
 
 download.sh
 multiplateform_build.sh
 total.json
 output_old.json
-/wikiref/Properties/*.json
 /doc/~$perfs.docx
 
