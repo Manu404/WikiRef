@@ -140,8 +140,8 @@ namespace WikiRef.Wiki
                         url.SourceStatus = status;
 
                         // take the worst case scenario
-                        ///reference.Status = (SourceStatus)Math.Max((int)status, (int)reference.Status);
-                        reference.Status = status;
+                        reference.Status = (SourceStatus)Math.Max((int)status, (int)reference.Status);
+                        //reference.Status = status;
 
                         DisplayreferencesStatus(reference, url.Url);
                     }
