@@ -32,7 +32,9 @@ namespace WikiRef.Wiki
         [JsonIgnore] public int MalformedDates { get; set; }
         [JsonIgnore] public int DatesCount { get; set; }
         [JsonIgnore] public int WikiLinks { get; set; }
-        [JsonIgnore] public int WhiteListLinks { get; set; }
+
+        [JsonIgnore] public List<YoutubeUrlData> ThreadSafeYoutubeUrls { get; set; }
+        [JsonIgnore] public List<Reference> ThreadSafeReferences { get; set; }
 
         public WikiPage()
         {
@@ -209,7 +211,7 @@ namespace WikiRef.Wiki
         {
             _console.WriteLine("Aggregating youtube links");
 
-            Parallel.ForEach(References.Where(r => !r.IsCitation), async (reference) =>
+            foreach( var reference in References.Where(r => !r.IsCitation)) // can't || because collection is modified
             {
                 try
                 {
@@ -231,7 +233,8 @@ namespace WikiRef.Wiki
                 {
                     _console.WriteLineInRed($"URL: {reference.Content} - Erreur: {ex.Message}");
                 }
-            });
+            };
+
         }
 
         public bool IsYoutubeUrl(string url)
