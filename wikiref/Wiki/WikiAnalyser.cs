@@ -41,15 +41,15 @@ namespace WikiRef.Wiki
             _console.WriteLineInGray($"Wikipedia links: {_wikiPageCache.WikiPages.Sum(p => p.WikiLinks)}");
 
             _console.WriteSection("Invalid link");
-            foreach (var url in _wikiPageCache.WikiPages.SelectMany(r => r.References).SelectMany(u => u.Urls).Where(u => u.SourceStatus == SourceStatus.Invalid))
+            foreach (var url in _wikiPageCache.WikiPages.SelectMany(r => r.References).SelectMany(u => u.Urls).Where(u => u.SourceStatus == SourceStatus.Invalid).OrderBy(u => u.Url))
                 _console.WriteLineInGray(url.Url);
 
             _console.WriteSection("Undefined link");
-            foreach (var url in _wikiPageCache.WikiPages.SelectMany(r => r.References).SelectMany(u => u.Urls).Where(u => u.SourceStatus == SourceStatus.Undefined))
+            foreach (var url in _wikiPageCache.WikiPages.SelectMany(r => r.References).SelectMany(u => u.Urls).Where(u => u.SourceStatus == SourceStatus.Undefined).OrderBy(u => u.Url))
                 _console.WriteLineInGray(url.Url);
 
             _console.WriteSection("Whitelisted link");
-            foreach (var url in _wikiPageCache.WikiPages.SelectMany(r => r.References).SelectMany(u => u.Urls).Where(u => u.SourceStatus == SourceStatus.WhiteListed))
+            foreach (var url in _wikiPageCache.WikiPages.SelectMany(r => r.References).SelectMany(u => u.Urls).Where(u => u.SourceStatus == SourceStatus.WhiteListed).OrderBy(u => u.Url))
                 _console.WriteLineInGray(url.Url);
         }
     }
