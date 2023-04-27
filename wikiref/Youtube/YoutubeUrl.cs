@@ -34,8 +34,23 @@ namespace WikiRef
                 url
             };
 
-            if(IsVideo)
+            try
+            {
                 VideoId = GetVideoId(url, _regexHelper);
+            }
+            catch (Exception ex)
+            {
+                _console.WriteLineInRed($"Error retreiving VideoID for url {url}");
+            }
+
+            try
+            {
+                CheckValidity();
+            }
+            catch (Exception ex)
+            {
+                _console.WriteLineInRed($"Error checking validity for url {url}");
+            }
 
             IsValid = SourceStatus.Undefined;
         }
@@ -53,10 +68,9 @@ namespace WikiRef
             }
         }
 
-        public async Task<SourceStatus> CheckIsValid()
+        public async Task<SourceStatus> FetchPageName()
         {
             await RetreivePageName();
-            CheckValidity();
             return IsValid;
         }
 

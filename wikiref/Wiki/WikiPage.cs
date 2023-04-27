@@ -186,9 +186,14 @@ namespace WikiRef.Wiki
 
             BuildAggregatedYoutubeUrl();
 
+            new ParallelOptions
+            {
+                MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling((Environment.ProcessorCount * 0.75) * 2.0))
+            };
+
             await Parallel.ForEachAsync(YoutubeUrls, async (youtubeUrls, token) =>
             {
-                await (youtubeUrls as YoutubeUrl).CheckIsValid();
+                await (youtubeUrls as YoutubeUrl).FetchPageName();
             });
 
             // Check non youtube reference
@@ -209,7 +214,7 @@ namespace WikiRef.Wiki
                         else if (reference.IsCitation && IsYoutubeUrl(reference.Content)) // if url contained in citation
                         {
                             var citationVideo = new YoutubeUrl(url.Url, _console, _config, _regexHelper, _networkHelper);
-                            await citationVideo.CheckIsValid();
+                            await citationVideo.FetchPageName();
                             status = citationVideo.IsValid;
                         }
                         else
@@ -302,10 +307,9 @@ namespace WikiRef.Wiki
                             string VideoId = YoutubeUrl.GetVideoId(url.Url, _regexHelper);
                             if (!YoutubeUrls.Exists(o => o.VideoId == VideoId || String.IsNullOrEmpty(VideoId)))
                                 YoutubeUrls.Add(new YoutubeUrl(url.Url, _console, _config, _regexHelper, _networkHelper));
-                            else
-                            {
+                            else                            
                                 YoutubeUrls.FirstOrDefault(o => VideoId == o.VideoId).Urls.Add(url.Url);
-                            }
+                            
                         }
                     }
                 }
