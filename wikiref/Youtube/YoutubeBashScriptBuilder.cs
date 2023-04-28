@@ -68,7 +68,7 @@ namespace WikiRef
                     _console.WriteLineInOrange(String.Format("Download skipped. Url is a playlist {0} from {1}. Use --download-playlist if you want to download it's content", video.AggregatedUrls, page));
                 return String.Empty;
             }
-            else if (video.IsAbout || video.IsCommunity || video.IsHome || video.IsUser)
+            else if (!video.IsVideo)
             {
                 if (_config.Verbose)
                     _console.WriteLineInOrange($"Download skipped. {video.AggregatedUrls} is valid a webpage page(s) from {page} but not a video.");
