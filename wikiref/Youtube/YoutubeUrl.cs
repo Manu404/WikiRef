@@ -46,6 +46,7 @@ namespace WikiRef
             try
             {
                 CheckValidity();
+                CheckTypeOfUrl();
             }
             catch (Exception ex)
             {
