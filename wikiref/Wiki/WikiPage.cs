@@ -296,7 +296,7 @@ namespace WikiRef.Wiki
         {
             _console.WriteLine("Aggregating youtube links");
 
-            foreach( var reference in References.Where(r => !r.IsCitation)) // can't || because collection is modified
+            foreach(var reference in References.Where(r => !r.IsCitation)) // can't || because collection is modified
             {
                 try
                 {
@@ -307,9 +307,9 @@ namespace WikiRef.Wiki
                             string VideoId = YoutubeUrl.GetVideoId(url.Url, _regexHelper);
                             if (!YoutubeUrls.Exists(o => o.VideoId == VideoId || String.IsNullOrEmpty(VideoId)))
                                 YoutubeUrls.Add(new YoutubeUrl(url.Url, _console, _config, _regexHelper, _networkHelper));
-                            else                            
+                            else
                                 YoutubeUrls.FirstOrDefault(o => VideoId == o.VideoId).Urls.Add(url.Url);
-                            
+
                         }
                     }
                 }
