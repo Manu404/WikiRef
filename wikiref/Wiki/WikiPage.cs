@@ -259,9 +259,9 @@ namespace WikiRef.Wiki
                     _console.WriteLineInRed($"#> Invalid reference: {displayedUrl} -> {reference.Status}");
                     _console.WriteLineInRed($"Content: {reference.Content}");
                 }
-                else if (reference.Status == SourceStatus.WhiteListed)
+                else if (_config.Verbose && reference.Status == SourceStatus.WhiteListed)
                     _console.WriteLineInOrange($"> #The url {url} is whitelited and wasn't checked.");
-                else
+                else if(_config.Verbose && reference.Status != SourceStatus.Valid)
                     _console.WriteLineInGray($"#> Valid reference but might have some issues: {displayedUrl} -> {reference.Status}");
             }
         }
