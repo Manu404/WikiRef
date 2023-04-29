@@ -14,7 +14,7 @@
                 "IsPlaylist": false,
                 "IsUser": false,
                 "IsCommunity": false,
-                "IsAbout": false,
+                "IsAbout": true,
                 "IsChannels": false,
                 "IsHome": false,
                 "IsVideo": false
@@ -30,7 +30,7 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://youtu.be/gcMm2zzUP6s?t=2180"],
                 "VideoId": "gcMm2zzUP6s",
@@ -43,7 +43,7 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://youtu.be/TH9KCJgPeZM?t=505"],
                 "VideoId": "TH9KCJgPeZM",
@@ -56,7 +56,7 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://youtu.be/ZsHUweqUJ1A?t=637"],
                 "VideoId": "ZsHUweqUJ1A",
@@ -69,7 +69,7 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://youtu.be/iEHd1YtIRK8?t=5186", "https://youtu.be/iEHd1YtIRK8?t=3050", "https://youtu.be/iEHd1YtIRK8?t=5091", "https://youtu.be/iEHd1YtIRK8?t=2463", "https://youtu.be/iEHd1YtIRK8?t=2638", "https://youtu.be/iEHd1YtIRK8?t=3283", "https://youtu.be/iEHd1YtIRK8?t=8308", "https://youtu.be/iEHd1YtIRK8?t=1028"],
                 "VideoId": "iEHd1YtIRK8",
@@ -82,7 +82,7 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://youtu.be/KlaRbENAC8E?t=435"],
                 "VideoId": "KlaRbENAC8E",
@@ -95,7 +95,7 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://youtu.be/O933lKdjXlQ?t=136"],
                 "VideoId": "O933lKdjXlQ",
@@ -108,7 +108,7 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://youtu.be/zwklYb5m_s0?t=18", "https://youtu.be/zwklYb5m_s0", "https://youtu.be/zwklYb5m_s0?t=11"],
                 "VideoId": "zwklYb5m_s0",
@@ -121,7 +121,7 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://youtu.be/_6A1SzCvTWo?t=775", "https://youtu.be/_6A1SzCvTWo?t=459", "https://youtu.be/_6A1SzCvTWo?t=942"],
                 "VideoId": "_6A1SzCvTWo",
@@ -134,7 +134,7 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://youtu.be/zI6laqkcDVQ?t=769", "https://youtu.be/zI6laqkcDVQ?t=893", "https://youtu.be/zI6laqkcDVQ?t=983", "https://youtu.be/zI6laqkcDVQ?t=1057", "https://youtu.be/zI6laqkcDVQ?t=1089", "https://youtu.be/zI6laqkcDVQ?t=1154", "https://youtu.be/zI6laqkcDVQ?t=1198", "https://youtu.be/zI6laqkcDVQ?t=1322", "https://youtu.be/zI6laqkcDVQ?t=1799", "https://youtu.be/zI6laqkcDVQ?t=1841", "https://youtu.be/zI6laqkcDVQ?t=1926", "https://youtu.be/zI6laqkcDVQ?t=1940", "https://youtu.be/zI6laqkcDVQ?t=1970", "https://youtu.be/zI6laqkcDVQ?t=2133"],
                 "VideoId": "zI6laqkcDVQ",
@@ -147,7 +147,7 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://youtu.be/44mP1zP7zQ0?t=40", "https://youtu.be/44mP1zP7zQ0?t=49", "https://youtu.be/44mP1zP7zQ0?t=65", "https://youtu.be/44mP1zP7zQ0?t=247", "https://youtu.be/44mP1zP7zQ0?t=378"],
                 "VideoId": "44mP1zP7zQ0",
@@ -160,7 +160,7 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://youtu.be/IMuc4O3xkno?t=234", "https://youtu.be/IMuc4O3xkno?t=414", "https://youtu.be/IMuc4O3xkno?t=476", "https://youtu.be/IMuc4O3xkno?t=303", "https://youtu.be/IMuc4O3xkno?t=347", "https://youtu.be/IMuc4O3xkno?t=364"],
                 "VideoId": "IMuc4O3xkno",
@@ -173,7 +173,7 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://youtu.be/KQBq_dUzszw?t=102", "https://youtu.be/KQBq_dUzszw?t=286"],
                 "VideoId": "KQBq_dUzszw",
@@ -186,7 +186,7 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://youtu.be/o0jQKX4COR8?t=125", "https://youtu.be/o0jQKX4COR8?t=183", "https://youtu.be/o0jQKX4COR8?t=251"],
                 "VideoId": "o0jQKX4COR8",
@@ -199,7 +199,7 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://youtu.be/lX3cvG9wUuk?t=352", "https://youtu.be/lX3cvG9wUuk?t=305", "https://www.youtube.com/watch?v=lX3cvG9wUuk"],
                 "VideoId": "lX3cvG9wUuk",
@@ -212,7 +212,7 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://youtu.be/iLnmw_yjxYE?t=72", "https://youtu.be/iLnmw_yjxYE?t=126", "https://youtu.be/iLnmw_yjxYE?t=253"],
                 "VideoId": "iLnmw_yjxYE",
@@ -225,7 +225,7 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://www.youtube.com/shorts/PElWZRmFwc4"],
                 "VideoId": "PElWZRmFwc4",
@@ -238,7 +238,7 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://www.youtube.com/watch?v=Sve0-gSyzME"],
                 "VideoId": "Sve0-gSyzME",
@@ -251,7 +251,7 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://youtu.be/IUYQgRmhFEg?t=790", "https://youtu.be/IUYQgRmhFEg?t=797", "https://youtu.be/IUYQgRmhFEg?t=843", "https://youtu.be/IUYQgRmhFEg?t=880", "https://youtu.be/IUYQgRmhFEg?t=894", "https://www.youtube.com/watch?v=IUYQgRmhFEg"],
                 "VideoId": "IUYQgRmhFEg",
@@ -264,7 +264,7 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }
         ],
         "References": [{
@@ -1148,7 +1148,7 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://www.youtube.com/watch?v=yZ-K7nCVnBI&playnext_from=TL&videos=osPknwzXEas&feature=sub", "https://www.youtube.com/watch?v=yZ-K7nCVnBI&playnext_from=TL&videos=osPknwzXEas&feature=sub"],
                 "VideoId": "yZ-K7nCVnBI",
@@ -1161,7 +1161,7 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://youtu.be/dQw4w9WgXcQ?feature=youtube_gdata_playe", "http://youtu.be/dQw4w9WgXcQ?feature=youtube_gdata_playe", "https://youtube.com/shorts/dQw4w9WgXcQ?feature=share'"],
                 "VideoId": "dQw4w9WgXcQ",
@@ -1174,1423 +1174,10 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://youtube.com/watch?vi=dQw4w9WgXcQ&feature=youtube_gdata_player"],
                 "VideoId": "watch",
-                "Name": "",
-                "ChannelName": null,
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://www.youtube.com/user/Scobleizer#p/u/1/1p3vcRhsYGo"],
-                "VideoId": "1p3vcRhsYGo",
-                "Name": "Robert Scoble ",
-                "ChannelName": "Robert Scoble",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://www.youtube.com/ytscreeningroom?v=NRHVzbJVx8I", "http://www.youtube.com/ytscreeningroom?v=NRHVzbJVx8I"],
-                "VideoId": "NRHVzbJVx8I",
-                "Name": null,
-                "ChannelName": null,
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://www.youtube.com/embed/nas1rJpm7wY?rel=0"],
-                "VideoId": "nas1rJpm7wY",
-                "Name": "",
-                "ChannelName": null,
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://www.youtube.com/watch?v=ubNF9QNEQLA", "https://www.youtube.com/watch?v=ubNF9QNEQLA", "https://www.youtube.com/watch?v=ubNF9QNEQLA"],
-                "VideoId": "ubNF9QNEQLA",
-                "Name": "Test Your Awareness : Whodunnit? ",
-                "ChannelName": "dothetest",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://www.youtube.com/playlist?list=PLUTbk4P4tNYQ99rLpgq9eKAjZpiQh7Ay4", "https://www.youtube.com/playlist?list=PLUTbk4P4tNYQ99rLpgq9eKAjZpiQh7Ay4", "https://www.youtube.com/playlist?list=PLUTbk4P4tNYQ99rLpgq9eKAjZpiQh7Ay4", "https://www.youtube.com/playlist?list=PLUTbk4P4tNYQ99rLpgq9eKAjZpiQh7Ay4"],
-                "VideoId": "playlist",
-                "Name": "Vidéos Préparées ",
-                "ChannelName": null,
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }
-        ],
-        "References": [{
-                "Content": "<ref>Melon busk + shorten domain https://www.youtube.com/watch?v=2j3p_aDMTNg</ref>",
-                "Urls": [{
-                        "Url": "https://www.youtube.com/watch?v=2j3p_aDMTNg",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>vidéo privé https://www.youtube.com/watch?v=yZ-K7nCVnBI&playnext_from=TL&videos=osPknwzXEas&feature=sub</ref>",
-                "Urls": [{
-                        "Url": "https://www.youtube.com/watch?v=yZ-K7nCVnBI&playnext_from=TL&videos=osPknwzXEas&feature=sub",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>rick roll  [https://youtu.be/dQw4w9WgXcQ?feature=youtube_gdata_playe http://youtu.be/dQw4w9WgXcQ?feature=youtube_gdata_playe]</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/dQw4w9WgXcQ?feature=youtube_gdata_playe",
-                        "SourceStatus": 2
-                    }, {
-                        "Url": "http://youtu.be/dQw4w9WgXcQ?feature=youtube_gdata_playe",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>ajout source redirect home page -  https://youtube.com/watch?vi=dQw4w9WgXcQ&feature=youtube_gdata_player</ref>",
-                "Urls": [{
-                        "Url": "https://youtube.com/watch?vi=dQw4w9WgXcQ&feature=youtube_gdata_player",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>rick roll avec share https://youtube.com/shorts/dQw4w9WgXcQ?feature=share'</ref>",
-                "Urls": [{
-                        "Url": "https://youtube.com/shorts/dQw4w9WgXcQ?feature=share'",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>Video indisponible (pas TOS, pas privé) - https://www.youtube-nocookie.com/embed/up_lNV-yoK4?rel=0%2C</ref>",
-                "Urls": [{
-                        "Url": "https://www.youtube-nocookie.com/embed/up_lNV-yoK4?rel=0,",
-                        "SourceStatus": 0
-                    }
-                ],
-                "Status": 0,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>lien de chaine https://www.youtube.com/user/Scobleizer#p/u/1/1p3vcRhsYGo</ref>",
-                "Urls": [{
-                        "Url": "https://www.youtube.com/user/Scobleizer#p/u/1/1p3vcRhsYGo",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>chaine indisponnible  [https://www.youtube.com/ytscreeningroom?v=NRHVzbJVx8I http://www.youtube.com/ytscreeningroom?v=NRHVzbJVx8I]</ref>",
-                "Urls": [{
-                        "Url": "https://www.youtube.com/ytscreeningroom?v=NRHVzbJVx8I",
-                        "SourceStatus": 2
-                    }, {
-                        "Url": "http://www.youtube.com/ytscreeningroom?v=NRHVzbJVx8I",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>video indisponnible https://www.youtube.com/watch?v=yZ-K7nCVnBI&playnext_from=TL&videos=osPknwzXEas&feature=sub</ref>",
-                "Urls": [{
-                        "Url": "https://www.youtube.com/watch?v=yZ-K7nCVnBI&playnext_from=TL&videos=osPknwzXEas&feature=sub",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>Embedded video https://www.youtube.com/embed/nas1rJpm7wY?rel=0</ref>",
-                "Urls": [{
-                        "Url": "https://www.youtube.com/embed/nas1rJpm7wY?rel=0",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref> Multiple url reference [https://www.youtube.com/watch?v=ubNF9QNEQLA, https://www.youtube.com/watch?v=ubNF9QNEQLA]</ref>",
-                "Urls": [{
-                        "Url": "https://www.youtube.com/watch?v=ubNF9QNEQLA",
-                        "SourceStatus": 2
-                    }, {
-                        "Url": "https://www.youtube.com/watch?v=ubNF9QNEQLA",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref> nowiki referefence <nowiki>https://www.youtube.com/watch?v=ubNF9QNEQLA</nowiki></ref>",
-                "Urls": [{
-                        "Url": "https://www.youtube.com/watch?v=ubNF9QNEQLA",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>playlist avec plusieurs videos https://www.youtube.com/playlist?list=PLUTbk4P4tNYQ99rLpgq9eKAjZpiQh7Ay4</ref>",
-                "Urls": [{
-                        "Url": "https://www.youtube.com/playlist?list=PLUTbk4P4tNYQ99rLpgq9eKAjZpiQh7Ay4",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>https://www.youtube.com/playlist?list=PLUTbk4P4tNYQ99rLpgq9eKAjZpiQh7Ay4</ref>",
-                "Urls": [{
-                        "Url": "https://www.youtube.com/playlist?list=PLUTbk4P4tNYQ99rLpgq9eKAjZpiQh7Ay4",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>https://www.youtube.com/playlist?list=PLUTbk4P4tNYQ99rLpgq9eKAjZpiQh7Ay4 -  https://www.youtube.com/playlist?list=PLUTbk4P4tNYQ99rLpgq9eKAjZpiQh7Ay4</ref>",
-                "Urls": [{
-                        "Url": "https://www.youtube.com/playlist?list=PLUTbk4P4tNYQ99rLpgq9eKAjZpiQh7Ay4",
-                        "SourceStatus": 2
-                    }, {
-                        "Url": "https://www.youtube.com/playlist?list=PLUTbk4P4tNYQ99rLpgq9eKAjZpiQh7Ay4",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }
-        ],
-        "Content": "__NOINDEX__\n\n[[Category:Test pages]]\n\n===Cette page est utilisé pour tester un maximum de scénarios différents lié à YouTube pour l'outil WikiRef.===\n. .\n\n===<u>Merci de ne pas y toucher !</u>===\n\n<code><nowiki>__NOINDEX__</nowiki></code> tag set\n\n4 Invalid => dead links\n\n2 \"semi valid\" => malformed refs\n\nLe reste ce sont juste des exemples de formats d'url et usages différents valides.\n\nEnv de dev du regex: https://regex101.com/r/2lxQbx/1\n\nLa suite de l'url est nettoyé manuellement avec un peu de magie noire\n\n'''Vidéo a télécharger après aggregation et retrait des videos invalides, channel et playlist'''\n\n*'Elon_Musk_fires_employees_in_twitter_meeting_DUB__[2j3p_aDMTNg]‧mp4'\n*'Rick_Astley__Never_Gonna_Give_You_Up_(Official_Music_Video)__[dQw4w9WgXcQ]‧mp4'\n*'Test_Your_Awareness___Whodunnit___[ubNF9QNEQLA]]‧mp4'\n*'VGA_2011__Diablo_3_Exclusive_Intro_Cinematic__[nas1rJpm7wY]‧mp4'\n\n===Liste des références===\n\n<ref>Melon busk + shorten domain https://www.youtube.com/watch?v=2j3p_aDMTNg</ref> => Valid\n\n<ref>vidéo privé https://www.youtube.com/watch?v=yZ-K7nCVnBI&playnext_from=TL&videos=osPknwzXEas&feature=sub</ref> => Invalid - privé\n\n<ref>rick roll  [https://youtu.be/dQw4w9WgXcQ?feature=youtube_gdata_playe http://youtu.be/dQw4w9WgXcQ?feature=youtube_gdata_playe]</ref> => Valid \n\n<ref>ajout source redirect home page -  https://youtube.com/watch?vi=dQw4w9WgXcQ&feature=youtube_gdata_player</ref> => Valid\n\n<ref>rick roll avec share https://youtube.com/shorts/dQw4w9WgXcQ?feature=share'</ref> => Valid\n\n<ref>Video indisponible (pas TOS, pas privé) - https://www.youtube-nocookie.com/embed/up_lNV-yoK4?rel=0%2C</ref> => Invalid\n\n<ref>lien de chaine https://www.youtube.com/user/Scobleizer#p/u/1/1p3vcRhsYGo</ref>  => Valid - lien de chaine\n\n<ref>chaine indisponnible  [https://www.youtube.com/ytscreeningroom?v=NRHVzbJVx8I http://www.youtube.com/ytscreeningroom?v=NRHVzbJVx8I]</ref> => Invalid\n\n<ref>video indisponnible https://www.youtube.com/watch?v=yZ-K7nCVnBI&playnext_from=TL&videos=osPknwzXEas&feature=sub</ref> => Invalid\n\n<ref>Embedded video https://www.youtube.com/embed/nas1rJpm7wY?rel=0</ref> => Valid\n\n<ref> Multiple url reference [https://www.youtube.com/watch?v=ubNF9QNEQLA, https://www.youtube.com/watch?v=ubNF9QNEQLA]</ref> => Semi-valid - Multiple reference\n\n<ref> nowiki referefence <nowiki>https://www.youtube.com/watch?v=ubNF9QNEQLA</nowiki></ref> => Semivalid - nowiki tag\n\n<ref>playlist avec plusieurs videos https://www.youtube.com/playlist?list=PLUTbk4P4tNYQ99rLpgq9eKAjZpiQh7Ay4</ref> => valid - playlist\n\n<ref>https://www.youtube.com/playlist?list=PLUTbk4P4tNYQ99rLpgq9eKAjZpiQh7Ay4</ref> => valid sans metadata\n\n<ref>https://www.youtube.com/playlist?list=PLUTbk4P4tNYQ99rLpgq9eKAjZpiQh7Ay4 -  https://www.youtube.com/playlist?list=PLUTbk4P4tNYQ99rLpgq9eKAjZpiQh7Ay4</ref> => multiple links\n\n<references />"
-    }
-]
-[{
-        "Name": "Badsocio",
-        "YoutubeUrls": [],
-        "References": [],
-        "Content": "{{DraftBox}}\n\n[[Category:Test pages]]\n{{Infobox|pseudo= Bad Sociologist|activités=Twitter|twitter=https://twitter.com/Bad_Sociologist|photo=Image_missing.png|instagram=https://www.instagram.com/bad_sociologist_labs/}}\n\n'''Bad Sociologist''' est un influenceur politique sur Twitter.\n\n===Institutions===\n''\"Il est urgent d'abolir la police si l'on veut vivre dans une société émancipée\"''.\n\n==Références==\n\n{{Références|citation=0}}"
-    }, {
-        "Name": "Psyhodelik",
-        "YoutubeUrls": [{
-                "Urls": ["https://www.youtube.com/@psyhodelik/about"],
-                "VideoId": "about",
-                "Name": "Psyhodelik ",
-                "ChannelName": "Psyhodelik",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://youtu.be/E0gzvUc797I?t=138", "https://youtu.be/E0gzvUc797I?t=147", "https://youtu.be/E0gzvUc797I?t=397", "https://youtu.be/E0gzvUc797I?t=849"],
-                "VideoId": "E0gzvUc797I",
-                "Name": "LE PREMIER PRETRE NON BINAIRE GRACE A ADAM ET EVE ",
-                "ChannelName": "Psyhodelik",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://youtu.be/gcMm2zzUP6s?t=2180"],
-                "VideoId": "gcMm2zzUP6s",
-                "Name": "#RDF Psyhodelik clash  La gauchiasse! ",
-                "ChannelName": "ZioClo",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://youtu.be/TH9KCJgPeZM?t=505"],
-                "VideoId": "TH9KCJgPeZM",
-                "Name": "USUL S'ENFLAMME ET PARLE DES METIER DE MAYRDE DES PETIT PROLO ",
-                "ChannelName": "Psyhodelik",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://youtu.be/ZsHUweqUJ1A?t=637"],
-                "VideoId": "ZsHUweqUJ1A",
-                "Name": "VELMA - LA PIRE SERIE WOKE SE FAIT VAPORISÉ PAR LES CRITIQUE ",
-                "ChannelName": "Psyhodelik",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://youtu.be/iEHd1YtIRK8?t=5186", "https://youtu.be/iEHd1YtIRK8?t=3050", "https://youtu.be/iEHd1YtIRK8?t=5091", "https://youtu.be/iEHd1YtIRK8?t=2463", "https://youtu.be/iEHd1YtIRK8?t=2638", "https://youtu.be/iEHd1YtIRK8?t=3283", "https://youtu.be/iEHd1YtIRK8?t=8308", "https://youtu.be/iEHd1YtIRK8?t=1028"],
-                "VideoId": "iEHd1YtIRK8",
-                "Name": "PSYHODELIK DISCUTE AVEC UN MILITANT TRANS-LGBT SUR QU'EST-CE QU'UNE FEMME ? - FEAT @ZioCloaPX ",
-                "ChannelName": "Psyhodelik",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://youtu.be/KlaRbENAC8E?t=435"],
-                "VideoId": "KlaRbENAC8E",
-                "Name": "DANY CALIGULA DANS LA SAUCE POUR AVOIR DIT QUE SAMUEL PATY AVAIT CHIIER SUR L'ISLAM ",
-                "ChannelName": "Psyhodelik",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://youtu.be/O933lKdjXlQ?t=136"],
-                "VideoId": "O933lKdjXlQ",
-                "Name": "DISNEY SENSURE PICSOU A CAUSE DE CA ?? ",
-                "ChannelName": "Psyhodelik",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://youtu.be/zwklYb5m_s0?t=18", "https://youtu.be/zwklYb5m_s0", "https://youtu.be/zwklYb5m_s0?t=11"],
-                "VideoId": "zwklYb5m_s0",
-                "Name": "UN NAGEUR TRANS FINI DERNIER MAIS CE SENT ACCOMPLIS EN TANT QU'HOMME ",
-                "ChannelName": "Psyhodelik",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://youtu.be/_6A1SzCvTWo?t=775", "https://youtu.be/_6A1SzCvTWo?t=459", "https://youtu.be/_6A1SzCvTWo?t=942"],
-                "VideoId": "_6A1SzCvTWo",
-                "Name": "LE PREMIER PERSO TRANS DE HOGWARTS LEGACY EST AKHUZÉ DE TRANSFOUBY ",
-                "ChannelName": "Psyhodelik",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://youtu.be/zI6laqkcDVQ?t=769", "https://youtu.be/zI6laqkcDVQ?t=893", "https://youtu.be/zI6laqkcDVQ?t=983", "https://youtu.be/zI6laqkcDVQ?t=1057", "https://youtu.be/zI6laqkcDVQ?t=1089", "https://youtu.be/zI6laqkcDVQ?t=1154", "https://youtu.be/zI6laqkcDVQ?t=1198", "https://youtu.be/zI6laqkcDVQ?t=1322", "https://youtu.be/zI6laqkcDVQ?t=1799", "https://youtu.be/zI6laqkcDVQ?t=1841", "https://youtu.be/zI6laqkcDVQ?t=1926", "https://youtu.be/zI6laqkcDVQ?t=1940", "https://youtu.be/zI6laqkcDVQ?t=1970", "https://youtu.be/zI6laqkcDVQ?t=2133"],
-                "VideoId": "zI6laqkcDVQ",
-                "Name": "JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH ",
-                "ChannelName": "Psyhodelik",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://youtu.be/44mP1zP7zQ0?t=40", "https://youtu.be/44mP1zP7zQ0?t=49", "https://youtu.be/44mP1zP7zQ0?t=65", "https://youtu.be/44mP1zP7zQ0?t=247", "https://youtu.be/44mP1zP7zQ0?t=378"],
-                "VideoId": "44mP1zP7zQ0",
-                "Name": "UN HOMME TRANSGENRE DONNE NAISSANCE AU BÉBÉ D'UN PARTENAIRE NON BINAIRE AVEC UNE DONNEUSE DE SPAIRME ",
-                "ChannelName": "Psyhodelik",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://youtu.be/IMuc4O3xkno?t=234", "https://youtu.be/IMuc4O3xkno?t=414", "https://youtu.be/IMuc4O3xkno?t=476", "https://youtu.be/IMuc4O3xkno?t=303", "https://youtu.be/IMuc4O3xkno?t=347", "https://youtu.be/IMuc4O3xkno?t=364"],
-                "VideoId": "IMuc4O3xkno",
-                "Name": "UNE LOI POUR METTRE DES TAMPON DANS LES TOILETTES DES GARCONS ",
-                "ChannelName": "Psyhodelik",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://youtu.be/KQBq_dUzszw?t=102", "https://youtu.be/KQBq_dUzszw?t=286"],
-                "VideoId": "KQBq_dUzszw",
-                "Name": "GAMEKULT DÉCIDE DE KHANCEL HOGWARTS LEGACY ET REFUSE DE FAIRE LE TEST A CAUSE DE JK ROWLING ",
-                "ChannelName": "Psyhodelik",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://youtu.be/o0jQKX4COR8?t=125", "https://youtu.be/o0jQKX4COR8?t=183", "https://youtu.be/o0jQKX4COR8?t=251"],
-                "VideoId": "o0jQKX4COR8",
-                "Name": "PSYHODELIK SE CONTREDIT TOUT SEUL ET SE BLESSE DANS SA CONFUSION ! ",
-                "ChannelName": "RedClem le Z",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://youtu.be/lX3cvG9wUuk?t=352", "https://youtu.be/lX3cvG9wUuk?t=305", "https://www.youtube.com/watch?v=lX3cvG9wUuk"],
-                "VideoId": "lX3cvG9wUuk",
-                "Name": "LE MOT \"TERRAIN\" EST JUGÉ OFENSSANT ET ANTI-NOIR ",
-                "ChannelName": "Psyhodelik",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://youtu.be/iLnmw_yjxYE?t=72", "https://youtu.be/iLnmw_yjxYE?t=126", "https://youtu.be/iLnmw_yjxYE?t=253"],
-                "VideoId": "iLnmw_yjxYE",
-                "Name": "PANTIN DEVIENT PANTINE POUR SOUTENIR L'ÉGALITÉ HOMMES-FEMMES ",
-                "ChannelName": "Psyhodelik",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://www.youtube.com/shorts/PElWZRmFwc4"],
-                "VideoId": "PElWZRmFwc4",
-                "Name": "Psyho et KB VOUS MANIPULENT ET L'AVOUENT ",
-                "ChannelName": "Aléa+",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://www.youtube.com/watch?v=Sve0-gSyzME"],
-                "VideoId": "Sve0-gSyzME",
-                "Name": "LA MANGUE C'EST RACISTE 🥭 ",
-                "ChannelName": "Psyhodelik",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://youtu.be/IUYQgRmhFEg?t=790", "https://youtu.be/IUYQgRmhFEg?t=797", "https://youtu.be/IUYQgRmhFEg?t=843", "https://youtu.be/IUYQgRmhFEg?t=880", "https://youtu.be/IUYQgRmhFEg?t=894", "https://www.youtube.com/watch?v=IUYQgRmhFEg"],
-                "VideoId": "IUYQgRmhFEg",
-                "Name": "PSYHODELIK EST PRÉVISIBLE ET FACILE A PIÉGER ! ",
-                "ChannelName": "RedClem le Z",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }
-        ],
-        "References": [{
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=29 avril 2006|url=https://www.youtube.com/@psyhodelik/about|url_desc=Psyhodelik |desc=Channel de Psyhodelik}}</ref>",
-                "Urls": [{
-                        "Url": "https://www.youtube.com/@psyhodelik/about",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=18 janvier 2023|url=https://youtu.be/E0gzvUc797I?t=138|url_desc=LE PREMIER PRETRE NON BINAIRE GRACE A ADAM ET EVE |desc=Channel de Psyhodelik|timestamp=138}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/E0gzvUc797I?t=138",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=www.linkedin.com|date=|url=https://www.linkedin.com/in/daliborstanisavljevic/|url_desc=Section éducation}}</ref>",
-                "Urls": [{
-                        "Url": "www.linkedin.com",
-                        "SourceStatus": 0
-                    }, {
-                        "Url": "https://www.linkedin.com/in/daliborstanisavljevic/",
-                        "SourceStatus": 3
-                    }
-                ],
-                "Status": 3,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de ZioClo|date=01 mars 2023|url=https://youtu.be/gcMm2zzUP6s?t=2180|url_desc=#RDF Psyhodelik clash  La gauchiasse! |desc=Channel de ZioClo|timestamp=2180}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/gcMm2zzUP6s?t=2180",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=29 janvier 2023|url=https://youtu.be/TH9KCJgPeZM?t=505|url_desc=USUL S'ENFLAMME ET PARLE DES METIER DE MAYRDE DES PETIT PROLO |desc=Channel de Psyhodelik|timestamp=505}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/TH9KCJgPeZM?t=505",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=22 janvier 2023|url=https://youtu.be/ZsHUweqUJ1A?t=637|url_desc=VELMA - LA PIRE SERIE WOKE SE FAIT VAPORISÉ PAR LES CRITIQUE |desc=Channel de Psyhodelik|timestamp=637}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/ZsHUweqUJ1A?t=637",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/iEHd1YtIRK8?t=5186|url_desc=PSYHODELIK DISCUTE AVEC UN MILITANT TRANS-LGBT SUR QU'EST-CE QU'UNE FEMME ? - FEAT @ZioCloaPX |desc=Channel de Psyhodelik|timestamp=5186}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/iEHd1YtIRK8?t=5186",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=21 octobre 2022|url=https://youtu.be/KlaRbENAC8E?t=435|url_desc=DANY CALIGULA DANS LA SAUCE POUR AVOIR DIT QUE SAMUEL PATY AVAIT CHIIER SUR L'ISLAM |desc=Channel de Psyhodelik|timestamp=435}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/KlaRbENAC8E?t=435",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=19 février 2023|url=https://youtu.be/O933lKdjXlQ?t=136|url_desc=DISNEY SENSURE PICSOU A CAUSE DE CA ?? |desc=Channel de Psyhodelik|timestamp=136}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/O933lKdjXlQ?t=136",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=18 janvier 2023|url=https://youtu.be/zwklYb5m_s0?t=18|url_desc=UN NAGEUR TRANS FINI DERNIER MAIS CE SENT ACCOMPLIS EN TANT QU'HOMME |desc=Channel de Psyhodelik|timestamp=18}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/zwklYb5m_s0?t=18",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=18 janvier 2023|url=https://youtu.be/zwklYb5m_s0|url_desc=UN NAGEUR TRANS FINI DERNIER MAIS CE SENT ACCOMPLIS EN TANT QU'HOMME |desc=Channel de Psyhodelik|timestamp=}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/zwklYb5m_s0",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/iEHd1YtIRK8?t=3050|url_desc=PSYHODELIK DISCUTE AVEC UN MILITANT TRANS-LGBT SUR QU'EST-CE QU'UNE FEMME ? - FEAT @ZioCloaPX |desc=Channel de Psyhodelik|timestamp=3050}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/iEHd1YtIRK8?t=3050",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=09 février 2023|url=https://youtu.be/_6A1SzCvTWo?t=775|url_desc=LE PREMIER PERSO TRANS DE HOGWARTS LEGACY EST AKHUZÉ DE TRANSFOUBY |desc=Channel de Psyhodelik|timestamp=775}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/_6A1SzCvTWo?t=775",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=769|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=769}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/zI6laqkcDVQ?t=769",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=893|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=893}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/zI6laqkcDVQ?t=893",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=983|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=983}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/zI6laqkcDVQ?t=983",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=11 janvier 2023|url=https://youtu.be/44mP1zP7zQ0?t=40|url_desc=UN HOMME TRANSGENRE DONNE NAISSANCE AU BÉBÉ D'UN PARTENAIRE NON BINAIRE AVEC UNE DONNEUSE DE SPAIRME |desc=Channel de Psyhodelik|timestamp=40}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/44mP1zP7zQ0?t=40",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=18 janvier 2023|url=https://youtu.be/zwklYb5m_s0?t=11|url_desc=UN NAGEUR TRANS FINI DERNIER MAIS CE SENT ACCOMPLIS EN TANT QU'HOMME |desc=Channel de Psyhodelik|timestamp=11}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/zwklYb5m_s0?t=11",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=11 janvier 2023|url=https://youtu.be/44mP1zP7zQ0?t=49|url_desc=UN HOMME TRANSGENRE DONNE NAISSANCE AU BÉBÉ D'UN PARTENAIRE NON BINAIRE AVEC UNE DONNEUSE DE SPAIRME |desc=Channel de Psyhodelik|timestamp=49}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/44mP1zP7zQ0?t=49",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=11 janvier 2023|url=https://youtu.be/44mP1zP7zQ0?t=65|url_desc=UN HOMME TRANSGENRE DONNE NAISSANCE AU BÉBÉ D'UN PARTENAIRE NON BINAIRE AVEC UNE DONNEUSE DE SPAIRME |desc=Channel de Psyhodelik|timestamp=65}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/44mP1zP7zQ0?t=65",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=11 janvier 2023|url=https://youtu.be/44mP1zP7zQ0?t=247|url_desc=UN HOMME TRANSGENRE DONNE NAISSANCE AU BÉBÉ D'UN PARTENAIRE NON BINAIRE AVEC UNE DONNEUSE DE SPAIRME |desc=Channel de Psyhodelik|timestamp=247}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/44mP1zP7zQ0?t=247",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=1057|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=1057}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/zI6laqkcDVQ?t=1057",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=1089|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=1089}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/zI6laqkcDVQ?t=1089",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref group=\"citation\"><cite class=\"note\">''\"C'est exactement ce que je me tue à faire, à chaque fois quand je dis, et que ça les énerve à mort, que je suis apolitique et non binaire de la politique, parce que ça m'amuse. Arrêtez de ramener la politique sur n'importe quel sujet, ça devient ridicule, on peut débattre de plein de sujets, sans avoir le prisme politique.\"''</cite></ref>",
-                "Urls": [],
-                "Status": 0,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": true
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/iEHd1YtIRK8?t=5091|url_desc=PSYHODELIK DISCUTE AVEC UN MILITANT TRANS-LGBT SUR QU'EST-CE QU'UNE FEMME ? - FEAT @ZioCloaPX |desc=Channel de Psyhodelik|timestamp=5091}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/iEHd1YtIRK8?t=5091",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=1154|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=1154}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/zI6laqkcDVQ?t=1154",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref group=\"citation\"><cite class=\"note\">''\"C'est trop tôt 10 ans en fait [...] t'es en pleine construction, tu ne comprends rien à la vie, et on va te guider vers une transition, c'est pas un tatouage quoi\"''</cite></ref>",
-                "Urls": [],
-                "Status": 0,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": true
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/iEHd1YtIRK8?t=2463|url_desc=PSYHODELIK DISCUTE AVEC UN MILITANT TRANS-LGBT SUR QU'EST-CE QU'UNE FEMME ? - FEAT @ZioCloaPX |desc=Channel de Psyhodelik|timestamp=2463}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/iEHd1YtIRK8?t=2463",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=1198|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=1198}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/zI6laqkcDVQ?t=1198",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/IMuc4O3xkno?t=234|url_desc=UNE LOI POUR METTRE DES TAMPON DANS LES TOILETTES DES GARCONS |desc=Channel de Psyhodelik|timestamp=234}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/IMuc4O3xkno?t=234",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref group=\"citation\"><cite class=\"note\">Réagissant à une vidéo du Minnesota House of Representatives Public Information Services department, dont l'objectif est de fournir des services et informations au public à propos du processus législatif et l'encourager à y participer ([https://www.youtube.com/@MNHouseInfo/about source]), il résume grossièrement : ''\"Donc quand tu as tes règles, et que du coup il n'y a pas de tampons dans les toilettes des garçons, ça peut créer de l'anxiété et de la dépression. Si c'est le seul problème que tu as dans ta vie, et ben putain. Waouh, quand ils vont tomber sur des vrais problèmes de la vie, wah, ca va être chaud.\"''</cite></ref>",
-                "Urls": [{
-                        "Url": "https://www.youtube.com/@MNHouseInfo/about",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": true
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/IMuc4O3xkno?t=414|url_desc=UNE LOI POUR METTRE DES TAMPON DANS LES TOILETTES DES GARCONS |desc=Channel de Psyhodelik|timestamp=414}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/IMuc4O3xkno?t=414",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref group=\"citation\"><cite class=\"note\">''\"Donc juste si tu leur donnes un tampon, ça réduit leur stress et ils se sentent tellement aimés. Putain, achetez une Xbox au bout d'un moment, si ta vie tourne autour d'un tampon.\"''</cite></ref>",
-                "Urls": [],
-                "Status": 0,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": true
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/IMuc4O3xkno?t=476|url_desc=UNE LOI POUR METTRE DES TAMPON DANS LES TOILETTES DES GARCONS |desc=Channel de Psyhodelik|timestamp=476}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/IMuc4O3xkno?t=476",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=11 janvier 2023|url=https://youtu.be/44mP1zP7zQ0?t=378|url_desc=UN HOMME TRANSGENRE DONNE NAISSANCE AU BÉBÉ D'UN PARTENAIRE NON BINAIRE AVEC UNE DONNEUSE DE SPAIRME |desc=Channel de Psyhodelik|timestamp=378}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/44mP1zP7zQ0?t=378",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref group=\"citation\"><cite class=\"note\">À propos d'un vicaire anglican non-binaire, il dit : ''\"Vu qu'il est prêtre, quelque part, ben tu suis les préceptes de Dieu, et normalement Dieu t'a créé.e à son image, ce n'est pas à toi de dire 'non mais Dieu, tu n'as pas eu raison, je me sens comme ça', ça ne marche pas, ça ne marche pas vraiment. Surtout en plus quand tu es prêtre car tu es censé.e t'accepter tel.le que dieu t'as créé.e.\"''</cite></ref>",
-                "Urls": [],
-                "Status": 0,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": true
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=18 janvier 2023|url=https://youtu.be/E0gzvUc797I?t=147|url_desc=LE PREMIER PRETRE NON BINAIRE GRACE A ADAM ET EVE |desc=Channel de Psyhodelik|timestamp=147}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/E0gzvUc797I?t=147",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=1322|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=1322}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/zI6laqkcDVQ?t=1322",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=18 janvier 2023|url=https://youtu.be/E0gzvUc797I?t=397|url_desc=LE PREMIER PRETRE NON BINAIRE GRACE A ADAM ET EVE |desc=Channel de Psyhodelik|timestamp=397}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/E0gzvUc797I?t=397",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref group=\"citation\"><cite class=\"note\">''\"Moi en temps que père je vais lui dire d'attendre un peu, histoire d'être sur.e, parce que on pense à plein de choses, et quand on est adolescent aussi. En fait, il faut pas nier la chose que quand t'es adolescent tu as envie de tester pleins de trucs, et il y a aussi plein de passades en fait. Puis, tu reviens 'mais qu'est-ce que j'étais con en fait, pourquoi j'ai fait ci, pourquoi j'ai fait ça, je me suis fait percer les oreilles je n'avais pas envie, j'ai fait un tatouage, je n'avais pas envie, pris de la drogue, je n'avais pas envie. J'ai eu une période où je m'habillais en femme mais finalement bon ben voila'.\"''</cite></ref>",
-                "Urls": [],
-                "Status": 0,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": true
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/iEHd1YtIRK8?t=2638|url_desc=PSYHODELIK DISCUTE AVEC UN MILITANT TRANS-LGBT SUR QU'EST-CE QU'UNE FEMME ? - FEAT @ZioCloaPX |desc=Channel de Psyhodelik|timestamp=2638}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/iEHd1YtIRK8?t=2638",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref group=\"citation\"><cite class=\"note\">''\"C'est pas forcément péjoratif ou négatif, c'est à dire que ce concept de trap, c'est quelque part amusant, c'est à dire tu vois une nana, qui te surexcite de ouf, parce qu'elle est bonne de partout, et d'un coup elle a un service trois pièces. Et c'est à dire, ce malaise, qui se crée dans ta tête, quand tu as un copain qui se fait avoir par ça, moi, je suis mort de rire.\"''</cite></ref>",
-                "Urls": [],
-                "Status": 0,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": true
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/iEHd1YtIRK8?t=3283|url_desc=PSYHODELIK DISCUTE AVEC UN MILITANT TRANS-LGBT SUR QU'EST-CE QU'UNE FEMME ? - FEAT @ZioCloaPX |desc=Channel de Psyhodelik|timestamp=3283}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/iEHd1YtIRK8?t=3283",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 février 2023|url=https://youtu.be/KQBq_dUzszw?t=102|url_desc=GAMEKULT DÉCIDE DE KHANCEL HOGWARTS LEGACY ET REFUSE DE FAIRE LE TEST A CAUSE DE JK ROWLING |desc=Channel de Psyhodelik|timestamp=102}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/KQBq_dUzszw?t=102",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref group=\"citation\"><cite class=\"note\">''\"On avait des vidéos à ce sujet, sur des trucs calomnieux et diffamatoires [concernant la transphobie de JK Rowling], ils foncent. Sur les autres [jeux] où il y a de vrais problèmes, et qu'il y a vraiment des trucs, tu te dis à la limite, bon, il y a peut être un truc, faudrait peut être réfléchir au boycott, ou pas, je suis pas spécialement pour le boycott mais, au moins le débat reste ouvert. Parce qu'il y a quelque chose de tangible, on peut en discuter. Là, rien ! Si ce n'est que d'aller dans le sens de la vertu, de la mafia arc-en-ciel.\"''</cite></ref>",
-                "Urls": [],
-                "Status": 0,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": true
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 février 2023|url=https://youtu.be/KQBq_dUzszw?t=286|url_desc=GAMEKULT DÉCIDE DE KHANCEL HOGWARTS LEGACY ET REFUSE DE FAIRE LE TEST A CAUSE DE JK ROWLING |desc=Channel de Psyhodelik|timestamp=286}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/KQBq_dUzszw?t=286",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=09 février 2023|url=https://youtu.be/_6A1SzCvTWo?t=459|url_desc=LE PREMIER PERSO TRANS DE HOGWARTS LEGACY EST AKHUZÉ DE TRANSFOUBY |desc=Channel de Psyhodelik|timestamp=459}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/_6A1SzCvTWo?t=459",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=09 février 2023|url=https://youtu.be/_6A1SzCvTWo?t=942|url_desc=LE PREMIER PERSO TRANS DE HOGWARTS LEGACY EST AKHUZÉ DE TRANSFOUBY |desc=Channel de Psyhodelik|timestamp=942}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/_6A1SzCvTWo?t=942",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref group=\"citation\"><cite class=\"note\">''\"C'est l'avis de 99% de la population, c'est à dire que pour eux, femelle, femme ; mâle, homme, c'est le même mot et ça définit exactement la même chose en fait. En gros c'est comme si tu arrivais et que tu leur disais 'un plus deux égal trois', ben ouais, faut arrêter les conneries. Et en fait c'est impossible de conceptualiser ce truc là.\"''</cite></ref>",
-                "Urls": [],
-                "Status": 0,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": true
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/iEHd1YtIRK8?t=8308|url_desc=PSYHODELIK DISCUTE AVEC UN MILITANT TRANS-LGBT SUR QU'EST-CE QU'UNE FEMME ? - FEAT @ZioCloaPX |desc=Channel de Psyhodelik|timestamp=8308}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/iEHd1YtIRK8?t=8308",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=18 janvier 2023|url=https://youtu.be/E0gzvUc797I?t=849|url_desc=LE PREMIER PRETRE NON BINAIRE GRACE A ADAM ET EVE |desc=Channel de Psyhodelik|timestamp=849}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/E0gzvUc797I?t=849",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref group=\"citation\"><cite class=\"note\">''\"Effectivement, je l'ai dit, j'ai le droit de vie ou de mort sur mon gamin... C'est normal. Une mère de famille qui avorte elle a droit de vie ou de mort sur son gamin, c'est normal.\"''</cite></ref>",
-                "Urls": [],
-                "Status": 0,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": true
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de RedClem le Z|date=26 novembre 2022|url=https://youtu.be/o0jQKX4COR8?t=125|url_desc=PSYHODELIK SE CONTREDIT TOUT SEUL ET SE BLESSE DANS SA CONFUSION ! |desc=Channel de RedClem le Z|timestamp=125}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/o0jQKX4COR8?t=125",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de RedClem le Z|date=26 novembre 2022|url=https://youtu.be/o0jQKX4COR8?t=183|url_desc=PSYHODELIK SE CONTREDIT TOUT SEUL ET SE BLESSE DANS SA CONFUSION ! |desc=Channel de RedClem le Z|timestamp=183}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/o0jQKX4COR8?t=183",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de RedClem le Z|date=26 novembre 2022|url=https://youtu.be/o0jQKX4COR8?t=251|url_desc=PSYHODELIK SE CONTREDIT TOUT SEUL ET SE BLESSE DANS SA CONFUSION ! |desc=Channel de RedClem le Z|timestamp=251}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/o0jQKX4COR8?t=251",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=20 janvier 2023|url=https://youtu.be/lX3cvG9wUuk?t=352|url_desc=LE MOT \"TERRAIN\" EST JUGÉ OFENSSANT ET ANTI-NOIR |desc=Channel de Psyhodelik|timestamp=352}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/lX3cvG9wUuk?t=352",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref group=\"citation\"><cite class=\"note\">Ce communiqué déclare : ''\"Nos diverses expériences et notre participation à des systèmes de pouvoir et de privilège rendent les conversations continues sur la race, le racisme structurel et systémique et l’oppression complexe et difficile\". Il faisait suite au choix de l'école de ne plus utiliser le mot \"field\", qui peut être connoté dans la langue anglaise, pour parler de terrains de football. Il déclare : \"En fait, ce qui est complexe et difficile c'est d'arriver à justifier un racisme qui n'existe pas, et comme ils n'arrivent pas à le justifier, ils partent dans des délires hallucinants et un mille feuille argumentatif, qui est juste, ingérable, et non debunkable parce que c'est basé sur du vent.\"''</cite></ref>",
-                "Urls": [],
-                "Status": 0,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": true
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=20 janvier 2023|url=https://youtu.be/lX3cvG9wUuk?t=305|url_desc=LE MOT \"TERRAIN\" EST JUGÉ OFENSSANT ET ANTI-NOIR |desc=Channel de Psyhodelik|timestamp=305}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/lX3cvG9wUuk?t=305",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=1799|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=1799}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/zI6laqkcDVQ?t=1799",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/iEHd1YtIRK8?t=1028|url_desc=PSYHODELIK DISCUTE AVEC UN MILITANT TRANS-LGBT SUR QU'EST-CE QU'UNE FEMME ? - FEAT @ZioCloaPX |desc=Channel de Psyhodelik|timestamp=1028}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/iEHd1YtIRK8?t=1028",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=1841|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=1841}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/zI6laqkcDVQ?t=1841",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref group=\"citation\"><cite class=\"note\">''\"Genre ils vont sécher, parce qu'ils ont leurs règles. C'est un peu genre tu sèches ton boulot parce que tu as le nez bouché.\"''</cite></ref>",
-                "Urls": [],
-                "Status": 0,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": true
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/IMuc4O3xkno?t=303|url_desc=UNE LOI POUR METTRE DES TAMPON DANS LES TOILETTES DES GARCONS |desc=Channel de Psyhodelik|timestamp=303}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/IMuc4O3xkno?t=303",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=10 janvier 2023|url=https://youtu.be/iLnmw_yjxYE?t=72|url_desc=PANTIN DEVIENT PANTINE POUR SOUTENIR L'ÉGALITÉ HOMMES-FEMMES |desc=Channel de Psyhodelik|timestamp=72}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/iLnmw_yjxYE?t=72",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref group=\"citation\"><cite class=\"note\">''\"Vous savez, hum, l'espèce de légende urbaine que les femmes touchaient moins en terme de salariat qui a été 'débunké'\"''.</cite></ref>",
-                "Urls": [],
-                "Status": 0,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": true
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=10 janvier 2023|url=https://youtu.be/iLnmw_yjxYE?t=126|url_desc=PANTIN DEVIENT PANTINE POUR SOUTENIR L'ÉGALITÉ HOMMES-FEMMES |desc=Channel de Psyhodelik|timestamp=126}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/iLnmw_yjxYE?t=126",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=1926|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=1926}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/zI6laqkcDVQ?t=1926",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref group=\"citation\"><cite class=\"note\">''\"Ce n'est pas parce que tu rajoute un 'E' à 'Pantin' que d'un coup il n'y a plus de problèmes de violence contre les femmes, que d'un coup elles sauront faire des créneaux, que d'un coup elles pourront ouvrir des pots de confiture. Qu'on le veuille ou non, l'égalité elle ne sera jamais parfaite\"''</cite></ref>",
-                "Urls": [],
-                "Status": 0,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": true
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=10 janvier 2023|url=https://youtu.be/iLnmw_yjxYE?t=253|url_desc=PANTIN DEVIENT PANTINE POUR SOUTENIR L'ÉGALITÉ HOMMES-FEMMES |desc=Channel de Psyhodelik|timestamp=253}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/iLnmw_yjxYE?t=253",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=1940|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=1940}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/zI6laqkcDVQ?t=1940",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=1970|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=1970}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/zI6laqkcDVQ?t=1970",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Aléa+|date=25 octobre 2022|url=https://www.youtube.com/shorts/PElWZRmFwc4|url_desc=Psyho et KB VOUS MANIPULENT ET L'AVOUENT |desc=Channel de Aléa+|timestamp=}}</ref>",
-                "Urls": [{
-                        "Url": "https://www.youtube.com/shorts/PElWZRmFwc4",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/IMuc4O3xkno?t=347|url_desc=UNE LOI POUR METTRE DES TAMPON DANS LES TOILETTES DES GARCONS |desc=Channel de Psyhodelik|timestamp=347}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/IMuc4O3xkno?t=347",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/IMuc4O3xkno?t=364|url_desc=UNE LOI POUR METTRE DES TAMPON DANS LES TOILETTES DES GARCONS |desc=Channel de Psyhodelik|timestamp=364}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/IMuc4O3xkno?t=364",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=20 janvier 2023|url=https://www.youtube.com/watch?v=lX3cvG9wUuk|url_desc=LE MOT \"TERRAIN\" EST JUGÉ OFENSSANT ET ANTI-NOIR |desc=Channel de Psyhodelik|timestamp=}}</ref>",
-                "Urls": [{
-                        "Url": "https://www.youtube.com/watch?v=lX3cvG9wUuk",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=2133|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=2133}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/zI6laqkcDVQ?t=2133",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=22 avril 2022|url=https://www.youtube.com/watch?v=Sve0-gSyzME|url_desc=LA MANGUE C'EST RACISTE 🥭 |desc=Channel de Psyhodelik|timestamp=}}</ref>",
-                "Urls": [{
-                        "Url": "https://www.youtube.com/watch?v=Sve0-gSyzME",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de RedClem le Z|date=12 décembre 2022|url=https://youtu.be/IUYQgRmhFEg?t=790|url_desc=PSYHODELIK EST PRÉVISIBLE ET FACILE A PIÉGER ! |desc=Channel de RedClem le Z|timestamp=790}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/IUYQgRmhFEg?t=790",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de RedClem le Z|date=12 décembre 2022|url=https://youtu.be/IUYQgRmhFEg?t=797|url_desc=PSYHODELIK EST PRÉVISIBLE ET FACILE A PIÉGER ! |desc=Channel de RedClem le Z|timestamp=797}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/IUYQgRmhFEg?t=797",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de RedClem le Z|date=12 décembre 2022|url=https://youtu.be/IUYQgRmhFEg?t=843|url_desc=PSYHODELIK EST PRÉVISIBLE ET FACILE A PIÉGER ! |desc=Channel de RedClem le Z|timestamp=843}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/IUYQgRmhFEg?t=843",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de RedClem le Z|date=12 décembre 2022|url=https://youtu.be/IUYQgRmhFEg?t=880|url_desc=PSYHODELIK EST PRÉVISIBLE ET FACILE A PIÉGER ! |desc=Channel de RedClem le Z|timestamp=880}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/IUYQgRmhFEg?t=880",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de RedClem le Z|date=12 décembre 2022|url=https://youtu.be/IUYQgRmhFEg?t=894|url_desc=PSYHODELIK EST PRÉVISIBLE ET FACILE A PIÉGER ! |desc=Channel de RedClem le Z|timestamp=894}}</ref>",
-                "Urls": [{
-                        "Url": "https://youtu.be/IUYQgRmhFEg?t=894",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }, {
-                "Content": "<ref>{{ReferenceText|desc=Channel de RedClem le Z|date=12 décembre 2022|url=https://www.youtube.com/watch?v=IUYQgRmhFEg|url_desc=PSYHODELIK EST PRÉVISIBLE ET FACILE A PIÉGER ! |desc=Channel de RedClem le Z|timestamp=}}</ref>",
-                "Urls": [{
-                        "Url": "https://www.youtube.com/watch?v=IUYQgRmhFEg",
-                        "SourceStatus": 2
-                    }
-                ],
-                "Status": 2,
-                "FormattingIssue": false,
-                "InvalidUrls": 0,
-                "IsCitation": false
-            }
-        ],
-        "Content": "{{DraftBox}}\n\n[[Category:Test pages]]\n{{Infobox|pseudo=Psyhodelik|vrai_nom=Dalibor Stanisavljevic|date_naissance=|activités=Vidéaste, Streamer|youtube=https://www.youtube.com/@psyhodelik|photo=Psyho.jpg|twitter=https://twitter.com/psyhodelikus|facebook=https://www.facebook.com/groups/Psyhoandco|linkedin=https://www.linkedin.com/in/daliborstanisavljevic/}}\n\n'''Dalibor Stanisavljevic''', plus connu sous le nom de '''Psyhodelik''', est un videaste dont le contenu est centré autour de la revue d'actualités. Il traite de sujets de société tels que le racisme, la cancel culture, les problématiques de genre, la grossophobie, etc.<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=29 avril 2006|url=https://www.youtube.com/@psyhodelik/about|url_desc=Psyhodelik |desc=Channel de Psyhodelik}}</ref>.\n\n===Positionnement global===\nIl dit avoir étudié les religions, l'anthropologie et la sociologie des religions<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=18 janvier 2023|url=https://youtu.be/E0gzvUc797I?t=138|url_desc=LE PREMIER PRETRE NON BINAIRE GRACE A ADAM ET EVE |desc=Channel de Psyhodelik|timestamp=138}}</ref><ref>{{ReferenceText|desc=www.linkedin.com|date=|url=https://www.linkedin.com/in/daliborstanisavljevic/|url_desc=Section éducation}}</ref> et avoir fait 4 années d'études de psychologie.<ref>{{ReferenceText|desc=Channel de ZioClo|date=01 mars 2023|url=https://youtu.be/gcMm2zzUP6s?t=2180|url_desc=#RDF Psyhodelik clash  La gauchiasse! |desc=Channel de ZioClo|timestamp=2180}}</ref>\n\nIl se dit apolitique<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=29 janvier 2023|url=https://youtu.be/TH9KCJgPeZM?t=505|url_desc=USUL S'ENFLAMME ET PARLE DES METIER DE MAYRDE DES PETIT PROLO |desc=Channel de Psyhodelik|timestamp=505}}</ref>.\n\n''\"Les progressistes et l'extrême gauche font de la merde et ne comprennent rien à rien\"''<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=22 janvier 2023|url=https://youtu.be/ZsHUweqUJ1A?t=637|url_desc=VELMA - LA PIRE SERIE WOKE SE FAIT VAPORISÉ PAR LES CRITIQUE |desc=Channel de Psyhodelik|timestamp=637}}</ref>.\n\n''\"Si tout est politique, il n'y a plus de politique\"'' <ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/iEHd1YtIRK8?t=5186|url_desc=PSYHODELIK DISCUTE AVEC UN MILITANT TRANS-LGBT SUR QU'EST-CE QU'UNE FEMME ? - FEAT @ZioCloaPX |desc=Channel de Psyhodelik|timestamp=5186}}</ref>\n\n===Sociétal===\nEn réponse à un live de Dany & Raz qui réagissent à la récupération faite par l'ED du fait divers du [https://fr.wikipedia.org/wiki/Affaire_Lola meurtre de Lola], alors que l'ED reproche à la gauche de s'être indigné concernant [https://fr.wikipedia.org/wiki/Mort_de_George_Floyd George Floyd] et [https://fr.wikipedia.org/wiki/Affaire_Adama_Traor%C3%A9 Adama]⁣ : ''\"À quel moment c'est pareil ? Justement, les gens, ces droitards comme tu dis, s'indignent de Lola, parce que c'est une petite fille innocente, et ils ne se sont pas indigné pour George Floyd ou pour Adama, parce que ce sont des criminels à la base. Vous, vous vous êtes indigné pour Adama, pour George Floyd et là pour Lola rien à péter, elle n'est pas racisée.\"'' <ref>{{ReferenceText|desc=Channel de Psyhodelik|date=21 octobre 2022|url=https://youtu.be/KlaRbENAC8E?t=435|url_desc=DANY CALIGULA DANS LA SAUCE POUR AVOIR DIT QUE SAMUEL PATY AVAIT CHIIER SUR L'ISLAM |desc=Channel de Psyhodelik|timestamp=435}}</ref>\n\nIl pense que l'école ne devrait pas apprendre aux enfants la théorie du genre sans l'accord des parents, que c'est de l'endoctrinement de la part des enseignants et que les enseignants qui genrent les enfants comme ils (les enfants) le souhaitent, indépendamment de leur sexe biologique, ne devraient pas le faire sans l'accord des parents.<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=19 février 2023|url=https://youtu.be/O933lKdjXlQ?t=136|url_desc=DISNEY SENSURE PICSOU A CAUSE DE CA ?? |desc=Channel de Psyhodelik|timestamp=136}}</ref>\n\n===Transidentité===\nIl mégenre régulièrement les personnes trans. Par exemple, à propos de [[wikipedia:Lia_Thomas|Lia Thomas]], femme trans, il dit : ''\"il a fait sa transition en tant que femme, et du coup, il a rejoint l'équipe féminine, il a dominé le game de la natation universitaire, il est même quasiment qualifié pour les jeux olympiques\"'' <ref>{{ReferenceText|desc=Channel de Psyhodelik|date=18 janvier 2023|url=https://youtu.be/zwklYb5m_s0?t=18|url_desc=UN NAGEUR TRANS FINI DERNIER MAIS CE SENT ACCOMPLIS EN TANT QU'HOMME |desc=Channel de Psyhodelik|timestamp=18}}</ref>. Ce mégenrage continue tout au long de la vidéo. Également, à propos d'un homme trans, il dit : ''\"mais ce nageur qui était chez les femmes, maintenant, a décidé officiellement de nager chez les hommes, elle avait un niveau stratosphérique chez les femmes jusqu’à Lia Thomas, elle est quasiment dernière chez les hommes\"'' <ref>{{ReferenceText|desc=Channel de Psyhodelik|date=18 janvier 2023|url=https://youtu.be/zwklYb5m_s0|url_desc=UN NAGEUR TRANS FINI DERNIER MAIS CE SENT ACCOMPLIS EN TANT QU'HOMME |desc=Channel de Psyhodelik|timestamp=}}</ref>. Léo, steamer trans, est également mégenré: ''\"par exemple elle, Leo Jackotte\"'' <ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/iEHd1YtIRK8?t=3050|url_desc=PSYHODELIK DISCUTE AVEC UN MILITANT TRANS-LGBT SUR QU'EST-CE QU'UNE FEMME ? - FEAT @ZioCloaPX |desc=Channel de Psyhodelik|timestamp=3050}}</ref>. Ou encore concernant une femme trans condamné par la justice : ''\"Donc cette femme, [...], il risque de se retrouver dans une prison pour femme\"'' <ref>{{ReferenceText|desc=Channel de Psyhodelik|date=09 février 2023|url=https://youtu.be/_6A1SzCvTWo?t=775|url_desc=LE PREMIER PERSO TRANS DE HOGWARTS LEGACY EST AKHUZÉ DE TRANSFOUBY |desc=Channel de Psyhodelik|timestamp=775}}</ref>\n\nIl se défend de mégenrer volontairement les personnes trans, mettant cela sur le dos de l'inattention. Mais compare le fait de mégenrer des personnes au fait de mégenrer des objets, prenant comme exemple le/la gameboy. Il compare aussi ce mégenrage aux erreurs faites par des gens qui dont le français ne serait pas la langue natale. Il compare aussi ce mégenrage au fait qu'on lui disait \"madame\" lorsqu'il avait les cheveux longs et que ça ne l'affectait pas.<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=769|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=769}}</ref> \n\nPour lui, l'emprisonnement de femme trans dans des prisons pour femme est problématique et pourrait \"faire des étincelles\", ce qui pour lui n'est pas de la transphobie, mais de la protection. Pour lui, être contre cela, fait de la personne quelqu'un de dangereux.<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=893|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=893}}</ref>\n\nPour lui, le fait de mentionner \"trans\" quand on parle de \"homme/femme-trans\" fait que ce sont pas totalement des hommes/femmes. Aussi, pour lui le fait de ne pas préciser \"trans\" reviendrait à nier la transition de la personne, ce qui serait transphobe d'après lui.<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=983|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=983}}</ref>\n\nIl utilise régulièrement le terme \"homme/femme d'usine\" pour parler du sexe biologique <ref>{{ReferenceText|desc=Channel de Psyhodelik|date=11 janvier 2023|url=https://youtu.be/44mP1zP7zQ0?t=40|url_desc=UN HOMME TRANSGENRE DONNE NAISSANCE AU BÉBÉ D'UN PARTENAIRE NON BINAIRE AVEC UNE DONNEUSE DE SPAIRME |desc=Channel de Psyhodelik|timestamp=40}}</ref><ref>{{ReferenceText|desc=Channel de Psyhodelik|date=18 janvier 2023|url=https://youtu.be/zwklYb5m_s0?t=11|url_desc=UN NAGEUR TRANS FINI DERNIER MAIS CE SENT ACCOMPLIS EN TANT QU'HOMME |desc=Channel de Psyhodelik|timestamp=11}}</ref><ref>{{ReferenceText|desc=Channel de Psyhodelik|date=11 janvier 2023|url=https://youtu.be/44mP1zP7zQ0?t=49|url_desc=UN HOMME TRANSGENRE DONNE NAISSANCE AU BÉBÉ D'UN PARTENAIRE NON BINAIRE AVEC UNE DONNEUSE DE SPAIRME |desc=Channel de Psyhodelik|timestamp=49}}</ref><ref>{{ReferenceText|desc=Channel de Psyhodelik|date=11 janvier 2023|url=https://youtu.be/44mP1zP7zQ0?t=65|url_desc=UN HOMME TRANSGENRE DONNE NAISSANCE AU BÉBÉ D'UN PARTENAIRE NON BINAIRE AVEC UNE DONNEUSE DE SPAIRME |desc=Channel de Psyhodelik|timestamp=65}}</ref>.\n\nIl qualifie l'appareil reproducteur féminin d'un homme transgenre ''\"d'outillage cyberpunk plug-n-play\"'' <ref>{{ReferenceText|desc=Channel de Psyhodelik|date=11 janvier 2023|url=https://youtu.be/44mP1zP7zQ0?t=247|url_desc=UN HOMME TRANSGENRE DONNE NAISSANCE AU BÉBÉ D'UN PARTENAIRE NON BINAIRE AVEC UNE DONNEUSE DE SPAIRME |desc=Channel de Psyhodelik|timestamp=247}}</ref>, ce qu'il qualifie d'humour.<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=1057|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=1057}}</ref>\n\nIl reconnait le lien entre suicide et le manque d'accès aux moyens de transitions.<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=1089|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=1089}}</ref>\n\nIl considère que la question de la transidentité n'est pas une question politique,<ref group=\"citation\"><cite class=\"note\">''\"C'est exactement ce que je me tue à faire, à chaque fois quand je dis, et que ça les énerve à mort, que je suis apolitique et non binaire de la politique, parce que ça m'amuse. Arrêtez de ramener la politique sur n'importe quel sujet, ça devient ridicule, on peut débattre de plein de sujets, sans avoir le prisme politique.\"''</cite></ref><ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/iEHd1YtIRK8?t=5091|url_desc=PSYHODELIK DISCUTE AVEC UN MILITANT TRANS-LGBT SUR QU'EST-CE QU'UNE FEMME ? - FEAT @ZioCloaPX |desc=Channel de Psyhodelik|timestamp=5091}}</ref> car c'est une question transpartisane.<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=1154|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=1154}}</ref>\n\nIl considère que se revendiquer transgenre à 10 ans est \"trop tôt\". <ref group=\"citation\"><cite class=\"note\">''\"C'est trop tôt 10 ans en fait [...] t'es en pleine construction, tu ne comprends rien à la vie, et on va te guider vers une transition, c'est pas un tatouage quoi\"''</cite></ref><ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/iEHd1YtIRK8?t=2463|url_desc=PSYHODELIK DISCUTE AVEC UN MILITANT TRANS-LGBT SUR QU'EST-CE QU'UNE FEMME ? - FEAT @ZioCloaPX |desc=Channel de Psyhodelik|timestamp=2463}}</ref><ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=1198|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=1198}}</ref>\n\n''\"Si vous n'êtes pas une femme et que vous avez des menstruations, consultez parce que je pense que médicalement, c'est très grave\"''<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/IMuc4O3xkno?t=234|url_desc=UNE LOI POUR METTRE DES TAMPON DANS LES TOILETTES DES GARCONS |desc=Channel de Psyhodelik|timestamp=234}}</ref>.\n\nIl considère que l'accès aux produits d’hygiène menstruelle pour les hommes menstrues n'est pas un vrai problème.<ref group=\"citation\"><cite class=\"note\">Réagissant à une vidéo du Minnesota House of Representatives Public Information Services department, dont l'objectif est de fournir des services et informations au public à propos du processus législatif et l'encourager à y participer ([https://www.youtube.com/@MNHouseInfo/about source]), il résume grossièrement : ''\"Donc quand tu as tes règles, et que du coup il n'y a pas de tampons dans les toilettes des garçons, ça peut créer de l'anxiété et de la dépression. Si c'est le seul problème que tu as dans ta vie, et ben putain. Waouh, quand ils vont tomber sur des vrais problèmes de la vie, wah, ca va être chaud.\"''</cite></ref><ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/IMuc4O3xkno?t=414|url_desc=UNE LOI POUR METTRE DES TAMPON DANS LES TOILETTES DES GARCONS |desc=Channel de Psyhodelik|timestamp=414}}</ref>\n\nIl questionne le fait que l'accès aux produits d’hygiène menstruelle permette aux hommes menstrues de réduire leur stress et de se sentir plus inclus, nie l'importance de la prise en compte de la menstruation masculine et leur conseil d'acheter une Xbox à la place. <ref group=\"citation\"><cite class=\"note\">''\"Donc juste si tu leur donnes un tampon, ça réduit leur stress et ils se sentent tellement aimés. Putain, achetez une Xbox au bout d'un moment, si ta vie tourne autour d'un tampon.\"''</cite></ref><ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/IMuc4O3xkno?t=476|url_desc=UNE LOI POUR METTRE DES TAMPON DANS LES TOILETTES DES GARCONS |desc=Channel de Psyhodelik|timestamp=476}}</ref>.\n\nConcernant l'enfant d'un homme trans et d'un partenaire non-binaire avec donneur de sperme, il s'étonne : ''\"Comme vous pouvez le voir, il n'a pas de bouc, il n'a pas de moustache, il est normal. Alors je sais pas si il est trans ou non binaire. Je n'ai pas encore étudié ce pan là\"'' <ref>{{ReferenceText|desc=Channel de Psyhodelik|date=11 janvier 2023|url=https://youtu.be/44mP1zP7zQ0?t=378|url_desc=UN HOMME TRANSGENRE DONNE NAISSANCE AU BÉBÉ D'UN PARTENAIRE NON BINAIRE AVEC UNE DONNEUSE DE SPAIRME |desc=Channel de Psyhodelik|timestamp=378}}</ref>.\n\nSelon lui la non-binarité et la transidentité ne sont pas compatibles avec la religion anglicane.<ref group=\"citation\"><cite class=\"note\">À propos d'un vicaire anglican non-binaire, il dit : ''\"Vu qu'il est prêtre, quelque part, ben tu suis les préceptes de Dieu, et normalement Dieu t'a créé.e à son image, ce n'est pas à toi de dire 'non mais Dieu, tu n'as pas eu raison, je me sens comme ça', ça ne marche pas, ça ne marche pas vraiment. Surtout en plus quand tu es prêtre car tu es censé.e t'accepter tel.le que dieu t'as créé.e.\"''</cite></ref><ref>{{ReferenceText|desc=Channel de Psyhodelik|date=18 janvier 2023|url=https://youtu.be/E0gzvUc797I?t=147|url_desc=LE PREMIER PRETRE NON BINAIRE GRACE A ADAM ET EVE |desc=Channel de Psyhodelik|timestamp=147}}</ref><ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=1322|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=1322}}</ref>.\n\nRéagissant à un article traitant d'un prêtre anglican LGBTQIA+ l'article dit : ''\"Maintenant, ils visitent les écoles et parlent aux groupes de jeunes pour encourager les autres personnes LGBTQ+ à avoir une place dans l'église\"''. Il répond : ''\"Il fait du prosélytisme, avant, c'était 'soyez catholiques', maintenant, c'est 'soyez gays, viendez'\"'' <ref>{{ReferenceText|desc=Channel de Psyhodelik|date=18 janvier 2023|url=https://youtu.be/E0gzvUc797I?t=397|url_desc=LE PREMIER PRETRE NON BINAIRE GRACE A ADAM ET EVE |desc=Channel de Psyhodelik|timestamp=397}}</ref>.\n\nIl est contre les \"transitions physiques\" avant la majorité, pense que la dysphorie de genre peut-être \"une passade\" et compare les démarches de réaffirmations de genre à un piercing, tatouage ou prise de drogue à l'adolescence. <ref group=\"citation\"><cite class=\"note\">''\"Moi en temps que père je vais lui dire d'attendre un peu, histoire d'être sur.e, parce que on pense à plein de choses, et quand on est adolescent aussi. En fait, il faut pas nier la chose que quand t'es adolescent tu as envie de tester pleins de trucs, et il y a aussi plein de passades en fait. Puis, tu reviens 'mais qu'est-ce que j'étais con en fait, pourquoi j'ai fait ci, pourquoi j'ai fait ça, je me suis fait percer les oreilles je n'avais pas envie, j'ai fait un tatouage, je n'avais pas envie, pris de la drogue, je n'avais pas envie. J'ai eu une période où je m'habillais en femme mais finalement bon ben voila'.\"''</cite></ref><ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/iEHd1YtIRK8?t=2638|url_desc=PSYHODELIK DISCUTE AVEC UN MILITANT TRANS-LGBT SUR QU'EST-CE QU'UNE FEMME ? - FEAT @ZioCloaPX |desc=Channel de Psyhodelik|timestamp=2638}}</ref>\n\nConcernant le terme de \"trap\", qui est souvent vu comme une insulte transphobe lourde de sous-entendu et souvent lié à un imaginaire transphobe, il trouve le terme \"marrant\". <ref group=\"citation\"><cite class=\"note\">''\"C'est pas forcément péjoratif ou négatif, c'est à dire que ce concept de trap, c'est quelque part amusant, c'est à dire tu vois une nana, qui te surexcite de ouf, parce qu'elle est bonne de partout, et d'un coup elle a un service trois pièces. Et c'est à dire, ce malaise, qui se crée dans ta tête, quand tu as un copain qui se fait avoir par ça, moi, je suis mort de rire.\"''</cite></ref><ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/iEHd1YtIRK8?t=3283|url_desc=PSYHODELIK DISCUTE AVEC UN MILITANT TRANS-LGBT SUR QU'EST-CE QU'UNE FEMME ? - FEAT @ZioCloaPX |desc=Channel de Psyhodelik|timestamp=3283}}</ref>\n\n=== JK Rowling, Hogwarts Legacy & transphobie===\n\nIl considère que les accusations de transphobie à l'encontre J.K. Rowling reposent sur des articles diffamatoires et calomnieux<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 février 2023|url=https://youtu.be/KQBq_dUzszw?t=102|url_desc=GAMEKULT DÉCIDE DE KHANCEL HOGWARTS LEGACY ET REFUSE DE FAIRE LE TEST A CAUSE DE JK ROWLING |desc=Channel de Psyhodelik|timestamp=102}}</ref>. \n\t\nIl considère l'appel au boycott du jeu Hogwarts Legacy par certains médias et influenceurs comme étant la \"faute\" de leur besoin de signalement de vertu et de la \"mafia arc-en-ciel\" qui se repose sur des articles calomnieux et diffamatoires. <ref group=\"citation\"><cite class=\"note\">''\"On avait des vidéos à ce sujet, sur des trucs calomnieux et diffamatoires [concernant la transphobie de JK Rowling], ils foncent. Sur les autres [jeux] où il y a de vrais problèmes, et qu'il y a vraiment des trucs, tu te dis à la limite, bon, il y a peut être un truc, faudrait peut être réfléchir au boycott, ou pas, je suis pas spécialement pour le boycott mais, au moins le débat reste ouvert. Parce qu'il y a quelque chose de tangible, on peut en discuter. Là, rien ! Si ce n'est que d'aller dans le sens de la vertu, de la mafia arc-en-ciel.\"''</cite></ref><ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 février 2023|url=https://youtu.be/KQBq_dUzszw?t=286|url_desc=GAMEKULT DÉCIDE DE KHANCEL HOGWARTS LEGACY ET REFUSE DE FAIRE LE TEST A CAUSE DE JK ROWLING |desc=Channel de Psyhodelik|timestamp=286}}</ref>\n\t\nConcernant les personnes appelant au boycott du jeu Hogwarts Legacy et qui critiquent JK Rowling, il considère que c'est fait dans le but de ''\"soigner ses points de vertu, soigner le narratif et l'idéologie politique que t'essaie d'instaurer derrière\"'' <ref>{{ReferenceText|desc=Channel de Psyhodelik|date=09 février 2023|url=https://youtu.be/_6A1SzCvTWo?t=459|url_desc=LE PREMIER PERSO TRANS DE HOGWARTS LEGACY EST AKHUZÉ DE TRANSFOUBY |desc=Channel de Psyhodelik|timestamp=459}}</ref>\n\t\nEn réaction à un article titrant ''[https://kotaku.com/trans-inclusion-means-more-than-just-adding-potential-g-1846388481 \"L'inclusion trans signifie plus que simplement ajouter des options de genre potentielles à Hogwarts Legacy\"]'', il répond : ''\"Pour eux, tu ne gagneras jamais. Pour eux, tant que les trans sont pas en majorité, et, voire limite, on enlève tous les cis, il y a un problème.\"'' <ref>{{ReferenceText|desc=Channel de Psyhodelik|date=09 février 2023|url=https://youtu.be/_6A1SzCvTWo?t=942|url_desc=LE PREMIER PERSO TRANS DE HOGWARTS LEGACY EST AKHUZÉ DE TRANSFOUBY |desc=Channel de Psyhodelik|timestamp=942}}</ref>\n\n===Genre ===\nIl juge la différenciation entre sexe biologique et identité de genre incompréhensible pour la majorité de la population, voire conceptuellement impossible. <ref group=\"citation\"><cite class=\"note\">''\"C'est l'avis de 99% de la population, c'est à dire que pour eux, femelle, femme ; mâle, homme, c'est le même mot et ça définit exactement la même chose en fait. En gros c'est comme si tu arrivais et que tu leur disais 'un plus deux égal trois', ben ouais, faut arrêter les conneries. Et en fait c'est impossible de conceptualiser ce truc là.\"''</cite></ref><ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/iEHd1YtIRK8?t=8308|url_desc=PSYHODELIK DISCUTE AVEC UN MILITANT TRANS-LGBT SUR QU'EST-CE QU'UNE FEMME ? - FEAT @ZioCloaPX |desc=Channel de Psyhodelik|timestamp=8308}}</ref>\n\t\nConcernant un article disant \"depuis qu'elle a mentalement séparé le genre du sexe, Allison est devenue une militante à part entière\", il répond : ''\"Ah ben oui, si mentalement t'arrive à faire la séparation, après, tu peux faire ce que tu veux et t'inventer une vie comme tu veux\"'' <ref>{{ReferenceText|desc=Channel de Psyhodelik|date=18 janvier 2023|url=https://youtu.be/E0gzvUc797I?t=849|url_desc=LE PREMIER PRETRE NON BINAIRE GRACE A ADAM ET EVE |desc=Channel de Psyhodelik|timestamp=849}}</ref>.\n\n===Droit de l'enfant===\nIl justifie sa prise de position passée disant qu'il a droit de vie ou de mort sur son enfant en le comparant au droit d'une mère à avorter. <ref group=\"citation\"><cite class=\"note\">''\"Effectivement, je l'ai dit, j'ai le droit de vie ou de mort sur mon gamin... C'est normal. Une mère de famille qui avorte elle a droit de vie ou de mort sur son gamin, c'est normal.\"''</cite></ref><ref>{{ReferenceText|desc=Channel de RedClem le Z|date=26 novembre 2022|url=https://youtu.be/o0jQKX4COR8?t=125|url_desc=PSYHODELIK SE CONTREDIT TOUT SEUL ET SE BLESSE DANS SA CONFUSION ! |desc=Channel de RedClem le Z|timestamp=125}}</ref>\n\t\n''\"Mon enfant, c'est mon enfant. Si ma fille, j'ai envie de l'appeler placard à balais, ou chihuahua, et de l'identifier comme ça, c'est mon droit le plus total. Personne n'a le droit de me retirer ce droit.\"'' <ref>{{ReferenceText|desc=Channel de RedClem le Z|date=26 novembre 2022|url=https://youtu.be/o0jQKX4COR8?t=183|url_desc=PSYHODELIK SE CONTREDIT TOUT SEUL ET SE BLESSE DANS SA CONFUSION ! |desc=Channel de RedClem le Z|timestamp=183}}</ref>\n\t\n''\"Alors, à la limite, elle aurait 20 ans, 30 ans, elle veut se faire retirer les boobs [...]. Là, elle a 14 ans, c'est une claque dans la gueule et tu vas dans ta chambre.\"'' <ref>{{ReferenceText|desc=Channel de RedClem le Z|date=26 novembre 2022|url=https://youtu.be/o0jQKX4COR8?t=251|url_desc=PSYHODELIK SE CONTREDIT TOUT SEUL ET SE BLESSE DANS SA CONFUSION ! |desc=Channel de RedClem le Z|timestamp=251}}</ref>\n\n===Racisme===\nIl affirme à propos du communiqué d'une école qui tente de lutter contre le racisme systémique et structurel et les oppressions complexes et difficiles : ''\"Ils créent des niches de boulot qui n'existaient pas et ils ramassent masse\"'' <ref>{{ReferenceText|desc=Channel de Psyhodelik|date=20 janvier 2023|url=https://youtu.be/lX3cvG9wUuk?t=352|url_desc=LE MOT \"TERRAIN\" EST JUGÉ OFENSSANT ET ANTI-NOIR |desc=Channel de Psyhodelik|timestamp=352}}</ref>.\n\t\nIl questionne l'existence du racisme systémique<ref group=\"citation\"><cite class=\"note\">Ce communiqué déclare : ''\"Nos diverses expériences et notre participation à des systèmes de pouvoir et de privilège rendent les conversations continues sur la race, le racisme structurel et systémique et l’oppression complexe et difficile\". Il faisait suite au choix de l'école de ne plus utiliser le mot \"field\", qui peut être connoté dans la langue anglaise, pour parler de terrains de football. Il déclare : \"En fait, ce qui est complexe et difficile c'est d'arriver à justifier un racisme qui n'existe pas, et comme ils n'arrivent pas à le justifier, ils partent dans des délires hallucinants et un mille feuille argumentatif, qui est juste, ingérable, et non debunkable parce que c'est basé sur du vent.\"''</cite></ref><ref>{{ReferenceText|desc=Channel de Psyhodelik|date=20 janvier 2023|url=https://youtu.be/lX3cvG9wUuk?t=305|url_desc=LE MOT \"TERRAIN\" EST JUGÉ OFENSSANT ET ANTI-NOIR |desc=Channel de Psyhodelik|timestamp=305}}</ref> et pense qu'il n'existe pas.<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=1799|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=1799}}</ref>\n\n===Validisme===\nConcernant les personnes ayant des [https://fr.wikipedia.org/wiki/Trouble_identitaire_de_l%27int%C3%A9grit%C3%A9_corporelle trouble identitaire de l'intégrité corporelle], il juge : ''\"Et de l'autre côté, tu as des gens qui se disent trans-handicapé [...] en fait, ils romantisent le handicap et ne se rendent pas compte de la souffrance que cela peut être\"'' <ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/iEHd1YtIRK8?t=1028|url_desc=PSYHODELIK DISCUTE AVEC UN MILITANT TRANS-LGBT SUR QU'EST-CE QU'UNE FEMME ? - FEAT @ZioCloaPX |desc=Channel de Psyhodelik|timestamp=1028}}</ref>. Position qu'il confirme, ne prenant pas en compte ce qu'est le [https://fr.wikipedia.org/wiki/Trouble_identitaire_de_l%27int%C3%A9grit%C3%A9_corporelle trouble identitaire de l'intégrité corporelle].<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=1841|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=1841}}</ref>\n\n=== Féminisme===\nRéagissant à une vidéo expliquant que de nombreux élèves manquent l'école, car ils n'ont pas accès aux produits d’hygiène menstruels, il compare les menstruations à un nez bouché. <ref group=\"citation\"><cite class=\"note\">''\"Genre ils vont sécher, parce qu'ils ont leurs règles. C'est un peu genre tu sèches ton boulot parce que tu as le nez bouché.\"''</cite></ref><ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/IMuc4O3xkno?t=303|url_desc=UNE LOI POUR METTRE DES TAMPON DANS LES TOILETTES DES GARCONS |desc=Channel de Psyhodelik|timestamp=303}}</ref>\n\t\nEn réaction à un article titrant : \"la ville de Pantin va être rebaptisée 'Pantine' pour soutenir l'égalité femmes-hommes\" ; il déclare : ''\"J'aime bien quand pour soutenir l'égalité femmes-hommes, ils mettent 'femmes', avant les hommes, du coup il n'y a plus d'égalité\"''.<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=10 janvier 2023|url=https://youtu.be/iLnmw_yjxYE?t=72|url_desc=PANTIN DEVIENT PANTINE POUR SOUTENIR L'ÉGALITÉ HOMMES-FEMMES |desc=Channel de Psyhodelik|timestamp=72}}</ref>\n\t\nPour lui, l'écart salarial homme-femme est une légende urbaine qu'il prétend être \"débunké\".<ref group=\"citation\"><cite class=\"note\">''\"Vous savez, hum, l'espèce de légende urbaine que les femmes touchaient moins en terme de salariat qui a été 'débunké'\"''.</cite></ref><ref>{{ReferenceText|desc=Channel de Psyhodelik|date=10 janvier 2023|url=https://youtu.be/iLnmw_yjxYE?t=126|url_desc=PANTIN DEVIENT PANTINE POUR SOUTENIR L'ÉGALITÉ HOMMES-FEMMES |desc=Channel de Psyhodelik|timestamp=126}}</ref><ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=1926|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=1926}}</ref>\n\t\nPour lui, les femmes ne savent ni faire de créneaux, ni ouvrir des pots de confiture et l'égalité homme-femme ne sera jamais parfaite.<ref group=\"citation\"><cite class=\"note\">''\"Ce n'est pas parce que tu rajoute un 'E' à 'Pantin' que d'un coup il n'y a plus de problèmes de violence contre les femmes, que d'un coup elles sauront faire des créneaux, que d'un coup elles pourront ouvrir des pots de confiture. Qu'on le veuille ou non, l'égalité elle ne sera jamais parfaite\"''</cite></ref><ref>{{ReferenceText|desc=Channel de Psyhodelik|date=10 janvier 2023|url=https://youtu.be/iLnmw_yjxYE?t=253|url_desc=PANTIN DEVIENT PANTINE POUR SOUTENIR L'ÉGALITÉ HOMMES-FEMMES |desc=Channel de Psyhodelik|timestamp=253}}</ref><ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=1940|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=1940}}</ref>\n\t\nSelon lui, l'égalité homme-femme n'existe pas et n'existera jamais.<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=1970|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=1970}}</ref>\n\n===Déontologie===\nConcernant une prise de position de [[Kroc Blanc]] qui assumait de propager des fake news sous prétexte de valeur ajouté et de faire des vues, il semble le rejoindre, mais pour lui \"ce n'est pas la fake news la valeur ajoutée\" mais \"le putaclic\", c'est-à-dire \"de déformer légèrement les faits pour rendre le truc un peu plus commercial\".<ref>{{ReferenceText|desc=Channel de Aléa+|date=25 octobre 2022|url=https://www.youtube.com/shorts/PElWZRmFwc4|url_desc=Psyho et KB VOUS MANIPULENT ET L'AVOUENT |desc=Channel de Aléa+|timestamp=}}</ref>\n\t\nIl fait régulièrement des erreurs de traduction qui déforment les propos auxquels il réagit, confondant par exemple \"widespread\" et \"white spread\"<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/IMuc4O3xkno?t=347|url_desc=UNE LOI POUR METTRE DES TAMPON DANS LES TOILETTES DES GARCONS |desc=Channel de Psyhodelik|timestamp=347}}</ref> ou en traduisant \"one out of every 10 menstruating students\" par \"un homme sur 10 a des problèmes de règles\"<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=24 janvier 2023|url=https://youtu.be/IMuc4O3xkno?t=364|url_desc=UNE LOI POUR METTRE DES TAMPON DANS LES TOILETTES DES GARCONS |desc=Channel de Psyhodelik|timestamp=364}}</ref>.  \n\t\nIl a aussi recours à des traducteurs automatiques qui ne sont pas fiables quand il s'agit de traduire des articles traitant avec précision de questions de langage. Par exemple, dans le cas d'une école qui choisit de ne plus utiliser le mot \"field\" pour désigner un terrain de football (mot qui peut être traduit par \"champ\" et évoquer l'esclavagisme), le traducteur automatique qu'il utilise lui faire conclure que \"le mot terrain est raciste\"<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=20 janvier 2023|url=https://www.youtube.com/watch?v=lX3cvG9wUuk|url_desc=LE MOT \"TERRAIN\" EST JUGÉ OFENSSANT ET ANTI-NOIR |desc=Channel de Psyhodelik|timestamp=}}</ref>, ce qui n'est pas le propos. Il maintient ce propos, considérant que ce n'est pas une erreur de traduction.<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=06 mars 2023|url=https://youtu.be/zI6laqkcDVQ?t=2133|url_desc=JE DEBUNK MA PAGE POLITIWIKI FAITES PAR BADMULCH |desc=Channel de Psyhodelik|timestamp=2133}}</ref>\n\nIl ne vérifie pas la véracité des articles auquel il réagit, par exemple, le vidéaste Droitard Fragile, avec la complicité des steamers Dai-mon et Kalee, avait écrit un article canular : ''\"Le problème du marché de la mangue et comment il propage le racisme\",'' publié sur le site \"''Daily Kos''\". L'article était présenté comme étant du contenu communautaire et n'ayant pas été relu par l'équipe du \"Daily Kos\" avant. L'article n'est plus disponible actuellement. Il a réagi à cet article en le prenant pour vrai<ref>{{ReferenceText|desc=Channel de Psyhodelik|date=22 avril 2022|url=https://www.youtube.com/watch?v=Sve0-gSyzME|url_desc=LA MANGUE C'EST RACISTE 🥭 |desc=Channel de Psyhodelik|timestamp=}}</ref> et donc sans effectuer de recherches sur la véracité des propos tenus dedans. Il a conservé la vidéo réaction en ligne malgré les commentaires de son public<ref>{{ReferenceText|desc=Channel de RedClem le Z|date=12 décembre 2022|url=https://youtu.be/IUYQgRmhFEg?t=790|url_desc=PSYHODELIK EST PRÉVISIBLE ET FACILE A PIÉGER ! |desc=Channel de RedClem le Z|timestamp=790}}</ref><ref>{{ReferenceText|desc=Channel de RedClem le Z|date=12 décembre 2022|url=https://youtu.be/IUYQgRmhFEg?t=797|url_desc=PSYHODELIK EST PRÉVISIBLE ET FACILE A PIÉGER ! |desc=Channel de RedClem le Z|timestamp=797}}</ref><ref>{{ReferenceText|desc=Channel de RedClem le Z|date=12 décembre 2022|url=https://youtu.be/IUYQgRmhFEg?t=843|url_desc=PSYHODELIK EST PRÉVISIBLE ET FACILE A PIÉGER ! |desc=Channel de RedClem le Z|timestamp=843}}</ref> et de deux complices<ref>{{ReferenceText|desc=Channel de RedClem le Z|date=12 décembre 2022|url=https://youtu.be/IUYQgRmhFEg?t=880|url_desc=PSYHODELIK EST PRÉVISIBLE ET FACILE A PIÉGER ! |desc=Channel de RedClem le Z|timestamp=880}}</ref><ref>{{ReferenceText|desc=Channel de RedClem le Z|date=12 décembre 2022|url=https://youtu.be/IUYQgRmhFEg?t=894|url_desc=PSYHODELIK EST PRÉVISIBLE ET FACILE A PIÉGER ! |desc=Channel de RedClem le Z|timestamp=894}}</ref> lui faisant remarquer la supercherie.<ref>{{ReferenceText|desc=Channel de RedClem le Z|date=12 décembre 2022|url=https://www.youtube.com/watch?v=IUYQgRmhFEg|url_desc=PSYHODELIK EST PRÉVISIBLE ET FACILE A PIÉGER ! |desc=Channel de RedClem le Z|timestamp=}}</ref>\n\n==Références==\n\n{{Références|citation=1}}"
-    }, {
-        "Name": "Testpagewikiref",
-        "YoutubeUrls": [{
-                "Urls": ["https://www.youtube.com/watch?v=2j3p_aDMTNg"],
-                "VideoId": "2j3p_aDMTNg",
-                "Name": "Elon Musk fires employees in twitter meeting DUB ",
-                "ChannelName": "GeoMFilms",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://www.youtube.com/watch?v=yZ-K7nCVnBI&playnext_from=TL&videos=osPknwzXEas&feature=sub", "https://www.youtube.com/watch?v=yZ-K7nCVnBI&playnext_from=TL&videos=osPknwzXEas&feature=sub"],
-                "VideoId": "yZ-K7nCVnBI",
                 "Name": " ",
                 "ChannelName": null,
                 "IsValid": 2,
@@ -2600,33 +1187,7 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://youtu.be/dQw4w9WgXcQ?feature=youtube_gdata_playe", "http://youtu.be/dQw4w9WgXcQ?feature=youtube_gdata_playe", "https://youtube.com/shorts/dQw4w9WgXcQ?feature=share'"],
-                "VideoId": "dQw4w9WgXcQ",
-                "Name": "Rick Astley - Never Gonna Give You Up (Official Music Video) ",
-                "ChannelName": "Rick Astley",
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
-            }, {
-                "Urls": ["https://youtube.com/watch?vi=dQw4w9WgXcQ&feature=youtube_gdata_player"],
-                "VideoId": "watch",
-                "Name": "",
-                "ChannelName": null,
-                "IsValid": 2,
-                "IsPlaylist": false,
-                "IsUser": false,
-                "IsCommunity": false,
-                "IsAbout": false,
-                "IsChannels": false,
-                "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://www.youtube.com/user/Scobleizer#p/u/1/1p3vcRhsYGo"],
                 "VideoId": "1p3vcRhsYGo",
@@ -2634,7 +1195,7 @@
                 "ChannelName": "Robert Scoble",
                 "IsValid": 2,
                 "IsPlaylist": false,
-                "IsUser": false,
+                "IsUser": true,
                 "IsCommunity": false,
                 "IsAbout": false,
                 "IsChannels": false,
@@ -2643,8 +1204,8 @@
             }, {
                 "Urls": ["https://www.youtube.com/ytscreeningroom?v=NRHVzbJVx8I", "http://www.youtube.com/ytscreeningroom?v=NRHVzbJVx8I"],
                 "VideoId": "NRHVzbJVx8I",
-                "Name": null,
-                "ChannelName": null,
+                "Name": "How Wings Are Attached to the Backs of Angels ",
+                "ChannelName": "NFB",
                 "IsValid": 2,
                 "IsPlaylist": false,
                 "IsUser": false,
@@ -2652,12 +1213,12 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://www.youtube.com/embed/nas1rJpm7wY?rel=0"],
                 "VideoId": "nas1rJpm7wY",
-                "Name": "",
-                "ChannelName": null,
+                "Name": "VGA 2011: Diablo 3 Exclusive Intro Cinematic ",
+                "ChannelName": "GameTrailers",
                 "IsValid": 2,
                 "IsPlaylist": false,
                 "IsUser": false,
@@ -2665,7 +1226,7 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://www.youtube.com/watch?v=ubNF9QNEQLA", "https://www.youtube.com/watch?v=ubNF9QNEQLA", "https://www.youtube.com/watch?v=ubNF9QNEQLA"],
                 "VideoId": "ubNF9QNEQLA",
@@ -2678,14 +1239,14 @@
                 "IsAbout": false,
                 "IsChannels": false,
                 "IsHome": false,
-                "IsVideo": false
+                "IsVideo": true
             }, {
                 "Urls": ["https://www.youtube.com/playlist?list=PLUTbk4P4tNYQ99rLpgq9eKAjZpiQh7Ay4", "https://www.youtube.com/playlist?list=PLUTbk4P4tNYQ99rLpgq9eKAjZpiQh7Ay4", "https://www.youtube.com/playlist?list=PLUTbk4P4tNYQ99rLpgq9eKAjZpiQh7Ay4", "https://www.youtube.com/playlist?list=PLUTbk4P4tNYQ99rLpgq9eKAjZpiQh7Ay4"],
                 "VideoId": "playlist",
                 "Name": "Vidéos Préparées ",
                 "ChannelName": null,
                 "IsValid": 2,
-                "IsPlaylist": false,
+                "IsPlaylist": true,
                 "IsUser": false,
                 "IsCommunity": false,
                 "IsAbout": false,
