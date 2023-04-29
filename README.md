@@ -1,4 +1,4 @@
-![Logo WikiRef](https://raw.githubusercontent.com/Manu404/WikiRef/master/doc/logo-no-background.png)
+![Logo WikiRef](https://raw.githubusercontent.com/Manu404/WikiRef/master/doc/logo-no-background_3.png)
 
 WikiRef is a free/libre and open source cross-platform tool that helps you verify and archive the references on a [MediaWiki](https://www.mediawiki.org/wiki/MediaWiki) instance.
 
