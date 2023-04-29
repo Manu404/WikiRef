@@ -1,4 +1,4 @@
-![Logo WikiRef](https://raw.githubusercontent.com/Manu404/WikiRef/master/doc/logo-no-background_3.png)
+![Logo WikiRef](https://raw.githubusercontent.com/Manu404/WikiRef/master/doc/logo.png)
 
 WikiRef is a free/libre and open source cross-platform tool that helps you verify and archive the references on a [MediaWiki](https://www.mediawiki.org/wiki/MediaWiki) instance.
 
@@ -68,7 +68,7 @@ Here's the list of options for the Analyse mode.
 
 |      |             | Flag |                      Required                       | Description                                                  |
 | ---- | ----------- | :--: | :-------------------------------------------------: | ------------------------------------------------------------ |
-| -w   | --wiki-api  |      |                          ⬤                          | The api url of the wiki to analyze; This is the location where api.php is. |
+| -w   | --wiki-api  |      |                          ⬤                          | Url of api.php                                               |
 | -c   | --category  |      |   ⬤<br />(mutually exclusive with page parameter)   | The name of the category to analyze                          |
 | -p   | --page      |      | ⬤<br />(mutually exclusive with category parameter) | The name of the page to analyze                              |
 | -j   |             |  ⬤   |                                                     | Output the analysis to a file with a generated name based on the date |
@@ -267,3 +267,8 @@ If you like this tool, let me know, it's always appreciated, you can contact me 
 Also, if you have any comments or would like any request, I'm totally open for them, [open an issue](https://github.com/Manu404/WikiRef/issues) or send me an [email](mailto:contact@emmmanuelistace.be).
 
 I would like to shout-out [BadMulch](https://twitter.com/badmulch), [BienfaitsPourTous](https://bienfaitspourtous.fr/) and the [community](https://discord.gg/Y43NAEDCBy) around the [PolitiWiki project](https://politiwiki.fr/) for which this tool was developed, for their support, greetz, ideas, company during the development when I was streaming it on the discord server and overall moral support.
+
+### Licensing
+
+- Software is under GNU General Public License version 3. [More](https://github.com/Manu404/WikiRef/blob/master/LICENSE)
+- Logos and graphics are under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International licence. [More](https://github.com/Manu404/WikiRef/blob/master/doc/cc-by-nc-sa-4.txt)
