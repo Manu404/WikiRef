@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net7.0</TargetFramework>
     <AssemblyName>wikiref</AssemblyName>
-    <ApplicationIcon>icon_full.ico</ApplicationIcon>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
     <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="icon_full.ico" />
+    <Content Include="icon.ico" />
   </ItemGroup>
 
   <ItemGroup>

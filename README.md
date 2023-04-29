@@ -64,7 +64,7 @@ This mode analyzes references and checks the validity of used URLs.
 
 #### Options
 
-Here's the list of options for the Analyse mode.
+Here's the list of options for the Analyze mode.
 
 |      |             | Flag |                      Required                       | Description                                                  |
 | ---- | ----------- | :--: | :-------------------------------------------------: | ------------------------------------------------------------ |
@@ -80,19 +80,19 @@ Here's the list of options for the Analyse mode.
 Analyze all references from pages in the category Science on the wiki https://demowiki.com/
 
 ```
-wikiref analyse -w https://demowiki.com/ -c Science
+wikiref analyse -w https://demowiki.com/w/api.php -c Science
 ```
 
 Analyze all references from the page Informatic on the wiki https://demowiki.com/
 
 ```
-wikiref analyse -w https://demowiki.com/ -p Informatic
+wikiref analyse -w https://demowiki.com/w/api.php -p Informatic
 ```
 
 Analyze all references from pages in the category Science on the wiki https://demowiki.com/; put the output in a file and output nothing in the console
 
 ```
-wikiref analyze -w https://demowiki.com/ -c Science -j -s
+wikiref analyze -w https://demowiki.com/w/api.php -c Science -j -s
 ```
 
 This mode produce also a JSON file used as data source for other modes.
@@ -119,7 +119,7 @@ Here's the list of options for the Script mode.
 
 |  |  | Flag | Required | Value | Description |
 |---|---|:-:|:-:|---|---|
-| -i   | --input-json        |      |    ⬤    | Filename                       | Input JSON source to generate the download script file       |
+| -i   | --input-json        |      |    ⬤    | Filename                       | Input JSON source from analyze to generate the download script file |
 | -d   | --directory         |      |    ⬤    | Path                           | The root folder where to put videos. They will then be placed in a subfolder based on the page name. |
 |      | --output-script     |      |          | Filename                       | Allow to change the default name of the output script        |
 |      | --tool              |      |    ⬤    | Filename                       | Path to yt-dlp                                               |
@@ -134,7 +134,7 @@ Here's the list of options for the Script mode.
 Generate a script called download.sh to download all videos contained in the analyse file into the folder "video" using yt-dlp
 
 ```
-wikiref script -i analyse.json -d ./videos/ --tool /bin/usr/yt-dlp --output-script download.sh
+wikiref script -i analysis-output.json -d ./videos/ --tool /bin/usr/yt-dlp --output-script download.sh
 ```
 
 Note: Under windows, wikiref will be replaced by wikiref‧exe
@@ -149,7 +149,7 @@ Here's the list of options for the Archive mode.
 
 |      |              | Flag | Required | Value    | Description                                                  |
 | ---- | ------------ | :--: | :------: | -------- | ------------------------------------------------------------ |
-| -i   | --input-json |      |    ⬤     | Filename | Input JSON source to get URL to archive.                     |
+| -i   | --input-json |      |    ⬤     | Filename | Input JSON source from analyze to get URL to archive.        |
 | -w   | --wait       |  ⬤   |          |          | Wait for confirmation of archival from Archive.org. Use with caution, archive.org might usually take a long time to archive pages. Sometimes many minutes. |
 
 

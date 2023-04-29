@@ -3,7 +3,7 @@ using WikiRef.Commons;
 
 namespace WikiRef
 {
-    [Verb("analyse", HelpText = "Provide analysis features regarding references. '--help analyse' for more informations.")]
+    [Verb("analyze", HelpText = "Provide analysis features regarding references. '--help analyse' for more informations.")]
     public class AnalyseOptions : DefaultOptions
     {
         [Option('w', "wiki-api", Required = true, HelpText = "Url of the wiki api to analyze, for eg: https://en.wikipedia.org/w/ - Required")]
@@ -28,7 +28,7 @@ namespace WikiRef
     [Verb("archive", HelpText = "Generate a wayback machine archive of non-video content. '--help archive' for more informations.")]
     public class ArchiveOptions : DefaultOptions
     {
-        [Option('i', "input-json", Required = true, HelpText = "Input json source.")]
+        [Option('i', "input-json", Required = true, HelpText = "Input json source from analyze.")]
         public string InputJson { get; set; }
 
         [Option('w', "wait", Required = false, Default = false, HelpText = "Input json source.")]
@@ -38,7 +38,7 @@ namespace WikiRef
     [Verb("script", HelpText = "Generate a bash script relying on yt-dlp to download youtube references. '--help script' for more informations.")]
     public class YoutubeDownloadOption : DefaultOptions
     {
-        [Option('i', "input-json", Required = true, HelpText = "Input json source.")]
+        [Option('i', "input-json", Required = true, HelpText = "Input json source from analyze.")]
         public string InputJson { get; set; }
 
         [Option('d', "directory", Required = true, HelpText = "Root folder where videos will be placed. Videos will be placed in subfolder per wiki page.")]
