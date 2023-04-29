@@ -35,7 +35,7 @@ namespace WikiRef.Wiki
                     return new[] { new WikiPage(_config.Page, _console, this, _config, _whitelistHandler, _regexHelper, _networkHelper) };
 
                 // if query category
-                string queryUrl = $"{_config.WikiApi}/api.php?action=query&list=categorymembers&cmtitle=Category:{_config.Category}&cmlimit=500&format=json";
+                string queryUrl = $"{_config.WikiApi}?action=query&list=categorymembers&cmtitle=Category:{_config.Category}&cmlimit=500&format=json";
                 string json = await _networkHelper.GetContent(queryUrl);
                 JObject jsonObject = JObject.Parse(json);
                 foreach (var page in jsonObject["query"]["categorymembers"])
@@ -57,7 +57,7 @@ namespace WikiRef.Wiki
                 if (string.IsNullOrEmpty(pageName)) return string.Empty;
 
                 var sanitizedPageName = pageName.Replace(" ", "_");
-                string queryUrl = $"{_config.WikiApi}/api.php?action=query&prop=revisions&titles={sanitizedPageName}&rvslots=*&rvprop=timestamp|user|comment|content&format=json";
+                string queryUrl = $"{_config.WikiApi}?action=query&prop=revisions&titles={sanitizedPageName}&rvslots=*&rvprop=timestamp|user|comment|content&format=json";
                 string json = await _networkHelper.GetContent(queryUrl);
 
                 JObject jsonObject = JObject.Parse(json);

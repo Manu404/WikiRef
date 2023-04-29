@@ -11,12 +11,14 @@ namespace WikiRef.Wiki
         MediaWikiApi _api;
         ConsoleHelper _console;
         WikiPageCache _wikiPageCache;
+        AppConfiguration _config;
 
-        public WikiAnalyser(MediaWikiApi api, ConsoleHelper console, WikiPageCache wikiPageCache)
+        public WikiAnalyser(MediaWikiApi api, ConsoleHelper console, WikiPageCache wikiPageCache, AppConfiguration config)
         {
             _api = api;
             _console = console;
             _wikiPageCache = wikiPageCache;
+            _config = config;   
         }
 
         // Main method for the analyze verb
@@ -44,13 +46,16 @@ namespace WikiRef.Wiki
             foreach (var url in _wikiPageCache.WikiPages.SelectMany(r => r.References).SelectMany(u => u.Urls).Where(u => u.SourceStatus == SourceStatus.Invalid).OrderBy(u => u.Url))
                 _console.WriteLineInGray(url.Url);
 
-            _console.WriteSection("Undefined link");
-            foreach (var url in _wikiPageCache.WikiPages.SelectMany(r => r.References).SelectMany(u => u.Urls).Where(u => u.SourceStatus == SourceStatus.Undefined).OrderBy(u => u.Url))
-                _console.WriteLineInGray(url.Url);
+            if (_config.Verbose)
+            {
+                _console.WriteSection("Undefined link");
+                foreach (var url in _wikiPageCache.WikiPages.SelectMany(r => r.References).SelectMany(u => u.Urls).Where(u => u.SourceStatus == SourceStatus.Undefined).OrderBy(u => u.Url))
+                    _console.WriteLineInGray(url.Url);
 
-            _console.WriteSection("Whitelisted link");
-            foreach (var url in _wikiPageCache.WikiPages.SelectMany(r => r.References).SelectMany(u => u.Urls).Where(u => u.SourceStatus == SourceStatus.WhiteListed).OrderBy(u => u.Url))
-                _console.WriteLineInGray(url.Url);
+                _console.WriteSection("Whitelisted link");
+                foreach (var url in _wikiPageCache.WikiPages.SelectMany(r => r.References).SelectMany(u => u.Urls).Where(u => u.SourceStatus == SourceStatus.WhiteListed).OrderBy(u => u.Url))
+                    _console.WriteLineInGray(url.Url);
+            }
         }
     }
 }
