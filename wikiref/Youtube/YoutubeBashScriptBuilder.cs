@@ -14,13 +14,13 @@ namespace WikiRef
 
         private ConsoleHelper _console;
         private AppConfiguration _config;
-        private JsonWikiPageCache _wikiPageCache;
+        private WikiRefCache _wikiRefCache;
 
-        public YoutubeBashScriptBuilder(AppConfiguration config, ConsoleHelper console, JsonWikiPageCache wikiPageCache)
+        public YoutubeBashScriptBuilder(AppConfiguration config, ConsoleHelper console, WikiRefCache wikiPageCache)
         {
             _config = config;
             _console = console;
-            _wikiPageCache = wikiPageCache;
+            _wikiRefCache = wikiPageCache;
         }
 
         public void ConstructBashScript()
@@ -30,7 +30,7 @@ namespace WikiRef
 
             builder.AppendLine("#!/bin/bash");
 
-            foreach (var page in _wikiPageCache.WikiPages)
+            foreach (var page in _wikiRefCache.WikiPages)
             {
                 foreach (var video in page.YoutubeUrls)
                 {

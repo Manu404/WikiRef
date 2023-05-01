@@ -8,7 +8,7 @@ namespace WikiRef.Commons
     public class WhitelistHandler
     {
         // some website avoid crawling pages, those are blackliste to avoid false positive
-        private List<string> WhitelistWebsite;
+        public List<string> WhitelistWebsite { get; private set; }
 
         public WhitelistHandler(WikiRef.AppConfiguration config, WikiRef.FileHelper fileHelper)
         {

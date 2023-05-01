@@ -34,6 +34,8 @@ namespace WikiRef
                 url
             };
 
+            IsValid = SourceStatus.NotSet;
+
             try
             {
                 VideoId = GetVideoId(url, _regexHelper);
@@ -45,7 +47,6 @@ namespace WikiRef
 
             try
             {
-                CheckValidity();
                 CheckTypeOfUrl();
             }
             catch (Exception ex)
@@ -53,7 +54,6 @@ namespace WikiRef
                 _console.WriteLineInRed($"Error checking validity for url {url}");
             }
 
-            IsValid = SourceStatus.Undefined;
         }
 
         public static string GetVideoId(string url, RegexHelper regexHelper)
@@ -72,6 +72,7 @@ namespace WikiRef
         public async Task<SourceStatus> FetchPageName()
         {
             await RetreivePageName();
+            CheckValidity();
             return IsValid;
         }
 
