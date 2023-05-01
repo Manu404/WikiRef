@@ -1,6 +1,10 @@
-﻿using System.Runtime;
+﻿using CommandLine.Text;
+using CommandLine;
+using Newtonsoft.Json;
+using System.Runtime;
 using WikiRef.Commons;
 using WikiRef.Commons.Data;
+using System.Security.Cryptography.X509Certificates;
 
 namespace WikiRef
 {
@@ -24,6 +28,8 @@ namespace WikiRef
                 InitalizeOptions(options as YoutubeDownloadOption);
             else if (options is AnalyseOptions)
                 InitalizeOptions(options as AnalyseOptions);
+            else if (options is PublishOptions)
+                InitalizeOptions(options as PublishOptions);
         }
 
         // analyse verb options
@@ -80,6 +86,20 @@ namespace WikiRef
             Action = Action.Archive;
             Inputjson = options.InputJson;
             WaitForArchiving = options.Wait;
+        }
+
+        public string User { get; set; }
+        public string Password { get; set; }
+        public string ReportPage { get; set; }
+        public void InitalizeOptions(PublishOptions options)
+        {
+            Action = Action.Archive;
+            Inputjson = options.InputJson;
+            WikiApi = options.WikiApi;
+            User = options.User;
+            Password = options.Password;
+            ReportPage = options.ReportPage;
+
         }
     }
 }

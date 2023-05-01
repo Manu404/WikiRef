@@ -16,7 +16,7 @@ namespace WikiRef
             _consoleHelper = consoleHelper;
         }
 
-        public void SaveWikiPagesToJsonFile(IEnumerable<WikiPage> pages, string filename, string subfolder)
+        public void SaveWikiRefCacheToJsonFile(WikiRefCache cache, string filename, string subfolder)
         {
             filename = GenerateOutputFilePath(filename, subfolder, ".json");
 
@@ -26,7 +26,7 @@ namespace WikiRef
 
                 using (TextWriter textWritter = new StreamWriter(filename))
                 {
-                    string output = JsonConvert.SerializeObject(pages);
+                    string output = JsonConvert.SerializeObject(cache);
                     textWritter.WriteLine(output);
                 }
                 _consoleHelper.WriteLine(String.Format("Json saved to: {0}", filename));
@@ -55,20 +55,20 @@ namespace WikiRef
             }
         }
 
-        public List<WikiPage> LoadWikiPagesFromJsonFile(string filename)
+        public WikiRefCache LoadWikiRefCacheFromJsonFile(string filename)
         {
             try
             {
                 string json = File.ReadAllText(filename);
-                List<WikiPage> pages = JsonConvert.DeserializeObject<List<WikiPage>>(json);
+                WikiRefCache cache = JsonConvert.DeserializeObject<WikiRefCache>(json);
                 _consoleHelper.WriteLine(String.Format("Json load from: {0}", filename));
-                return pages;
+                return cache;
             }
             catch (Exception e)
             {
                 _consoleHelper.WriteLineInRed(String.Format("An error occured while loading {0}", filename));
                 _consoleHelper.WriteLineInRed(e.Message);
-                return new List<WikiPage>();
+                return new WikiRefCache();
             }
         }
 

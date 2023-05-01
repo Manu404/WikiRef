@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using WikiRef.Commons;
 
@@ -33,6 +34,9 @@ namespace WikiRef.Wiki
                 // If query page
                 if (string.IsNullOrEmpty(_config.Category))
                     return new[] { new WikiPage(_config.Page, _console, this, _config, _whitelistHandler, _regexHelper, _networkHelper) };
+
+                if (await _networkHelper.GetStatus(_config.WikiApi) != HttpStatusCode.OK)
+                    _console.WriteLineInRed($"Provided api url seems invalid {_config.WikiApi}");
 
                 // if query category
                 string queryUrl = $"{_config.WikiApi}?action=query&list=categorymembers&cmtitle=Category:{_config.Category}&cmlimit=500&format=json";

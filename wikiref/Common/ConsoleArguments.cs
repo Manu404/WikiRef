@@ -3,10 +3,10 @@ using WikiRef.Commons;
 
 namespace WikiRef
 {
-    [Verb("analyze", HelpText = "Provide analysis features regarding references. '--help analyse' for more informations.")]
+    [Verb("analyse", HelpText = "Provide analysis features regarding references. '--help analyse' for more informations.")]
     public class AnalyseOptions : DefaultOptions
     {
-        [Option('w', "wiki-api", Required = true, HelpText = "Url of the wiki api to analyze, for eg: https://en.wikipedia.org/w/ - Required")]
+        [Option('a', "api", Required = true, HelpText = "Url of the wiki api to analyze, for eg: https://en.wikipedia.org/w/ - Required")]
         public string Wiki { get; set; }
 
         [Option('c', "category", Required = true, HelpText = "Name of the category to analyse, without the 'Category:' prefix.", SetName = "category")]
@@ -21,8 +21,27 @@ namespace WikiRef
         [Option("json", Required = false, HelpText = "Output the analysis in a json file to the given filename")]
         public string OutputJsonToFile { get; set; }
 
-        [Option("white-list", Required = false, HelpText = "Json file containing white listed domain that will not be analyzed.")]
+        [Option("whitelist", Required = false, HelpText = "Json file containing white listed domain that will not be analyzed.")]
         public string WhiteList { get; set; }
+    }
+
+    [Verb("publish", HelpText = "Publish the analysis result to a wiki. '--help analyse' for more informations.")]
+    public class PublishOptions : DefaultOptions
+    {
+        [Option('a', "api", Required = true, HelpText = "Url of the wiki api to analyze, for eg: https://en.wikipedia.org/w/ - Required")]
+        public string WikiApi { get; set; }
+
+        [Option('i', "input", Required = false, HelpText = "Url of the wiki api to analyze, for eg: https://en.wikipedia.org/w/ - Required")]
+        public string InputJson { get; set; }
+
+        [Option('u', "user", Required = true, HelpText = "Url of the wiki api to analyze, for eg: https://en.wikipedia.org/w/ - Required")]
+        public string User { get; set; }
+
+        [Option('p', "password", Required = true, HelpText = "Url of the wiki api to analyze, for eg: https://en.wikipedia.org/w/ - Required")]
+        public string Password { get; set; }
+
+        [Option("report-page", Required = true, HelpText = "Url of the wiki api to analyze, for eg: https://en.wikipedia.org/w/ - Required")]
+        public string ReportPage { get; set; }
     }
 
     [Verb("archive", HelpText = "Generate a wayback machine archive of non-video content. '--help archive' for more informations.")]

@@ -15,21 +15,21 @@ namespace WikiRef
     {
         private ConsoleHelper _console;
         private AppConfiguration _config;
-        private JsonWikiPageCache _wikiPageCache;
+        private WikiRefCache _wikiRefCache;
         private NetworkHelper _networkHelper;
 
-        public WayBackMachineArchiver(AppConfiguration config, ConsoleHelper console, NetworkHelper networkHelper, JsonWikiPageCache wikiPageCache)
+        public WayBackMachineArchiver(AppConfiguration config, ConsoleHelper console, NetworkHelper networkHelper, WikiRefCache wikiPageCache)
         {
             _config = config;
             _console = console;
-            _wikiPageCache = wikiPageCache;
+            _wikiRefCache = wikiPageCache;
             _networkHelper = networkHelper;
 
         }
 
         public async Task Archive()
         {
-            foreach (var page in _wikiPageCache.WikiPages)
+            foreach (var page in _wikiRefCache.WikiPages)
             {
                 await Parallel.ForEachAsync(page.References.Where(r => !r.IsCitation), async (reference, token) =>
                 {

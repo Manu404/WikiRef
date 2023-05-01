@@ -106,10 +106,10 @@ namespace WikiRef.Wiki
 
             BuildAggregatedYoutubeUrl();
 
-            new ParallelOptions
-            {
-                MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling((Environment.ProcessorCount * 0.75) * 2.0))
-            };
+            //new ParallelOptions
+            //{
+            //    MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling((Environment.ProcessorCount * 0.75) * 2.0))
+            //};
 
             await Parallel.ForEachAsync(YoutubeUrls, async (youtubeUrls, token) =>
             {
@@ -127,18 +127,18 @@ namespace WikiRef.Wiki
                         if (IsYoutubeUrl(url.Url))
                         {
                             string VideoId = YoutubeUrl.GetVideoId(url.Url, _regexHelper);
-                        if (VideoId != null && YoutubeUrls.Any(v => v.VideoId == VideoId))
-                            status = YoutubeUrls.FirstOrDefault(v => v.VideoId == VideoId).IsValid;
-                        else if (YoutubeUrls.Any(v => v.Urls.Any(u => u == url.Url)))
-                            status = YoutubeUrls.FirstOrDefault(v => v.Urls.Any(u => u == url.Url)).IsValid;
-                        else if (reference.IsCitation && IsYoutubeUrl(reference.Content)) // if url contained in citation
-                        {
-                            var citationVideo = new YoutubeUrl(url.Url, _console, _config, _regexHelper, _networkHelper);
-                            await citationVideo.FetchPageName();
-                            status = citationVideo.IsValid;
-                        }
-                        else
-                            status = SourceStatus.Invalid;
+                            if (VideoId != null && YoutubeUrls.Any(v => v.VideoId == VideoId))
+                                status = YoutubeUrls.FirstOrDefault(v => v.VideoId == VideoId).IsValid;
+                            else if (YoutubeUrls.Any(v => v.Urls.Any(u => u == url.Url)))
+                                status = YoutubeUrls.FirstOrDefault(v => v.Urls.Any(u => u == url.Url)).IsValid;
+                            else if (reference.IsCitation && IsYoutubeUrl(reference.Content)) // if url contained in citation
+                            {
+                                var citationVideo = new YoutubeUrl(url.Url, _console, _config, _regexHelper, _networkHelper);
+                                await citationVideo.FetchPageName();
+                                status = citationVideo.IsValid;
+                            }
+                            else
+                                status = SourceStatus.Invalid;
 
                         }
                         else
@@ -179,9 +179,9 @@ namespace WikiRef.Wiki
                     _console.WriteLineInRed($"#> Invalid reference: {displayedUrl} -> {reference.Status}");
                     _console.WriteLineInRed($"Content: {reference.Content}");
                 }
-                else if (reference.Status == SourceStatus.WhiteListed)
+                else if (reference.Status == SourceStatus.WhiteListed && _config.Verbose)
                     _console.WriteLineInOrange($"> #The url {url} is whitelited and wasn't checked.");
-                else
+                else if (reference.Status != SourceStatus.Valid)
                     _console.WriteLineInGray($"#> Valid reference but might have some issues: {displayedUrl} -> {reference.Status}");
             }
         }
