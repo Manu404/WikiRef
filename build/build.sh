@@ -1,7 +1,7 @@
 #!/bin/bash
 
 projectVersion="1.0.0.0"
-projetFile="./wikiref/WikiRef.csproj"
+projetFile="./WikiRef/WikiRef.csproj"
 projectName="wikiref"
 buildScript="multiplateform_build.sh"
 
