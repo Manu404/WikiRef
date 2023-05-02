@@ -1,6 +1,7 @@
 ![Logo WikiRef](https://raw.githubusercontent.com/Manu404/WikiRef/master/doc/logo.png)
 
-[![Build status](https://ci.appveyor.com/api/projects/status/knry4e5v84tds4p6?svg=true)](https://ci.appveyor.com/project/Manu404/wikiref)
+[![Build status](https://ci.appveyor.com/api/projects/status/knry4e5v84tds4p6/branch/master?svg=true)](https://ci.appveyor.com/project/Manu404/wikiref/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/7opqyl1w9a8uocsq/branch/politiwiki?svg=true)](https://ci.appveyor.com/project/Manu404/wikiref-politiwiki/branch/politiwiki)
 
 WikiRef is a free/libre and open source cross-platform tool that helps you verify and archive the references on a [MediaWiki](https://www.mediawiki.org/wiki/MediaWiki) instance.
 
