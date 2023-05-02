@@ -1,5 +1,7 @@
 ![Logo WikiRef](https://raw.githubusercontent.com/Manu404/WikiRef/master/doc/logo.png)
 
+[![Build status](https://ci.appveyor.com/api/projects/status/knry4e5v84tds4p6?svg=true)](https://ci.appveyor.com/project/Manu404/wikiref)
+
 WikiRef is a free/libre and open source cross-platform tool that helps you verify and archive the references on a [MediaWiki](https://www.mediawiki.org/wiki/MediaWiki) instance.
 
 WikiRef can analyze MediaWiki references, identify errors, archive webpage references with [WaybackMachine](https://archive.org/web/) service and locally archive YouTube references. To help you improve the quality of the sourcing of your instance, this tool can let you know if it finds any errors, like dead links, duplicated or malformed references and more. This tool is designed to identify issues in your content rather than fixing them. It provides a report of the identified issues, making it a useful reporting tool.
@@ -26,7 +28,7 @@ If you need anything, have any ideas or find any bugs or issues, let me know thr
 
 The core of the tool is analysis mode, which analyze references and links, then produces JSON used as input for the other modes.
 
-![Schema of the architecture of WikiRef](https://github.com/Manu404/WikiRef/blob/master/doc/Overview_Archi.drawio.png)
+![Schema of the architecture of WikiRef](https://github.com/Manu404/WikiRef/raw/master/doc/Overview_Archi.drawio_old.png)
 
 ### Available binaries
 
