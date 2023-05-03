@@ -83,30 +83,32 @@ Here's the list of options for the Analyze mode.
 Analyze all references from pages in the category Science on the wiki https://demowiki.com/
 
 ```
-wikiref analyse -w https://demowiki.com/w/api.php -c Science
+wikiref analyse -a https://demowiki.com/w/api.php -c Science
 ```
 
 Analyze all references from the page Informatic on the wiki https://demowiki.com/
 
 ```
-wikiref analyse -w https://demowiki.com/w/api.php -p Informatic
+wikiref analyse -a https://demowiki.com/w/api.php -p Informatic
 ```
 
 Analyze all references from pages in the category Science on the wiki https://demowiki.com/; put the output in a file and output nothing in the console
 
 ```
-wikiref analyze -w https://demowiki.com/w/api.php -c Science -j -s
+wikiref analyze -a https://demowiki.com/w/api.php -c Science -j -s
 ```
 
 This mode produce also a JSON file used as data source for other modes.
 
 #### Whitelisting
 
-A whitelising system is present to avoid checking domain that prevent tools like this to check their page status. You can provide a json file using the following format:
+A whitelisting system is present to avoid checking domains that prevents tools like this to check their page status or domains you trust. 
 
-`[ "https://google.com", "https://www.linkedin.com/", "www.odysee.com" ]`
+You can provide a JSON file using the following format:
 
-The URLS starting with these addresses will not be checked by the system to avoid false positive in the report.
+`[ "google.com", "www.linkedin.com/", "www.odysee.com" ]`
+
+The URLs starting with these domains will not be checked by the system to avoid false positive in the report.
 
 ### Script mode
 
@@ -126,7 +128,7 @@ Here's the list of options for the Script mode.
 | -d   | --directory         |      |    ⬤    | Path                           | The root folder where to put videos. They will then be placed in a subfolder based on the page name. |
 |      | --output-script     |      |          | Filename                       | Allow to change the default name of the output script        |
 |      | --tool              |      |    ⬤    | Filename                       | Path to yt-dlp                                               |
-| -a   | --arguments         |      |          | Tool arguments                 | Default arguments are  "-S res,ext:mp4:m4a --recode mp4" to download 480p verison of the videos. |
+|    | --tool-arguments |      |          | Tool arguments                 | Default arguments are  "-S res,ext:mp4:m4a --recode mp4" to download 480p verison of the videos. |
 | -e   | --extension         |      |          | File extension without the "." | Extension of the video file.                                 |
 |      | --redownload        |  ⬤  |          |                                | Download the video, even if it already exist.                |
 |      | --download-playlist |  ⬤  |          |                                | Download videos in playlist URLS                             |
