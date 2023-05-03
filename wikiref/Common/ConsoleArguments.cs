@@ -69,7 +69,7 @@ namespace WikiRef
         [Option("tool", Required = true, HelpText = "Location of yt-dlp. Go to https://github.com/yt-dlp/yt-dlp for more information")]
         public string ToolLocation { get; set; }
 
-        [Option('a', "arguments", Default = "-S res,ext:mp4:m4a --recode mp4", Required = false, HelpText = "Yt -dlp arguments. Default argument produce compressed mp4. Cfr. https://github.com/yt-dlp/yt-dlp for more information")]
+        [Option("tool-arguments", Default = "-S res,ext:mp4:m4a --recode mp4", Required = false, HelpText = "Yt -dlp arguments. Default argument produce compressed mp4. Cfr. https://github.com/yt-dlp/yt-dlp for more information")]
         public string Arguments { get; set; }
 
         [Option('e', "extension", Default = "mp4", Required = false, HelpText = "Video file extension. Default: mp4. Cfr. https://github.com/yt-dlp/yt-dlp for more information")]
