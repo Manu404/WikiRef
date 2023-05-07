@@ -5,7 +5,7 @@
 
 WikiRef is a free/libre and open source cross-platform tool that helps you verify and archive the references on a [MediaWiki](https://www.mediawiki.org/wiki/MediaWiki) instance.
 
-WikiRef can analyze MediaWiki references, identify errors, archive webpage references with [WaybackMachine](https://archive.org/web/) service and locally archive YouTube references. To help you improve the quality of the sourcing of your instance, this tool can let you know if it finds any errors, like dead links, duplicated or malformed references and more. This tool is designed to identify issues in your content rather than fixing them. It provides a report of the identified issues, making it a useful reporting tool.
+WikiRef is a tool that can analyze MediaWiki references, identify errors, and archive webpage references using the [WaybackMachine](https://archive.org/web/) service, as well as locally archiving YouTube references. By helping  you improve the quality of your instance's sourcing, this tool notifies  you of any errors it finds, such as dead links, duplicated or malformed  references, and more. It is designed to identify issues in your content, rather than fixing them. It provides a report of the identified issues, making it a useful reporting tool.
 
 ## Key features
 
@@ -55,7 +55,7 @@ Here's the list of options that apply to all modes.
 
 ## Analyse mode
 
-This mode analyzes references and checks the validity of used URLs.
+This mode analyzes references and checks the validity of used URLs and generate the json used by the other modes.
 
 ##### Options
 
@@ -84,13 +84,11 @@ Analyze all references from the page Informatic on the wiki https://demowiki.com
 wikiref analyse -a https://demowiki.com/w/api.php -p Informatic
 ```
 
-Analyze all references from pages in the category Science on the wiki https://demowiki.com/; put the output in a file and output nothing in the console
+Analyze all references from pages in the category Science on the wiki https://demowiki.com/; put the output in a file called "output.json" and output nothing in the console
 
 ```
-wikiref analyze -a https://demowiki.com/w/api.php -c Science -j -s
+wikiref analyze -a https://demowiki.com/w/api.php -c Science --json output.json -s
 ```
-
-This mode produce also a JSON file used as data source for other modes.
 
 ##### Whitelisting
 
@@ -131,7 +129,7 @@ Here's the list of options for the Script mode.
 Generate a script called download.sh to download all videos contained in the analyse file into the folder "video" using yt-dlp
 
 ```
-wikiref script -i analysis-output.json -d ./videos/ --tool /bin/usr/yt-dlp --output-script download.sh
+wikiref script -i output.json -d ./videos/ --tool /bin/usr/yt-dlp --output-script download.sh
 ```
 
 Note: Under windows, wikiref will be replaced by wikiref‧exe
@@ -153,12 +151,12 @@ Here's the list of options for the Archive mode.
 #### Example usage
 
 ```
-wikiref archive -i analyse.json
+wikiref archive -i output.json
 ```
 
 ## Publish mode
 
-Publish the result of an analysis to a MediaWiki page.
+Publish the result of an JSON analysis to a MediaWiki page.
 
 #### Options
 
@@ -197,7 +195,7 @@ Currently, supported systems are:
  - *Linux ARM* (Linux distributions running on Arm like Raspbian on Raspberry Pi Model 2+)
  - *Linux ARM64* (Linux distributions running on 64-bit Arm like Ubuntu Server 64-bit on Raspberry Pi Model 3+) 
 
-Supported platforms have been tested. Although many platforms are theoretically supported, there is no guarantee that the tool will function optimally on all of them without proper feedback. As a precautionary measure, untested systems will be categorized as "not yet supported". If you have feedback about a system that is not currently listed as a supported platform, please do not hesitate to contact.
+Although the tool may theoretically support many platforms, it has only  been thoroughly tested on a select few. As such, we cannot guarantee  optimal functionality on all platforms without proper feedback. To err  on the side of caution, any untested systems will be categorized as "not yet supported." However, if you have feedback regarding a system that  is not currently listed as a supported platform, please don't hesitate  to contact us. We welcome your feedback and will work to improve the  tool's functionality across as many platforms as possible.
 
 | System                       |     Supported     |
 | ---------------------------- | :---------------: |
@@ -250,21 +248,24 @@ Build is done on Windows using gitbash (normally provided with git) or on Linux.
 - DotNet 7 SDK: https://dotnet.microsoft.com/en-us/download/dotnet/7.0
 - Zip and bzip2 2 need to be added to your gitbash if you're on windows, (it's really easy to install); here's a straight forward tutorial: https://ranxing.wordpress.com/2016/12/13/add-zip-into-git-bash-on-windows/
 
-If under linux:
+Under linux:
 
 - DotNet 7 SDK: https://dotnet.microsoft.com/en-us/download/dotnet/7.0
 - Zip command
 
+#### Cloning the repository
+
+Use recursive git cloning to get the application submodules.
+
 #### Compilation
 
-Once the dependencies are installed, you're ready to compile by yourself the project.
+Once the dependencies and submodules are installed and, you're ready to compile by yourself the project.
 
-The compilation rely on two compile script:
+- After installing the dependencies and submodules, you will be able to compile the project on your own. The compilation process relies on two scripts:
 
-- *build.sh*: the root script containing project variable and calling a generic build script. You can edit it if you want to change what parameters are provided to the real build script, it's pretty straight forward.
-
-- *multiplateform_build.sh*: the "real" compile script, it can be given the following parameter. If a paramter is not given, an interactive prompt will ask you for informations
-
+  - The root script, `build.sh`, contains the project variables and calls a generic build script. You can edit this script to modify the parameters passed to the real build script - it's a straightforward process.
+  - The actual compilation script is `multiplateform_build.sh`. It can take the following parameters. If a parameter is not provided, an interactive prompt will ask you to enter the information.
+  
   | Parameter |           | Description                                               |
   | --------- | --------- | --------------------------------------------------------- |
   | -t        | --target  | The target plateteforme (cfr suppported plateform)        |
