@@ -11,11 +11,12 @@ source ./color.sh
 
 export PATH=$PATH:"C:\\Program Files\\Oracle\\VirtualBox\\"
 
-outputFolder=$(date)
+outputFolder=$(date '+%Y-%m-%d@%H-%M-%S')
 version=1.0.0.0
-targetwiki="http://192.168.2.112"
+targetwiki="http://192.168.2.112/api.php"
 expected_json=$(pwd)"/expected_output.json"
 expected_script=$(pwd)"/expected_download.sh"
+compare_tool=$(pwd)"/JsonCompare/output/build/win-x64_portable/JsonCompare.exe"
 vm_name=""
 vm_ip=""
 vm_snapshot=""
@@ -32,7 +33,7 @@ function waitingForKeyPress(){
 #
 # TESTING SERVER
 #
-vm_name="WikiRef MediaWiki"
+vm_name="WikiRef"
 vm_snapshot="fresh"
 echo -e  "$Cyan#> ===================================================================== $Color_Off"
 echo -e  "$Cyan#>                             VM $vm_name                               $Color_Off"
@@ -46,11 +47,13 @@ VBoxManage.exe startvm "$vm_name"
 #
 # UBUNTU PORTABLE
 #
-function Test() {
+function PortableTest() {
 	vm_name=$1
 	vm_ip=$2
 	vm_snapshot=$3
 	vm_code=$4
+	ssh_user=$5
+	ssh_password=$6
 	
 	echo -e  "$Cyan#> ===================================================================== $Color_Off"
 	echo -e  "$Cyan#>                             VM $vm_name                               $Color_Off"
@@ -68,46 +71,59 @@ function Test() {
 	waitingForKeyPress
 
 	echo -e  "$Cyan#> recreate distant wikiref dir $Color_Off"
-	sshpass -p 1234 ssh eis@$vm_ip 'rm -rf wikiref && mkdir wikiref'
+	sshpass -p $ssh_password ssh $ssh_user@$vm_ip 'rm -rf wikiref && mkdir wikiref'
 
 	echo -e  "$Cyan#> upload wikiref file $Color_Off"
 	zip_filename="wikiref_""$version""_linux-x64_portable.zip"
 	zip_location="..\\output\\zip\\""$zip_filename"
-	sshpass -p 1234 scp $zip_location eis@$vm_ip:/home/eis/wikiref/wikiref.zip
+	sshpass -p $ssh_password scp $zip_location eis@$vm_ip:/home/eis/wikiref/wikiref.zip
 
 	echo -e  "$Cyan#> unzip wikiref $Color_Off"
-	sshpass -p 1234 ssh eis@$vm_ip 'cd wikiref && unzip wikiref.zip && chmod +x wikiref'
-
+	sshpass -p $ssh_password ssh $ssh_user@$vm_ip 'cd wikiref && unzip wikiref.zip && chmod +x wikiref'
+	
 	echo -e  "$Cyan#> analyse $Color_Off"
-	sshpass -p 1234 ssh eis@$vm_ip "cd wikiref && ./wikiref analyse -w $targetwiki -c \"test pages\" --json output.json -b -l"
+	if [[ $vm_name = "CentOS Server 7" ]] || [[ $vm_name = "Alpine Standard 3.17.3" ]]
+	then
+		echo -e  "$Cyan#> Set DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1"
+		sshpass -p $ssh_password ssh $ssh_user@$vm_ip "export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1 && cd wikiref && ./wikiref analyse -a $targetwiki -c \"test pages\" --json output.json -b -l"
+	else 
+		sshpass -p $ssh_password ssh $ssh_user@$vm_ip "cd wikiref && ./wikiref analyse -a $targetwiki -c \"test pages\" --json output.json -b -l"
+	fi
 	
 	echo -e  "$Cyan#> build fake video $Color_Off"
-	sshpass -p 1234 ssh eis@$vm_ip "cd wikiref && mkdir -p ./video/Psyhodelik"
-	sshpass -p 1234 ssh eis@$vm_ip "cd wikiref && touch ./video/Psyhodelik/LE_PREMIER_PRETRE_NON_BINAIRE_GRACE_A_ADAM_ET_EVE__[E0gzvUc797I].mp4"
-	sshpass -p 1234 ssh eis@$vm_ip "cd wikiref && touch ./video/Psyhodelik/#RDF_Psyhodelik_clash__La_gauchiasse!__[gcMm2zzUP6s].mp4"
+	sshpass -p $ssh_password ssh $ssh_user@$vm_ip "cd wikiref && mkdir -p ./video/Psyhodelik"
+	sshpass -p $ssh_password ssh $ssh_user@$vm_ip "cd wikiref && touch ./video/Psyhodelik/LE_PREMIER_PRETRE_NON_BINAIRE_GRACE_A_ADAM_ET_EVE__[E0gzvUc797I].mp4"
+	sshpass -p $ssh_password ssh $ssh_user@$vm_ip "cd wikiref && touch ./video/Psyhodelik/#RDF_Psyhodelik_clash__La_gauchiasse!__[gcMm2zzUP6s].mp4"
 	
 	echo -e  "$Cyan#> generate download script $Color_Off"
-	sshpass -p 1234 ssh eis@$vm_ip "cd wikiref && ./wikiref script -i output.json --tool /usr/local/bin/yt-dlp -d ./video --output-script download_script.sh"
+	if [[ $vm_name = "CentOS Server 7" ]] || [[ $vm_name = "Alpine Standard 3.17.3" ]]
+	then
+		echo -e  "$Cyan#> Set DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1"
+		sshpass -p $ssh_password ssh $ssh_user@$vm_ip "export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1 && cd wikiref && ./wikiref script -i output.json --tool /usr/local/bin/yt-dlp -d './video' --output-script download_script.sh"
+	else 
+		sshpass -p $ssh_password ssh $ssh_user@$vm_ip "cd wikiref && ./wikiref script -i output.json --tool /usr/local/bin/yt-dlp -d './video' --output-script download_script.sh"
+	fi
+	
 		
 	echo -e  "$Cyan#> download json $Color_Off"
 	output_json=$(pwd)"/$outputFolder/output_$vm_code.json"
-	sshpass -p 1234 scp eis@$vm_ip:/home/eis/wikiref/output.json _output.json
+	sshpass -p $ssh_password scp $ssh_user@$vm_ip:/home/eis/wikiref/output.json _output.json
 	mv _output.json "$output_json"
 	
 	echo -e  "$Cyan#> download download script $Color_Off"
 	output_script=$(pwd)"/$outputFolder/download_$vm_code.sh"
 	echo $output_script
-	sshpass -p 1234 scp eis@$vm_ip:/home/eis/wikiref/download_script.sh _download.json
+	sshpass -p $ssh_password scp $ssh_user@$vm_ip:/home/eis/wikiref/download_script.sh _download.json
 	mv _download.json "$output_script"
 
 	echo -e  "$Cyan#> convert eol $Color_Off"
-	unix2dos "$output_json"
-	unix2dos "$output_script"
+	unix2dos "$output_json" -q
+	unix2dos "$output_script" -q
 	
 	echo $output_script
 	echo $expected_script
 	echo -e  "$Cyan#> Diff $output_script and $expected_script $Color_Off"
-	if [ "$(wc -l < "$output_script")" -eq "$(wc -l < $expected_script)" ]; 
+	if [ "$(wc -l < $output_script)" -eq "$(wc -l < $expected_script)" ];
 	then 
 		echo -e "$Green#> Download file contains the same number of downloads$Color_Off"; 
 	else 
@@ -116,8 +132,8 @@ function Test() {
 		echo -e "$Red#> Provided: $(wc -l < "$output_script")$Color_Off"; 
 	fi
 
-	echo -e  "$Cyan#> Diff $outputJson and $expected_json $Color_Off"
-	diff -q "$output_json" "$expected_json"
+	echo -e  "$Cyan#> Diff $output_json and $expected_json $Color_Off"
+	$compare_tool --file-a "$output_json" --file-b "$expected_json"
 	if [[ $? == "0" ]]
 	then
 	  echo -e  "$Green#> JSON Files are identical $Color_Off"
@@ -126,11 +142,29 @@ function Test() {
 	fi
 	
 	echo -e  "$Cyan#> Shutdown $vm_name $Color_Off"
-	vboxmanage.exe controlvm "$vm_name" acpipowerbutton
+	#÷vboxmanage.exe controlvm "$vm_name" acpipowerbutton
 	
 	echo -e  "$Cyan#> $Color_Off"
 	echo -e  "$Cyan#> --------------------------------------------------------------------- $Color_Off"
 	echo -e  "$Cyan#> $Color_Off"
 }
 
-Test "Ubuntu Server 18.04" "192.168.2.103" "fresh" "ubuntu_1804"
+ssh_user=eis
+ssh_password=1234
+
+PortableTest "Ubuntu Server 22.04" "192.168.2.101" "fresh" "ubuntu_2204" $ssh_user $ssh_password
+PortableTest "Ubuntu Server 20.04" "192.168.2.102" "fresh" "ubuntu_2004" $ssh_user $ssh_password
+PortableTest "Ubuntu Server 18.04" "192.168.2.103" "fresh" "ubuntu_1804" $ssh_user $ssh_password
+
+PortableTest "Fedora Server 37.1" "192.168.2.104" "fresh" "fedora_371" $ssh_user $ssh_password
+
+PortableTest "Debian 10.13" "192.168.2.105" "fresh" "debian_1013" $ssh_user $ssh_password
+PortableTest "Debian 11.6" "192.168.2.106" "fresh" "debian_116" $ssh_user $ssh_password
+
+PortableTest "CentOS Server 7" "192.168.2.107" "fresh" "centos_7" $ssh_user $ssh_password
+PortableTest "OpenSUSE Tumbleweed" "192.168.2.108" "fresh" "opensuse_tw" $ssh_user $ssh_password
+PortableTest "Alpine Standard 3.17.3" "192.168.2.114" "fresh" "alpine_3173" $ssh_user $ssh_password
+
+PortableTest "Ubuntu Desktop 20.04" "192.168.2.201" "fresh" "ubuntu_2004d" $ssh_user $ssh_password
+PortableTest "Fedora Workstation 37.7" "192.168.2.202" "fresh" "fedora_377d" $ssh_user $ssh_password
+PortableTest "CentOS Desktop 7" "192.168.2.203" "fresh" "centos_7d" $ssh_user $ssh_password
