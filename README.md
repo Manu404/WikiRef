@@ -14,10 +14,11 @@ WikiRef can analyze MediaWiki references, identify errors, archive webpage refer
  - Verify the accessibility of YouTube video references, their online status and permissions
  - Generate a script to download those videos if needed
  - Archive non-video sources using the WayBack Machine service
+ - Publish to MediaWiki reporting result
 
 ### Limits
 
-Some false positives are possible, for instance a website with a faulty SSL certificate will trigger an error, or some websites like LinkedIn fight against bot accessing their content. A "whitelist" system is being developed to ignore certain url or domains.
+Some false positives are possible, for instance a website with a faulty SSL certificate will trigger an error, or some websites like LinkedIn fight against bot accessing their content. A "whitelist" system is implemented to handle those cases.
 
 ## Support or contribute
 
@@ -29,22 +30,13 @@ If you need anything, have any ideas or find any bugs or issues, let me know thr
 
 The core of the tool is analysis mode, which analyze references and links, then produces JSON used as input for the other modes.
 
-![Schema of the architecture of WikiRef](https://github.com/Manu404/WikiRef/raw/master/doc/Overview_Archi.drawio_old.png)
+![Schema of the architecture of WikiRef](https://github.com/Manu404/WikiRef/raw/master/doc/Overview_Archi.drawio.png)
 
-### Available binaries
-
-Two kind of binaries are available:
-
-- *Self-contained*, or "portable": a single file with no other dependencies than yt-dlp for downloading youtube videos.
-
-- *Normal*: a lighter file that requires the DotNet 7 runtime to be installed on the machine.
-
-#### Note
+##### Note
 
 - On Windows, wikiref will be replaced by wikiref.exe
-- On Linux a 'chmod 755 wikiref' might be required to have it work.
 
-### General options
+## General options
 
 Here's the list of options that apply to all modes.
 
@@ -61,24 +53,24 @@ Here's the list of options that apply to all modes.
 |      | --subdir      |  ⬤   |                    | Place output files in dedicated folders (json, html, log)    |
 | -4   | -ipv4         |  ⬤   |                    | Force ipv4 DNS resolution and queries for compatibility in certain corner case |
 
-### Analyse mode
+## Analyse mode
 
 This mode analyzes references and checks the validity of used URLs.
 
-#### Options
+##### Options
 
 Here's the list of options for the Analyze mode.
 
 |      |             | Flag |                      Required                       | Description                                                  |
 | ---- | ----------- | :--: | :-------------------------------------------------: | ------------------------------------------------------------ |
-| -w   | --wiki-api  |      |                          ⬤                          | Url of api.php                                               |
+| -a   | --api       |      |                          ⬤                          | Url of api.php                                               |
 | -c   | --category  |      |   ⬤<br />(mutually exclusive with page parameter)   | The name of the category to analyze                          |
 | -p   | --page      |      | ⬤<br />(mutually exclusive with category parameter) | The name of the page to analyze                              |
 | -j   |             |  ⬤   |                                                     | Output the analysis to a file with a generated name based on the date |
 |      | --json      |      |                      Filename                       | Same as -h but with a specific filename                      |
 |      | --whitelist |      |                                                     | Filename of a json file containing domain to whitelist.      |
 
-#### Example usages
+##### Example usages
 
 Analyze all references from pages in the category Science on the wiki https://demowiki.com/
 
@@ -100,7 +92,7 @@ wikiref analyze -a https://demowiki.com/w/api.php -c Science -j -s
 
 This mode produce also a JSON file used as data source for other modes.
 
-#### Whitelisting
+##### Whitelisting
 
 A whitelisting system is present to avoid checking domains that prevents tools like this to check their page status or domains you trust. 
 
@@ -110,7 +102,7 @@ You can provide a JSON file using the following format:
 
 The URLs starting with these domains will not be checked by the system to avoid false positive in the report.
 
-### Script mode
+## Script mode
 
 This mode relies on the output of the analyze mode and uses yt-dlp for downloading, but other tools can be used as well.
 
@@ -134,7 +126,7 @@ Here's the list of options for the Script mode.
 |      | --download-playlist |  ⬤  |          |                                | Download videos in playlist URLS                             |
 |      | --download-channel  |  ⬤  |          |                                | Download videos in channel URLS                              |
 
-#### Example usages
+##### Example usages
 
 Generate a script called download.sh to download all videos contained in the analyse file into the folder "video" using yt-dlp
 
@@ -144,7 +136,7 @@ wikiref script -i analysis-output.json -d ./videos/ --tool /bin/usr/yt-dlp --out
 
 Note: Under windows, wikiref will be replaced by wikiref‧exe
 
-### Archive mode
+## Archive mode
 
 This mode archive URL through WaybackMachine. YouTube links are not archived through WaybackMachine, due to YouTube not allowing it.
 
@@ -154,7 +146,7 @@ Here's the list of options for the Archive mode.
 
 |      |              | Flag | Required | Value    | Description                                                  |
 | ---- | ------------ | :--: | :------: | -------- | ------------------------------------------------------------ |
-| -i   | --input-json |      |    ⬤     | Filename | Input JSON source from analyze to get URL to archive.        |
+| -a   | --input-json |      |    ⬤     | Filename | Input JSON source from analyze to get URL to archive.        |
 | -w   | --wait       |  ⬤   |          |          | Wait for confirmation of archival from Archive.org. Use with caution, archive.org might usually take a long time to archive pages. Sometimes many minutes. |
 
 
@@ -164,48 +156,87 @@ Here's the list of options for the Archive mode.
 wikiref archive -i analyse.json
 ```
 
-### Supported systems
+## Publish mode
+
+Publish the result of an analysis to a MediaWiki page.
+
+#### Options
+
+Here's the list of options for the Archive mode.
+
+|      |               | Flag | Required | Value    | Description                                            |
+| ---- | ------------- | :--: | :------: | -------- | ------------------------------------------------------ |
+| -a   | --api         |      |    ⬤     |          | Url of api.php                                         |
+| -i   | --input       |      |    ⬤     | Filename | Input JSON source from analyze to generate report for. |
+| -u   | --user        |      |    ⬤     |          | Wiki username used to publish the edit                 |
+| -p   | --password    |      |    ⬤     |          | The user password.                                     |
+|      | --report-page |      |    ⬤     |          | Name of the target page where to write the report.     |
+
+
+#### Example usage
+
+```
+wikiref publish --api https://monwiki/wiki/api.php -i analyse.json -u Manu404 -p "a$sw0rd" --report-page "Report page"
+```
+
+## 
+
+## Distribution
+
+The binary is availabla as a *Self-contained*, or "portable" application. 
+A single file with no other dependencies than yt-dlp for downloading youtube videos.
+
+### Installation & Supported systems
+
+#### Compatibility
 
 Currently, supported systems are:
 
- - *Windows 64-bit* & *32-bit* from 7 and above.
+ - *Windows 64-bit* & *32-bit* from 10 and above.
  - *Linux 64-bit*  (Most desktop distributions like CentOS, Debian, Fedora, Ubuntu, and derivatives)
  - *Linux ARM* (Linux distributions running on Arm like Raspbian on Raspberry Pi Model 2+)
  - *Linux ARM64* (Linux distributions running on 64-bit Arm like Ubuntu Server 64-bit on Raspberry Pi Model 3+) 
 
-Remarks: Supported platforms have been tested. Although many platforms are theoretically supported, there is no guarantee that the tool will function optimally on all of them without proper feedback. As a precautionary measure, untested systems will be categorized as "not yet supported". If you have feedback about a system that is not currently listed as a supported platform, please do not hesitate to contact.
+Supported platforms have been tested. Although many platforms are theoretically supported, there is no guarantee that the tool will function optimally on all of them without proper feedback. As a precautionary measure, untested systems will be categorized as "not yet supported". If you have feedback about a system that is not currently listed as a supported platform, please do not hesitate to contact.
+
+| System                       |     Supported     |
+| ---------------------------- | :---------------: |
+| Windows 10 64 bits 22H2      |         ⬤         |
+| Windows 11 64b bits          |     Presumed      |
+| Ubuntu Server 22.04          |         ⬤         |
+| Ubuntu Server 20.04          |         ⬤         |
+| Ubuntu Server 18.04          |         ⬤         |
+| Ubuntu Server 18.04          |         ⬤         |
+| Ubuntu Desktop 20.04         |         ⬤         |
+| Debian 11.6                  |         ⬤         |
+| Debian 10.13                 |         ⬤         |
+| Fedora Workstation 37.1      |         ⬤         |
+| Fedora Server 37.1           |         ⬤         |
+| CentOS Server 7              |         ⬤         |
+| CentOS Desktop 7             |         ⬤         |
+| OpenSuse Tumbleweed          |         ⬤         |
+| Raspbian (Raspberry pi)      |         ⬤         |
+| Linux Alpine Standard 3.17.3 | Not Supported Yet |
+| RHEL                         | Not Supported Yet |
+| MacOS                        | Not Supported Yet |
+
+#### CentOS
+
+CentOS 7 user needs the following environment variable:
+
+```
+export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
+```
 
 #### Not yet supported
 
-- *MacOS*: Support for MacOS will be made available in the near future, once it has been tested.
-- *RHEL systems*: While CentOS and Fedora are supported systems, the likelihood of RHEL systems being supported is low.
+  - *Linux Alpine Standard 3.17.3* : The software works but produce incomplete results, it can't be considered supported knowing there's error in his output json. Looking into it.
+  - *MacOS*: Support for MacOS will be made available in the near future, once it has been tested.
+  - *RHEL systems*: While CentOS and Fedora are supported systems, the likelihood of RHEL systems being supported is low.
 
-If you need to build the solution for a system or architecture that is not officially supported, please refer to the "Build for not officially supported system" section located at the end of the page for guidance.
+  If you need to build the solution for a system or architecture that is not officially supported, please refer to the "Build for not officially supported system" section located at the end of the page for guidance.
 
-#### Tested systems
-
-The tool have been tested and working under those systems:
-
-- Windows
-  - Windows 10 Pro 64 bits 22H2
-  - Windows 11 [to complete]
-- Linux
-  - Debian-based
-    - Ubuntu Server 22.04
-    - Ubuntu Server 20.04
-    - Ubuntu Server 18.04
-    - Ubuntu Desktop 20.04
-    - Debian 11.6
-    - Debian 10.13
-  - Red Hat based
-    - Fedora Workstation 37.1	
-    - Fedora Server 37.1
-    - CentOS Server 7
-    - CentOS Desktop 7
-  - OpenSuse Tumbleweed
-  - Alpine Standard 3.17.3
-
-### Building the tool
+## Building the tool
 
 #### Getting the code
 
@@ -219,21 +250,20 @@ Build is done on Windows using gitbash (normally provided with git) or on Linux.
 - DotNet 7 SDK: https://dotnet.microsoft.com/en-us/download/dotnet/7.0
 - Zip and bzip2 2 need to be added to your gitbash if you're on windows, (it's really easy to install); here's a straight forward tutorial: https://ranxing.wordpress.com/2016/12/13/add-zip-into-git-bash-on-windows/
 
+If under linux:
+
+- DotNet 7 SDK: https://dotnet.microsoft.com/en-us/download/dotnet/7.0
+- Zip command
+
 #### Compilation
 
 Once the dependencies are installed, you're ready to compile by yourself the project.
 
 The compilation rely on two compile script:
 
-- *build.sh*: download a multiplateform script and call it. It can be given the following argument
-  
-   | Parameter | Description                                          |
-   | --------- | ---------------------------------------------------- |
-   | -s        | Compile for a single plateform (default)             |
-   | -a        | Compile for all plateform, normal and self-contained |
-   | -e        | Specify to build a self-contained assembly.          |
+- *build.sh*: the root script containing project variable and calling a generic build script. You can edit it if you want to change what parameters are provided to the real build script, it's pretty straight forward.
 
-- *multiplateform_build.sh*: the "real" compile script, it can be given the following parameter:
+- *multiplateform_build.sh*: the "real" compile script, it can be given the following parameter. If a paramter is not given, an interactive prompt will ask you for informations
 
   | Parameter |           | Description                                               |
   | --------- | --------- | --------------------------------------------------------- |
@@ -241,7 +271,8 @@ The compilation rely on two compile script:
   | -p        | --project | Path to the project file                                  |
   | -n        | --name    | Project name used for the zip file                        |
   | -v        | --version | Version use for the zip file                              |
-  | -e        |           | Produce a SelfContained ("portable") file (default false) |
+  | -e        | --embeded | Produce a SelfContained ("portable") file (default false) |
+  | -a        | --all     | Build all plateform available                             |
 
 A clean is done before each build.
 
@@ -265,7 +296,7 @@ You can build for 'unofficially supported system' using the -p parameter of the 
 
 Example, building for macOS 13 Ventura ARM 64 : "./multiplateform_build -p osx.13-arm64"
 
-### Beerz, greetz and personal words
+## Beerz, greetz and personal words
 
 If you like this tool, let me know, it's always appreciated, you can contact me [by mail](mailto:contact@emmmanuelistace.be) . 
 
@@ -273,7 +304,7 @@ Also, if you have any comments or would like any request, I'm totally open for t
 
 I would like to shout-out [BadMulch](https://twitter.com/badmulch), [BienfaitsPourTous](https://bienfaitspourtous.fr/) and the [community](https://discord.gg/Y43NAEDCBy) around the [PolitiWiki project](https://politiwiki.fr/) for which this tool was developed, for their support, greetz, ideas, company during the development when I was streaming it on the discord server and overall moral support.
 
-### Licensing
+## Licensing
 
 - Software is under GNU General Public License version 3. [More](https://github.com/Manu404/WikiRef/blob/master/LICENSE)
 - Logos and graphics are under Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International licence. [More](https://github.com/Manu404/WikiRef/blob/master/doc/cc-by-nc-sa-4.txt)
