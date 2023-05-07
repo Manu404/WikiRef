@@ -9,6 +9,9 @@ namespace WikiRef
         [Option('a', "api", Required = true, HelpText = "Url of the wiki api to analyze, for eg: https://en.wikipedia.org/w/ - Required")]
         public string Wiki { get; set; }
 
+        [Option('n', "namespace", Required = true, HelpText = "Name of the category to analyse, without the 'Category:' prefix.", SetName = "namespace")]
+        public string Namespace { get; set; }
+
         [Option('c', "category", Required = true, HelpText = "Name of the category to analyse, without the 'Category:' prefix.", SetName = "category")]
         public string Category { get; set; }
 

@@ -29,22 +29,23 @@ namespace WikiRef
 
         public async Task Archive()
         {
-            foreach (var page in _wikiRefCache.WikiPages)
-            {
-                await Parallel.ForEachAsync(page.References.Where(r => !r.IsCitation), async (reference, token) =>
+            foreach(var ns in _wikiRefCache.Wiki.Namespaces)
+                foreach (var page in ns.Pages)
                 {
-                    foreach (var url in reference.Urls.Where(url => !IsYoutubeUrl(url.Url)))
-                        await AnalyseUrl(url.Url);
-                });
-                await Parallel.ForEachAsync(page.YoutubeUrls, async (video, token) =>
-                {
-                    if (video.IsVideo)
-                        await AnalyseUrl(video.VideoUrl);
-                    else
-                        foreach (var url in video.Urls)
-                            await AnalyseUrl(url);
-                });
-            }
+                    await Parallel.ForEachAsync(page.References.Where(r => !r.IsCitation), async (reference, token) =>
+                    {
+                        foreach (var url in reference.Urls.Where(url => !IsYoutubeUrl(url.Url)))
+                            await AnalyseUrl(url.Url);
+                    });
+                    await Parallel.ForEachAsync(page.YoutubeUrls, async (video, token) =>
+                    {
+                        if (video.IsVideo)
+                            await AnalyseUrl(video.VideoUrl);
+                        else
+                            foreach (var url in video.Urls)
+                                await AnalyseUrl(url);
+                    });
+                }
         }
 
         private async Task AnalyseUrl(string url)
