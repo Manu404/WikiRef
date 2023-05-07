@@ -31,7 +31,7 @@ namespace WikiRef.Report
                 var pageName = _config.ReportPage;
                 var wikiClient = new WikiClient();
                 var site = new WikiSite(wikiClient, _config.WikiApi);
-                string message = $"Publication rapport wikiref du {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")}";
+                string message = $"Publication date: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")}";
             try
             {
 
