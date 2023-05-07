@@ -17,9 +17,7 @@
 /usr/local/bin/yt-dlp -S res,ext:mp4:m4a --recode mp4 -o "./video\Psyhodelik\LA_MANGUE_C_EST_RACISTE_🥭__[Sve0-gSyzME].mp4" https://www.youtube.com/watch?v=Sve0-gSyzME
 /usr/local/bin/yt-dlp -S res,ext:mp4:m4a --recode mp4 -o "./video\Psyhodelik\PSYHODELIK_EST_PRÉVISIBLE_ET_FACILE_A_PIÉGER_!__[IUYQgRmhFEg].mp4" https://www.youtube.com/watch?v=IUYQgRmhFEg
 /usr/local/bin/yt-dlp -S res,ext:mp4:m4a --recode mp4 -o "./video\Testpagewikiref\Elon_Musk_fires_employees_in_twitter_meeting_DUB__[2j3p_aDMTNg].mp4" https://www.youtube.com/watch?v=2j3p_aDMTNg
-/usr/local/bin/yt-dlp -S res,ext:mp4:m4a --recode mp4 -o "./video\Testpagewikiref\__[yZ-K7nCVnBI].mp4" https://www.youtube.com/watch?v=yZ-K7nCVnBI
 /usr/local/bin/yt-dlp -S res,ext:mp4:m4a --recode mp4 -o "./video\Testpagewikiref\Rick_Astley_-_Never_Gonna_Give_You_Up_(Official_Music_Video)__[dQw4w9WgXcQ].mp4" https://www.youtube.com/watch?v=dQw4w9WgXcQ
-/usr/local/bin/yt-dlp -S res,ext:mp4:m4a --recode mp4 -o "./video\Testpagewikiref\__[watch].mp4" https://www.youtube.com/watch?v=watch
 /usr/local/bin/yt-dlp -S res,ext:mp4:m4a --recode mp4 -o "./video\Testpagewikiref\How_Wings_Are_Attached_to_the_Backs_of_Angels__[NRHVzbJVx8I].mp4" https://www.youtube.com/watch?v=NRHVzbJVx8I
 /usr/local/bin/yt-dlp -S res,ext:mp4:m4a --recode mp4 -o "./video\Testpagewikiref\VGA_2011__Diablo_3_Exclusive_Intro_Cinematic__[nas1rJpm7wY].mp4" https://www.youtube.com/watch?v=nas1rJpm7wY
 /usr/local/bin/yt-dlp -S res,ext:mp4:m4a --recode mp4 -o "./video\Testpagewikiref\Test_Your_Awareness___Whodunnit___[ubNF9QNEQLA].mp4" https://www.youtube.com/watch?v=ubNF9QNEQLA
