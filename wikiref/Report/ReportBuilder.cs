@@ -26,8 +26,8 @@ namespace WikiRef.Report
             builder.AppendLine($"'''Date: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")}'''");
             builder.AppendLine($"__NOTOC__");
             BuildOverview(builder);
-            foreach (var cat in _cache.Wiki.Namespaces)
-                BuildDetailSection(builder, cat);
+            foreach (var ns in _cache.Wiki.Namespaces)
+                BuildDetailSection(builder, ns);
             BuildwhitelistSection(builder);
             return builder.ToString();
         }
@@ -115,8 +115,8 @@ namespace WikiRef.Report
             builder.AppendLine($"=== Whitelisted domains ===");
             BuildWhitelistedUrl(builder);
             builder.AppendLine("<hr />");
-            foreach (var cat in _cache.Wiki.Categories)
-                foreach (var page in cat.Pages)
+            foreach (var ns in _cache.Wiki.Namespaces)
+                foreach (var page in ns.Pages)
                     BuildeWhitelistDetail(builder, page);
         }
 

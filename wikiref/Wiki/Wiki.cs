@@ -10,28 +10,29 @@ namespace WikiRef.Wiki
 {
     public class Wiki
     {
-        List<WikiCategory> category = new List<WikiCategory>();
-        private List<WikiNamespace> namespaces;
-        private bool namespaceChanged;
-        [JsonIgnore]
-        public List<WikiCategory> Categories
-        {
-            get
-            {
-                var listOfCats = Namespaces.SelectMany(p => p.Pages).SelectMany(p => p.Categories);
-                foreach (var cat in listOfCats)
-                {
-                    category.Add(new WikiCategory()
-                    {
-                        Name = cat.Name,
-                        Pages = Namespaces.SelectMany(p => p.Pages).Where(p => p.Categories.Contains(cat)).ToList()
-                    });
-                }
-                return category;
-            }
-        }
+        //private List<WikiCategory> _category = new List<WikiCategory>();
+        private List<WikiNamespace> _namespaces;
+        private bool _namespaceChanged;
 
-        [JsonProperty] public List<WikiNamespace> Namespaces { get => namespaces; set { namespaces = value; namespaceChanged = true; } }
+        //[JsonIgnore]
+        //public List<WikiCategory> Categories
+        //{
+        //    get
+        //    {
+        //        var listOfCats = Namespaces.SelectMany(p => p.Pages).SelectMany(p => p.Categories);
+        //        foreach (var cat in listOfCats)
+        //        {
+        //            _category.Add(new WikiCategory()
+        //            {
+        //                Name = cat.Name,
+        //                Pages = Namespaces.SelectMany(p => p.Pages).Where(p => p.Categories.Contains(cat)).ToList()
+        //            });
+        //        }
+        //        return _category;
+        //    }
+        //}
+
+        [JsonProperty] public List<WikiNamespace> Namespaces { get => _namespaces; set { _namespaces = value; _namespaceChanged = true; } }
         [JsonProperty] public string URL { get; set; }
 
         public Wiki()
