@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "JsonCompare": {
+      "commandName": "Project",
+      "commandLineArgs": "compare --file-a a.json --file-b b.json"
+    }
+  }
+}
