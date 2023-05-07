@@ -30,14 +30,15 @@ namespace WikiRef
 
             builder.AppendLine("#!/bin/bash");
 
-            foreach (var page in _wikiRefCache.WikiPages)
-            {
-                foreach (var video in page.YoutubeUrls)
+            foreach(var cat in _wikiRefCache.Wiki.Namespaces)
+                foreach (var page in cat.Pages)
                 {
-                    i++;
-                    builder.Append(ConstructBashInstruction(page.Name, video));
+                    foreach (var video in page.YoutubeUrls)
+                    {
+                        i++;
+                        builder.Append(ConstructBashInstruction(page.Name, video));
+                    }
                 }
-            }
 
             _console.WriteLine($"{i} video treated");
 

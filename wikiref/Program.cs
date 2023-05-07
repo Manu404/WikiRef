@@ -29,7 +29,7 @@ namespace WikiRef
             _fileHelper = new FileHelper(_bootStrapper.ConsoleHelper);
             _whitelistHandler = new WhitelistHandler(_config, _fileHelper);
             _api = new MediaWikiApi(_bootStrapper.ConsoleHelper, _config, _whitelistHandler, _bootStrapper.RegexHelper, _bootStrapper.NetworkHelper);
-            _wikiRefCache = new WikiRefCache(_api, _whitelistHandler);
+            _wikiRefCache = new WikiRefCache(_config, _api, _whitelistHandler);
         }
 
         private void ParseCommandlineArgument(string[] args)
@@ -72,7 +72,7 @@ namespace WikiRef
             if (_config != null && _config.ExportRefText)
             {
                 StringBuilder builder = new StringBuilder();
-                foreach (var reference in _wikiRefCache.WikiPages.SelectMany(p => p.References).Select(r => r.Content))
+                foreach (var reference in _wikiRefCache.Wiki.Namespaces.SelectMany( p => p.Pages).SelectMany(p => p.References).Select(r => r.Content))
                 {
                     builder.AppendLine(reference);
                 }

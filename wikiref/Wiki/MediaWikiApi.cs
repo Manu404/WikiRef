@@ -25,7 +25,36 @@ namespace WikiRef.Wiki
             _networkHelper = networkHelper;
         }
 
-        public async Task<IEnumerable<WikiPage>> GetWikiPages()
+        public async Task<IEnumerable<WikiPage>> GetWikiPagesFromNamespace()
+        {
+            List<WikiPage> pages = new List<WikiPage>();
+
+            try
+            {
+                // If query page
+                if (string.IsNullOrEmpty(_config.Namespace))
+                    return new[] { new WikiPage(_config.Page, _config.Namespace, _console, this, _config, _whitelistHandler, _regexHelper, _networkHelper) };
+
+                if (await _networkHelper.GetStatus(_config.WikiApi) != HttpStatusCode.OK)
+                    _console.WriteLineInRed($"Provided api url seems invalid {_config.WikiApi}");
+
+                // if query category
+                string queryUrl = $"{_config.WikiApi}?action=query&generator=allpages&gaplimit=500&apnamespace={_config.Namespace}&prop=revisions&rvprop=content&format=json";
+                string json = await _networkHelper.GetContent(queryUrl);
+                JObject jsonObject = JObject.Parse(json);
+                foreach (var page in jsonObject["query"]["pages"])
+                    pages.Add(new WikiPage((string)page.Children().First()["title"], _config.Category, _console, this, _config, _whitelistHandler, _regexHelper, _networkHelper));
+                return pages;
+            }
+            catch (Exception ex)
+            {
+                _console.WriteLineInRed($"Error retreiving pages from {_config.Category}");
+                _console.WriteLineInRed(ex.Message);
+                return pages;
+            }
+        }
+
+        public async Task<IEnumerable<WikiPage>> GetWikiPagesFromCategories()
         {
             List<WikiPage> pages = new List<WikiPage>();
 
@@ -33,7 +62,7 @@ namespace WikiRef.Wiki
             {
                 // If query page
                 if (string.IsNullOrEmpty(_config.Category))
-                    return new[] { new WikiPage(_config.Page, _console, this, _config, _whitelistHandler, _regexHelper, _networkHelper) };
+                    return new[] { new WikiPage(_config.Page, _config.Category, _console, this, _config, _whitelistHandler, _regexHelper, _networkHelper) };
 
                 if (await _networkHelper.GetStatus(_config.WikiApi) != HttpStatusCode.OK)
                     _console.WriteLineInRed($"Provided api url seems invalid {_config.WikiApi}");
@@ -43,7 +72,7 @@ namespace WikiRef.Wiki
                 string json = await _networkHelper.GetContent(queryUrl);
                 JObject jsonObject = JObject.Parse(json);
                 foreach (var page in jsonObject["query"]["categorymembers"])
-                    pages.Add(new WikiPage((string)page["title"], _console, this, _config, _whitelistHandler, _regexHelper, _networkHelper));
+                    pages.Add(new WikiPage((string)page["title"], _config.Category, _console, this, _config, _whitelistHandler, _regexHelper, _networkHelper));
                 return pages;
             }
             catch (Exception ex)

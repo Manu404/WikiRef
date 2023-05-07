@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Metadata;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using WikiRef.Commons;
@@ -22,10 +23,11 @@ namespace WikiRef.Report
         public string BuildReport()
         {
             StringBuilder builder = new StringBuilder();
-            builder.AppendLine($"'''Date de génération du rapport: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")}'''");
+            builder.AppendLine($"'''Date: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")}'''");
             builder.AppendLine($"__NOTOC__");
             BuildOverview(builder);
-            BuildDetailSection(builder);
+            foreach (var cat in _cache.Wiki.Namespaces)
+                BuildDetailSection(builder, cat);
             BuildwhitelistSection(builder);
             return builder.ToString();
         }
@@ -33,9 +35,10 @@ namespace WikiRef.Report
         private void BuildOverview(StringBuilder builder)
         {
             AddSectionTitle(builder, "Overview");
-            BuildPageTableHeader(builder);
-            foreach(var page in _cache.WikiPages)
-                BuildLine(builder, page);
+            BuildPageTableHeader(builder); 
+            foreach (var ns in _cache.Wiki.Namespaces)
+                foreach (var page in ns.Pages)
+                    BuildLine(builder, page);
             BuildPageTableFooter(builder);
         }
 
@@ -58,8 +61,9 @@ namespace WikiRef.Report
             !Status".Trim());
         }
 
-        private void BuildLine(StringBuilder builder, WikiPage page) 
+        private void BuildLine(StringBuilder builder, WikiPageData page) 
         {
+            
             var reference = page.References.Count;
             var citation = page.References.Where(r => r.IsCitation).Count();
             var whitelisted = page.References.SelectMany(u => u.Urls).Where(u => u.SourceStatus == SourceStatus.WhiteListed).Count();
@@ -83,14 +87,14 @@ namespace WikiRef.Report
             builder.AppendLine("|}");
         }
 
-        private void BuildDetailSection(StringBuilder builder)
+        private void BuildDetailSection(StringBuilder builder, WikiNamespace ns)
         {
-            AddSectionTitle(builder, "Error details");
-            if (_cache.WikiPages.Where(p => p.References.Any(r => r.Status == SourceStatus.Invalid)).Count() == 0)
-                builder.AppendLine("No errors found in the wiki, everything seems alright 👌");
-            else
-                foreach (var page in _cache.WikiPages.Where(p => p.References.Any(r => r.Status == SourceStatus.Invalid)))
+            if (ns.Pages.Where(p => p.References.Any(r => r.Status == SourceStatus.Invalid)).Count() > 0)
+            {
+                AddSectionTitle(builder, $"Error details - {ns.Name}");
+                foreach (var page in ns.Pages.Where(p => p.References.Any(r => r.Status == SourceStatus.Invalid)))
                     BuildeErrorDetail(builder, page);
+            }
         }
 
         private void BuildeErrorDetail(StringBuilder builder, WikiPage page)
@@ -111,8 +115,9 @@ namespace WikiRef.Report
             builder.AppendLine($"=== Whitelisted domains ===");
             BuildWhitelistedUrl(builder);
             builder.AppendLine("<hr />");
-            foreach (var page in _cache.WikiPages)
-                BuildeWhitelistDetail(builder, page);
+            foreach (var cat in _cache.Wiki.Categories)
+                foreach (var page in cat.Pages)
+                    BuildeWhitelistDetail(builder, page);
         }
 
         private void BuildWhitelistedUrl(StringBuilder builder)
@@ -121,7 +126,7 @@ namespace WikiRef.Report
                 builder.AppendLine($" - {url}");
         }
 
-        private void BuildeWhitelistDetail(StringBuilder builder, WikiPage page)
+        private void BuildeWhitelistDetail(StringBuilder builder, WikiPageData page)
         {
             IEnumerable<string> urls = page.References.SelectMany(u => u.Urls).Where(u => u.SourceStatus == SourceStatus.WhiteListed).Select(u => u.Url);
             if (urls.Count() == 0) return;

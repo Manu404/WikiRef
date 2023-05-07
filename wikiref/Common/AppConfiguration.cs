@@ -34,6 +34,7 @@ namespace WikiRef
 
         // analyse verb options
         public string WikiApi { get; private set; }
+        public string Namespace { get; set; }
         public string Category { get; private set; }
         public string Page { get; private set; }
         public string OutputJsonToFile { get; private set; }
@@ -45,6 +46,7 @@ namespace WikiRef
             Action = Action.Analyse;
 
             WikiApi = options.Wiki;
+            Namespace = options.Namespace;
             Page = options.Page;
             Category = options.Category;
             WhiteList = options.WhiteList;

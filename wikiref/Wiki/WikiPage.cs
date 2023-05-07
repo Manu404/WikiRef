@@ -32,6 +32,7 @@ namespace WikiRef.Wiki
         [JsonIgnore] public int MalformedDates { get; set; }
         [JsonIgnore] public int DatesCount { get; set; }
         [JsonIgnore] public int WikiLinks { get; set; }
+        public List<WikiCategory> Categories { get; set; }
 
         [JsonIgnore] public List<YoutubeUrlData> ThreadSafeYoutubeUrls { get; set; }
         [JsonIgnore] public List<Reference> ThreadSafeReferences { get; set; }
@@ -41,11 +42,16 @@ namespace WikiRef.Wiki
 
         }
 
-        public WikiPage(string name, ConsoleHelper consoleHelper, MediaWikiApi api, AppConfiguration configuration, WhitelistHandler whiteList, RegexHelper regexHelper, NetworkHelper networkHelper)
+        public WikiPage(string name, string category, ConsoleHelper consoleHelper, MediaWikiApi api, AppConfiguration configuration, WhitelistHandler whiteList, RegexHelper regexHelper, NetworkHelper networkHelper)
         {
             YoutubeUrls = new List<YoutubeUrlData>();
             References = new List<Reference>();
 
+            Categories = new List<WikiCategory>();
+            Categories.Add(new WikiCategory()
+            {
+                Name = category
+            });
             Name = name;
 
             _console = consoleHelper;
