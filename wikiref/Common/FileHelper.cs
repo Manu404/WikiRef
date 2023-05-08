@@ -26,7 +26,7 @@ namespace WikiRef
 
                 using (TextWriter textWritter = new StreamWriter(filename))
                 {
-                    string output = JsonConvert.SerializeObject(cache);
+                    string output = JsonConvert.SerializeObject(cache, Formatting.Indented);
                     textWritter.WriteLine(output);
                 }
                 _consoleHelper.WriteLine(String.Format("Json saved to: {0}", filename));
