@@ -38,62 +38,71 @@ namespace WikiRef
 
         private bool CompareWikiPages(WikiRefCache filea, WikiRefCache fileb)
         {
+            int nscount = filea.Wiki.Namespaces.Count();
+            int pagecount = 0;
             bool equal = true;
-            int count = filea.WikiPages.Count();
-            if (count != fileb.WikiPages.Count()) return false;
+            if (nscount != filea.Wiki.Namespaces.Count()) return false;
 
-            foreach(var pageA in filea.WikiPages)
+            foreach (var ns in filea.Wiki.Namespaces)
             {
-                var pageB = fileb.WikiPages.FirstOrDefault(f => f.Content == pageA.Content);
-                if (pageB == null) return false;
+                pagecount += ns.Pages.Count();
+                var fileBPagesInThisNamespace = filea.Wiki.Namespaces.FirstOrDefault(n => n.Name == ns.Name)?.Pages;
+                if (pagecount != fileBPagesInThisNamespace.Count()) return false;
+
+                foreach (var pageA in ns.Pages)
+                {
+                    var pageB = fileBPagesInThisNamespace.FirstOrDefault(f => f.Content == pageA.Content);
+                    if (pageB == null) return false;
                 
-                equal = equal && (pageB.DatesCount == pageA.DatesCount);
-                equal = equal && (pageA.MalformedDates == pageB.MalformedDates);
-                equal = equal && (pageA.WikiLinks == pageB.WikiLinks);  
-                equal = equal && (pageA.Name == pageB.Name);
+                    equal = equal && (pageB.DatesCount == pageA.DatesCount);
+                    equal = equal && (pageA.MalformedDates == pageB.MalformedDates);
+                    equal = equal && (pageA.WikiLinks == pageB.WikiLinks);  
+                    equal = equal && (pageA.Name == pageB.Name);
 
-                if (pageA.References.Count != pageB.References.Count) return false;
+                    if (pageA.References.Count != pageB.References.Count) return false;
 
-                int refCount = pageA.References.Count();
-                foreach(var refA in pageA.References)
-                {
-                    var refB = pageB.References.FirstOrDefault(r => r.Content == refA.Content);
-                    if (refB == null) return false;
-                    equal = equal && refA.IsCitation == refB.IsCitation;
-                    equal = equal && refA.Status == refB.Status;
-                    equal = equal && refA.FormattingIssue == refB.FormattingIssue;
-                    equal = equal && refA.InvalidUrls == refB.InvalidUrls;
-                    refCount -= 1;
+                    int refCount = pageA.References.Count();
+                    foreach(var refA in pageA.References)
+                    {
+                        var refB = pageB.References.FirstOrDefault(r => r.Content == refA.Content);
+                        if (refB == null) return false;
+                        equal = equal && refA.IsCitation == refB.IsCitation;
+                        equal = equal && refA.Status == refB.Status;
+                        equal = equal && refA.FormattingIssue == refB.FormattingIssue;
+                        equal = equal && refA.InvalidUrls == refB.InvalidUrls;
+                        refCount -= 1;
+                    }
+                    equal = equal && refCount == 0;
+
+
+                    if (pageA.YoutubeUrls.Count != pageB.YoutubeUrls.Count) return false;
+
+                    int youtubeUrlsCount = pageA.YoutubeUrls.Count(); 
+                    foreach (var ytbA in pageA.YoutubeUrls)
+                    {
+                        var ytbB = pageB.YoutubeUrls.FirstOrDefault(r => r.Urls.Any(u => ytbA.Urls.Contains(u)));
+                        if (ytbB == null) return false;
+                        if (ytbB.Urls.Count != ytbB.Urls.Count) return
+                        equal = equal && ytbA.VideoId == ytbB.VideoId;
+                        equal = equal && ytbA.Name == ytbB.Name;
+                        equal = equal && ytbA.ChannelName == ytbB.ChannelName;
+                        equal = equal && ytbA.IsValid == ytbB.IsValid;
+                        equal = equal && ytbA.IsPlaylist == ytbB.IsPlaylist;
+                        equal = equal && ytbA.IsUser == ytbB.IsUser;
+                        equal = equal && ytbA.IsCommunity == ytbB.IsCommunity;
+                        equal = equal && ytbA.IsAbout == ytbB.IsAbout;
+                        equal = equal && ytbA.IsChannels == ytbB.IsChannels;
+                        equal = equal && ytbA.IsHome == ytbB.IsHome;
+                        equal = equal && ytbA.IsVideo == ytbB.IsVideo;
+                        youtubeUrlsCount -= 1;
+                    }
+                    equal = equal && youtubeUrlsCount == 0;
+
+                    pagecount -= 1;
                 }
-                equal = equal && refCount == 0;
-
-
-                if (pageA.YoutubeUrls.Count != pageB.YoutubeUrls.Count) return false;
-
-                int youtubeUrlsCount = pageA.YoutubeUrls.Count(); 
-                foreach (var ytbA in pageA.YoutubeUrls)
-                {
-                    var ytbB = pageB.YoutubeUrls.FirstOrDefault(r => r.Urls.Any(u => ytbA.Urls.Contains(u)));
-                    if (ytbB == null) return false;
-                    if (ytbB.Urls.Count != ytbB.Urls.Count) return
-                    equal = equal && ytbA.VideoId == ytbB.VideoId;
-                    equal = equal && ytbA.Name == ytbB.Name;
-                    equal = equal && ytbA.ChannelName == ytbB.ChannelName;
-                    equal = equal && ytbA.IsValid == ytbB.IsValid;
-                    equal = equal && ytbA.IsPlaylist == ytbB.IsPlaylist;
-                    equal = equal && ytbA.IsUser == ytbB.IsUser;
-                    equal = equal && ytbA.IsCommunity == ytbB.IsCommunity;
-                    equal = equal && ytbA.IsAbout == ytbB.IsAbout;
-                    equal = equal && ytbA.IsChannels == ytbB.IsChannels;
-                    equal = equal && ytbA.IsHome == ytbB.IsHome;
-                    equal = equal && ytbA.IsVideo == ytbB.IsVideo;
-                    youtubeUrlsCount -= 1;
-                }
-                equal = equal && youtubeUrlsCount == 0;
-
-                count -= 1;
+                nscount -= 1;
             }
-            return count == 0 && equal;
+            return nscount == 0 && pagecount == 0 && equal;
         }
 
         private bool CompareWhiteList(WikiRefCache filea, WikiRefCache fileb)
