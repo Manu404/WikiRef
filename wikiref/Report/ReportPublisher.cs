@@ -61,6 +61,7 @@ namespace WikiRef.Report
                 catch (Exception ex)
                 {
                     _consoleHelper.WriteLineInRed($"Error with MediaWiki API : {ex.Message}");
+                    DigInnerException(ex, _consoleHelper);
                 }
                 try
                 {
@@ -70,12 +71,21 @@ namespace WikiRef.Report
                 catch (Exception ex)
                 {
                     _consoleHelper.WriteLineInRed($"Error with MediaWiki API : {ex.Message}");
+                    DigInnerException(ex, _consoleHelper);
                 }
             }
             catch (Exception ex)
             {
                 _consoleHelper.WriteLineInRed($"Error building report : {ex.Message}");
+                DigInnerException(ex, _consoleHelper);
             }
+        }
+
+        private void DigInnerException(Exception ex, ConsoleHelper _consoleHelper)
+        {
+            _consoleHelper.WriteLineInRed($"Exception : {ex.Message}{Environment.NewLine}{ex.StackTrace}");
+            if (ex.InnerException != null)
+                DigInnerException(ex.InnerException, _consoleHelper);
         }
     }
 }
