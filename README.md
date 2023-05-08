@@ -53,7 +53,7 @@ Here's the list of options that apply to all modes.
 |      | --subdir      |  ⬤   |                    | Place output files in dedicated folders (json, html, log)    |
 | -4   | -ipv4         |  ⬤   |                    | Force ipv4 DNS resolution and queries for compatibility in certain corner case |
 
-## Analyse mode
+## Analyze mode
 
 This mode analyzes references and checks the validity of used URLs and generate the json used by the other modes.
 
@@ -61,27 +61,28 @@ This mode analyzes references and checks the validity of used URLs and generate 
 
 Here's the list of options for the Analyze mode.
 
-|      |             | Flag |                      Required                       | Description                                                  |
-| ---- | ----------- | :--: | :-------------------------------------------------: | ------------------------------------------------------------ |
-| -a   | --api       |      |                          ⬤                          | Url of api.php                                               |
-| -c   | --category  |      |   ⬤<br />(mutually exclusive with page parameter)   | The name of the category to analyze                          |
-| -p   | --page      |      | ⬤<br />(mutually exclusive with category parameter) | The name of the page to analyze                              |
-| -j   |             |  ⬤   |                                                     | Output the analysis to a file with a generated name based on the date |
-|      | --json      |      |                      Filename                       | Same as -h but with a specific filename                      |
-|      | --whitelist |      |                                                     | Filename of a json file containing domain to whitelist.      |
+|      |             | Flag |                        Required                         | Description                                                  |
+| ---- | ----------- | :--: | :-----------------------------------------------------: | ------------------------------------------------------------ |
+| -a   | --api       |      |                            ⬤                            | Url of api.php                                               |
+| -n   | --namespace |      |   ⬤<br />(mutually exclusive with page and category)    | The name of the namespace to analyze                         |
+| -c   | --category  |      |   ⬤<br />(mutually exclusive with page and namespace)   | The name of the category to analyze                          |
+| -p   | --page      |      | ⬤<br />(mutually exclusive with category and namespace) | The name of the page to analyze                              |
+| -j   |             |  ⬤   |                                                         | Output the analysis to a file with a generated name based on the date |
+|      | --json      |      |                        Filename                         | Same as -h but with a specific filename                      |
+|      | --whitelist |      |                                                         | Filename of a json file containing domain to whitelist.      |
 
 ##### Example usages
 
 Analyze all references from pages in the category Science on the wiki https://demowiki.com/
 
 ```
-wikiref analyse -a https://demowiki.com/w/api.php -c Science
+wikiref analyze -a https://demowiki.com/w/api.php -c Science
 ```
 
 Analyze all references from the page Informatic on the wiki https://demowiki.com/
 
 ```
-wikiref analyse -a https://demowiki.com/w/api.php -p Informatic
+wikiref analyze -a https://demowiki.com/w/api.php -p Informatic
 ```
 
 Analyze all references from pages in the category Science on the wiki https://demowiki.com/; put the output in a file called "output.json" and output nothing in the console

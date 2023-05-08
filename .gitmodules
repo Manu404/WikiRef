@@ -1,9 +1,9 @@
 [submodule "WikiRef.Commons"]
 	path = WikiRef.Commons
 	url = https://github.com/Manu404/WikiRef.Commons
-[submodule "build/MultiplateformDotNetCoreBuildScript"]
-	path = build/MultiplateformDotNetCoreBuildScript
-	url = https://github.com/Manu404/MultiplateformDotNetCoreBuildScript.git
 [submodule "testing/JsonCompare/MultiplateformDotNetCoreBuildScript"]
 	path = testing/JsonCompare/MultiplateformDotNetCoreBuildScript
+	url = https://github.com/Manu404/MultiplateformDotNetCoreBuildScript.git
+[submodule "build/MultiplateformDotNetCoreBuildScript"]
+	path = build/MultiplateformDotNetCoreBuildScript
 	url = https://github.com/Manu404/MultiplateformDotNetCoreBuildScript.git
