@@ -115,9 +115,9 @@ function PortableTest() {
 	if [[ $vm_name = "CentOS Server 7" ]] || [[ $vm_name = "Alpine Standard 3.17.3" ]]
 	then
 		echo -e  "$Cyan#> Set DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1 $Color_Off"
-		sshpass -p $ssh_password ssh $ssh_user@$vm_ip "export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1 && cd wikiref && ./wikiref publish --api $wiki_api -i $remote_output_json -u $wiki_user -p $wiki_password --report-page $wiki_report_page" | cat
+		sshpass -p $ssh_password ssh $ssh_user@$vm_ip "export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1 && cd wikiref && ./wikiref publish -a $wiki_api -i $remote_output_json -u $wiki_user -p $wiki_password --report-page $wiki_report_page" | cat
 	else
-		sshpass -p $ssh_password ssh $ssh_user@$vm_ip "cd wikiref && ./wikiref publish --api $wiki_api -i $remote_output_json -u $wiki_user -p $wiki_password --report-page $wiki_report_page" | cat
+		sshpass -p $ssh_password ssh $ssh_user@$vm_ip "cd wikiref && ./wikiref publish -a $wiki_api -i $remote_output_json -u $wiki_user -p $wiki_password --report-page $wiki_report_page" | cat
 	fi
 	
 	echo -e  "$Cyan#> download json $Color_Off"
