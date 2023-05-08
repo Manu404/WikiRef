@@ -9,19 +9,19 @@ namespace WikiRef
         [Option('a', "api", Required = true, HelpText = "Url of the wiki api to analyze, for eg: https://en.wikipedia.org/w/ - Required")]
         public string Wiki { get; set; }
 
-        [Option('n', "namespace", Required = true, HelpText = "Name of the category to analyse, without the 'Category:' prefix.", SetName = "namespace")]
+        [Option('n', "namespace", Required = true, HelpText = "Name of a namespace to analyse.", SetName = "namespace")]
         public string Namespace { get; set; }
 
-        [Option('c', "category", Required = true, HelpText = "Name of the category to analyse, without the 'Category:' prefix.", SetName = "category")]
+        [Option('c', "category", Required = true, HelpText = "Name of a category to analyse.", SetName = "category")]
         public string Category { get; set; }
 
-        [Option('p', "page", Required = true, HelpText = "Name of page a to analyse.", SetName = "page")]
+        [Option('p', "page", Required = true, HelpText = "Name of a page a to analyse.", SetName = "page")]
         public string Page { get; set; }
 
-        [Option('j', Default = false, Required = false, HelpText = "Output the analysis in a json file using the date and time as name")]
+        [Option('j', Default = false, Required = false, HelpText = "Output the analysis in a json file using the date and time as name.")]
         public bool OutputJsonToDefaultFile { get; set; }
 
-        [Option("json", Required = false, HelpText = "Output the analysis in a json file to the given filename")]
+        [Option("json", Required = false, HelpText = "Output the analysis in a json file to the given filename.")]
         public string OutputJsonToFile { get; set; }
 
         [Option("whitelist", Required = false, HelpText = "Json file containing white listed domain that will not be analyzed.")]
@@ -34,16 +34,16 @@ namespace WikiRef
         [Option('a', "api", Required = true, HelpText = "Url of the wiki api to analyze, for eg: https://en.wikipedia.org/w/ - Required")]
         public string WikiApi { get; set; }
 
-        [Option('i', "input", Required = false, HelpText = "Url of the wiki api to analyze, for eg: https://en.wikipedia.org/w/ - Required")]
+        [Option('i', "input", Required = false, HelpText = "Input json source from analyze.")]
         public string InputJson { get; set; }
 
-        [Option('u', "user", Required = true, HelpText = "Url of the wiki api to analyze, for eg: https://en.wikipedia.org/w/ - Required")]
+        [Option('u', "user", Required = true, HelpText = "Username to connect to the mediawiki instance.")]
         public string User { get; set; }
 
-        [Option('p', "password", Required = true, HelpText = "Url of the wiki api to analyze, for eg: https://en.wikipedia.org/w/ - Required")]
+        [Option('p', "password", Required = true, HelpText = "Password to connect to the mediawiki instance.")]
         public string Password { get; set; }
 
-        [Option("report-page", Required = true, HelpText = "Url of the wiki api to analyze, for eg: https://en.wikipedia.org/w/ - Required")]
+        [Option("report-page", Required = true, HelpText = "The page where to publish the report.")]
         public string ReportPage { get; set; }
     }
 
@@ -69,7 +69,7 @@ namespace WikiRef
         [Option("output-script", Required = false, Default = "download.sh", HelpText = "Name of the output script.")]
         public string OutputScriptName { get; set; }
 
-        [Option("tool", Required = true, HelpText = "Location of yt-dlp. Go to https://github.com/yt-dlp/yt-dlp for more information")]
+        [Option("tool", Required = true, HelpText = "Location of yt-dlp. Go to https://github.com/yt-dlp/yt-dlp for more informations.")]
         public string ToolLocation { get; set; }
 
         [Option("tool-arguments", Default = "-S res,ext:mp4:m4a --recode mp4", Required = false, HelpText = "Yt -dlp arguments. Default argument produce compressed mp4. Cfr. https://github.com/yt-dlp/yt-dlp for more information")]
