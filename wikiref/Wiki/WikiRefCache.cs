@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using WikiRef.Commons;
 using WikiRef.Commons.Data;
@@ -16,12 +18,15 @@ namespace WikiRef.Wiki
             Wiki = new Wiki();
         }
 
-        public WikiRefCache(AppConfiguration _config, MediaWikiApi _api, WhitelistHandler whitelistHandler)
+        public WikiRefCache(AppConfiguration _config, MediaWikiApi _api, WhitelistHandler whitelistHandler, ConsoleHelper _consoleHelper)
         {
             Wiki = new Wiki();
 
             Wiki.URL = _config.WikiApi;
-            if(!string.IsNullOrEmpty(_config.Page))
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            if (!string.IsNullOrEmpty(_config.Page))
             {
                 WikiNamespace ns = new WikiNamespace();
                 ns.Name = "Principal";
@@ -43,6 +48,10 @@ namespace WikiRef.Wiki
                 Wiki.Namespaces.Add(ns);
             }
             WhiteList = whitelistHandler.WhitelistWebsite;
+
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            _consoleHelper.WriteLineInGray(String.Format("Runtime: {0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10));
         }
     }
 

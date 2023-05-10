@@ -18,7 +18,7 @@ namespace WikiRef.Wiki
     {
         // Internal status flags
         private bool isReferenceListBuilt = false;
-        private bool areUrlExtracteFromReferences = false;
+        private bool areUrlExtractedFromReferences = false;
         private bool isPageContentRetreivedFromApi = false;
 
         // External Dependencies
@@ -59,9 +59,14 @@ namespace WikiRef.Wiki
             _config = configuration;
             _whitelist = whiteList;
             _regexHelper = regexHelper;
-            _networkHelper = networkHelper; 
+            _networkHelper = networkHelper;
 
-            GetPageContentFromApi().Wait();
+            BuildPage().Wait();
+        }
+
+        public async Task BuildPage()
+        {
+            await GetPageContentFromApi();
             BuildReferenceList();
             ExtractUrlsFromReference();
         }
@@ -87,21 +92,21 @@ namespace WikiRef.Wiki
 
         private void ExtractUrlsFromReference()
         {
-            if (areUrlExtracteFromReferences) return;
+            if (areUrlExtractedFromReferences) return;
 
-            Parallel.ForEach(References, reference =>
+            foreach(var reference in References)
             {
                 var matches = _regexHelper.ExtractUrlFromReferenceRegex.Matches(reference.Content);
 
-                Parallel.ForEach(matches, match =>
+                foreach(Match match in matches)
                 {
                     if (match.Groups["url"].Value.Contains(','))
-                        _console.WriteLineInOrange(String.Format("#This reference contains multiple urls. Reference: {0}", reference.Content));
+                        _console.WriteLineInOrange($"#This reference contains multiple urls. Reference: {reference.Content}");
 
                     reference.Urls.Add(new ReferenceUrl(HttpUtility.UrlDecode(match.Groups["url"].Value)));
-                });
-            });
-            areUrlExtracteFromReferences = true;
+                }
+            }
+            areUrlExtractedFromReferences = true;
         }
         
         public async Task CheckReferenceStatus()
