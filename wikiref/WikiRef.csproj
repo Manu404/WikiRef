@@ -37,7 +37,7 @@
 
   <ItemGroup>
     <None Update="output.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="whitelist.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>

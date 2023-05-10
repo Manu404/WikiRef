@@ -29,7 +29,7 @@ namespace WikiRef
             _fileHelper = new FileHelper(_bootStrapper.ConsoleHelper);
             _whitelistHandler = new WhitelistHandler(_config, _fileHelper);
             _api = new MediaWikiApi(_bootStrapper.ConsoleHelper, _config, _whitelistHandler, _bootStrapper.RegexHelper, _bootStrapper.NetworkHelper);
-            _wikiRefCache = new WikiRefCache(_config, _api, _whitelistHandler);
+            _wikiRefCache = new WikiRefCache(_config, _api, _whitelistHandler, _bootStrapper.ConsoleHelper);
         }
 
         private void ParseCommandlineArgument(string[] args)

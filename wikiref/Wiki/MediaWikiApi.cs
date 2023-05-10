@@ -10,6 +10,7 @@ namespace WikiRef.Wiki
 {
     public class MediaWikiApi
     {
+        private int _apiCalls;
         private ConsoleHelper _console;
         private WhitelistHandler _whitelistHandler;
         private AppConfiguration _config;
@@ -23,9 +24,10 @@ namespace WikiRef.Wiki
             _config = config;
             _regexHelper = regexHelper;
             _networkHelper = networkHelper;
+            _apiCalls = 0;
         }
 
-        public async Task<IEnumerable<WikiPage>> GetWikiPagesFromNamespace()
+        public async Task<IEnumerable<WikiPage>> GetWikiPagesFromNamespace(string gap_continue = "")
         {
             List<WikiPage> pages = new List<WikiPage>();
 
@@ -38,12 +40,23 @@ namespace WikiRef.Wiki
                 if (await _networkHelper.GetStatus(_config.WikiApi) != HttpStatusCode.OK)
                     _console.WriteLineInRed($"Provided api url seems invalid {_config.WikiApi}");
 
-                // if query category
-                string queryUrl = $"{_config.WikiApi}?action=query&generator=allpages&gaplimit=500&apnamespace={_config.Namespace}&prop=revisions&rvprop=content&format=json";
+                // if query namespace, paging
+                string queryUrl = $"{_config.WikiApi}?action=query&generator=allpages&gaplimit=500&apnamespace={_config.Namespace}&format=json";
+                if (!String.IsNullOrEmpty(gap_continue))
+                    queryUrl += $"&gapcontinue={gap_continue}";
+
+                _console.WriteLineInGray($"{_apiCalls}::Retrieve {queryUrl}");
+
                 string json = await _networkHelper.GetContent(queryUrl);
+                _apiCalls += 1;
                 JObject jsonObject = JObject.Parse(json);
+
+                if (jsonObject["continue"] != null && (jsonObject["continue"]["gapcontinue"] != null))
+                    pages.AddRange(await GetWikiPagesFromNamespace(jsonObject["continue"]["gapcontinue"].Value<string>()));
+
                 foreach (var page in jsonObject["query"]["pages"])
                     pages.Add(new WikiPage((string)page.Children().First()["title"], _config.Category, _console, this, _config, _whitelistHandler, _regexHelper, _networkHelper));
+               
                 return pages;
             }
             catch (Exception ex)
@@ -54,7 +67,7 @@ namespace WikiRef.Wiki
             }
         }
 
-        public async Task<IEnumerable<WikiPage>> GetWikiPagesFromCategories()
+        public async Task<IEnumerable<WikiPage>> GetWikiPagesFromCategories(string page_continue = "")
         {
             List<WikiPage> pages = new List<WikiPage>();
 
@@ -67,12 +80,25 @@ namespace WikiRef.Wiki
                 if (await _networkHelper.GetStatus(_config.WikiApi) != HttpStatusCode.OK)
                     _console.WriteLineInRed($"Provided api url seems invalid {_config.WikiApi}");
 
-                // if query category
+                // if query category, paging
                 string queryUrl = $"{_config.WikiApi}?action=query&list=categorymembers&cmtitle=Category:{_config.Category}&cmlimit=500&format=json";
+                if (!String.IsNullOrEmpty(page_continue))
+                    queryUrl += $"&cmcontinue={page_continue}";
+
+                _console.WriteLineInGray($"{_apiCalls}::Retrieve {queryUrl}");
+
                 string json = await _networkHelper.GetContent(queryUrl);
+                _apiCalls += 1;
                 JObject jsonObject = JObject.Parse(json);
-                foreach (var page in jsonObject["query"]["categorymembers"])
+
+                if (jsonObject["continue"] != null && jsonObject["continue"]["cmcontinue"] != null)
+                    pages.AddRange(await GetWikiPagesFromCategories(jsonObject["continue"]["cmcontinue"].Value<string>()));
+
+                Parallel.ForEach(jsonObject["query"]["categorymembers"], page =>
+                {
                     pages.Add(new WikiPage((string)page["title"], _config.Category, _console, this, _config, _whitelistHandler, _regexHelper, _networkHelper));
+                });
+                
                 return pages;
             }
             catch (Exception ex)
@@ -91,13 +117,17 @@ namespace WikiRef.Wiki
 
                 var sanitizedPageName = pageName.Replace(" ", "_");
                 string queryUrl = $"{_config.WikiApi}?action=query&prop=revisions&titles={sanitizedPageName}&rvslots=*&rvprop=timestamp|user|comment|content&format=json";
+
+                _console.WriteLineInGray($"{_apiCalls}::Retrieve {queryUrl} => {pageName}");
+
                 string json = await _networkHelper.GetContent(queryUrl);
+                _apiCalls += 1;
 
                 JObject jsonObject = JObject.Parse(json);
                 JToken content = jsonObject.Descendants()
-                .Where(t => t.Type == JTokenType.Property && ((JProperty)t).Name == "*")
-                .Select(p => ((JProperty)p).Value)
-                .FirstOrDefault();
+                                            .Where(t => t.Type == JTokenType.Property && ((JProperty)t).Name == "*")
+                                            .Select(p => ((JProperty)p).Value)
+                                            .FirstOrDefault();
 
                 return content.ToString();
             }
