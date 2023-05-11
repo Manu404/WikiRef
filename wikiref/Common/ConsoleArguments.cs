@@ -18,7 +18,7 @@ namespace WikiRef
         [Option('p', "page", Required = true, HelpText = "Name of a page a to analyse.", SetName = "page")]
         public string Page { get; set; }
 
-        [Option('j', Default = false, Required = false, HelpText = "Output the analysis in a json file using the date and time as name.")]
+        [Option('j', Default = true, Required = false, HelpText = "Output the analysis in a json file using the date and time as name.")]
         public bool OutputJsonToDefaultFile { get; set; }
 
         [Option("json", Required = false, HelpText = "Output the analysis in a json file to the given filename.")]

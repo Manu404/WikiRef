@@ -62,6 +62,8 @@ namespace WikiRef
             if (_config != null && (_config.OutputJsonToDefaultFile || !String.IsNullOrEmpty(_config.OutputJsonToFile)))
             {
                 string filename = _config.OutputJsonToDefaultFile ? String.Empty : _config.OutputJsonToFile;
+                if (!String.IsNullOrEmpty(_config.OutputJsonToFile))
+                    filename = _config.OutputJsonToFile;
                 string dirname = _config.PutInSubDirectory ? ".json" : String.Empty;
                 _fileHelper.SaveWikiRefCacheToJsonFile(_wikiRefCache, filename, dirname);
             }
