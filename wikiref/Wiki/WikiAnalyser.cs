@@ -26,7 +26,7 @@ namespace WikiRef.Wiki
         public async Task AnalyseReferences()
         {
             foreach(var ns in _wikiRefCache.Wiki.Namespaces)
-                foreach (var page in ns.Pages)
+                foreach (var page in ns.Pages.OrderBy(p => p.Name))
                 {
                     _console.WriteSection(string.Format("Analyzing page: {0}...", page.Name));
                     await page.CheckReferenceStatus();
