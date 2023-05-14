@@ -11,7 +11,7 @@ source ./color.sh
 
 export PATH=$PATH:"C:\\Program Files\\Oracle\\VirtualBox\\"
 
-version=1.0.0.1
+version=1.0.0.2
 
 output_folder=$(date '+%Y-%m-%d@%H-%M-%S')
 remote_output_json="output.json"
@@ -92,9 +92,9 @@ function PortableTest() {
 	if [[ $vm_name = "CentOS Server 7" ]] || [[ $vm_name = "Alpine Standard 3.17.3" ]]
 	then
 		echo -e  "$Cyan#> Set DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1 $Color_Off"
-		sshpass -p $ssh_password ssh $ssh_user@$vm_ip "export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1 && cd wikiref && ./wikiref analyse -a $wiki_api -c \"test pages\" --json $remote_output_json -b -l" | cat
+		sshpass -p $ssh_password ssh $ssh_user@$vm_ip "export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1 && cd wikiref && ./wikiref analyze -a $wiki_api -c \"test pages\" --json $remote_output_json -b -l" | cat
 	else 
-		sshpass -p $ssh_password ssh $ssh_user@$vm_ip "cd wikiref && ./wikiref analyse -a $wiki_api -c \"test pages\" --json $remote_output_json -b -l" | cat
+		sshpass -p $ssh_password ssh $ssh_user@$vm_ip "cd wikiref && ./wikiref analyze -a $wiki_api -c \"test pages\" --json $remote_output_json -b -l" | cat
 	fi
 	
 	echo -e  "$Cyan#> build fake video $Color_Off"
