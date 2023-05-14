@@ -34,17 +34,20 @@ namespace WikiRef
                 {
                     await Parallel.ForEachAsync(page.References.Where(r => !r.IsCitation), async (reference, token) =>
                     {
-                        foreach (var url in reference.Urls.Where(url => !IsYoutubeUrl(url.Url)))
+                        foreach (var url in reference.Urls.Where(url => !IsYoutubeUrl(url.Url) && !IsWaybackMachine(url.Url)))
+                        { 
+                            await Task.Delay(_config.Throttle);
                             await AnalyseUrl(url.Url);
+                        }
                     });
-                    await Parallel.ForEachAsync(page.YoutubeUrls, async (video, token) =>
-                    {
-                        if (video.IsVideo)
-                            await AnalyseUrl(video.VideoUrl);
-                        else
-                            foreach (var url in video.Urls)
-                                await AnalyseUrl(url);
-                    });
+                    //await Parallel.ForEachAsync(page.YoutubeUrls, async (video, token) =>
+                    //{
+                    //    if (video.IsVideo)
+                    //        await AnalyseUrl(video.VideoUrl);
+                    //    else
+                    //        foreach (var url in video.Urls)
+                    //            await AnalyseUrl(url);
+                    //});
                 }
         }
 
@@ -52,11 +55,31 @@ namespace WikiRef
         {
             try
             {
-                var snapshot = await Getsnapshot(url);
+                WayBakckMachineSnapshot snapshot;
+                try
+                {
+                    if(_config.Throttle != 0)
+                        await Task.Delay(_config.Throttle * 1000);
+                    snapshot = await Getsnapshot(url);
+                }
+                catch (Exception ex)
+                {
+                    _console.WriteLineInRed($"Error archiving {url} - {ex.Message}");
+                    return;
+                }
+
                 if (!snapshot.IsArchived)
                 {
                     _console.WriteLine($"Website {url} not archived.");
-                    await _networkHelper.GetContent($"https://web.archive.org/save/{url}");
+
+                    try
+                    {
+                        await _networkHelper.GetContent($"https://web.archive.org/save/{url}");
+                    }
+                    catch (Exception ex)
+                    {
+                        _console.WriteLineInRed($"Error archiving {url} - {ex.Message}");
+                    }
                     _console.WriteLineInOrange($"Archival requested for {url}");
 
                     if(_config.WaitForArchiving)
@@ -64,7 +87,7 @@ namespace WikiRef
                         while (!snapshot.IsArchived)
                         {
                             _console.WriteLineInGray($"Waiting confirmation for {url}");
-                            await Task.Delay(5000);
+                            await Task.Delay(10000);
                             snapshot = await Getsnapshot(url);
                         }
                         _console.WriteLineInGreen($"Archival confirmed for {url}");
@@ -90,6 +113,11 @@ namespace WikiRef
         private bool IsYoutubeUrl(string url)
         {
             return (url.Contains("youtu.", StringComparison.InvariantCultureIgnoreCase) || url.Contains("youtube.", StringComparison.InvariantCultureIgnoreCase));
+        }
+
+        private bool IsWaybackMachine(string url)
+        {
+            return url.Contains("archive.org", StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }
