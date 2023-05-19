@@ -18,7 +18,8 @@ namespace WikiRef.Commons
         public bool CheckIfWebsiteIsWhitelisted(string url)
         {
             return WhitelistWebsite.Any(u => url.ToLower().StartsWith("https://" + u.ToLower(), StringComparison.InvariantCultureIgnoreCase))
-            || WhitelistWebsite.Any(u => url.ToLower().StartsWith("http://" + u.ToLower(), StringComparison.InvariantCultureIgnoreCase));
+            || WhitelistWebsite.Any(u => url.ToLower().StartsWith("http://" + u.ToLower(), StringComparison.InvariantCultureIgnoreCase))
+            || WhitelistWebsite.Any(u => url.ToLower().StartsWith(u.ToLower(), StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }
