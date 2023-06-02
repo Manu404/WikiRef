@@ -30,8 +30,7 @@ namespace WikiRef.Wiki
         private NetworkHelper _networkHelper;
 
         [JsonIgnore] public int MalformedDates { get; set; }
-        [JsonIgnore] public int DatesCount { get; set; }
-        [JsonIgnore] public int WikiLinks { get; set; }
+        public int WikiLinks { get; set; }
         public List<WikiCategory> Categories { get; set; }
 
         [JsonIgnore] public List<YoutubeUrlData> ThreadSafeYoutubeUrls { get; set; }
@@ -100,10 +99,14 @@ namespace WikiRef.Wiki
 
                 foreach(Match match in matches)
                 {
-                    if (match.Groups["url"].Value.Contains(','))
+                    var url = HttpUtility.UrlDecode(match.Groups["url"].Value);
+                    if (url.Contains(','))
                         _console.WriteLineInOrange($"#This reference contains multiple urls. Reference: {reference.Content}");
 
-                    reference.Urls.Add(new ReferenceUrl(HttpUtility.UrlDecode(match.Groups["url"].Value)));
+                    if (url.Contains("wikipedia"))
+                        WikiLinks += 1;
+
+                    reference.Urls.Add(new ReferenceUrl(url));
                 }
             }
             areUrlExtractedFromReferences = true;

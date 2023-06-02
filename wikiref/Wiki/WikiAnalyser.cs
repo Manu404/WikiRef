@@ -36,13 +36,12 @@ namespace WikiRef.Wiki
             _console.WriteLineInGray($"References: {_wikiRefCache.Wiki.Namespaces.SelectMany(p => p.Pages).Sum(p => p.References.Count)}");
             _console.WriteLineInGray($"Citation references: {_wikiRefCache.Wiki.Namespaces.SelectMany(p => p.Pages).SelectMany(r => r.References).Where(r => r.IsCitation).Count()}");
             _console.WriteLineInGray($"Urls: {_wikiRefCache.Wiki.Namespaces.SelectMany(p => p.Pages).SelectMany(r => r.References).SelectMany(u => u.Urls).Count()}");
-            _console.WriteLineInGray($"Invalid references: {_wikiRefCache.Wiki.Namespaces.SelectMany(p => p.Pages).SelectMany(r => r.References).Where(r => r.Status == SourceStatus.Invalid).Count()}");
-            _console.WriteLineInGray($"Undefined references: {_wikiRefCache.Wiki.Namespaces.SelectMany(p => p.Pages).SelectMany(r => r.References).Where(r => r.Status == SourceStatus.Undefined).Count()}");
-            _console.WriteLineInGray($"Whitelisted references: {_wikiRefCache.Wiki.Namespaces.SelectMany(p => p.Pages).SelectMany(r => r.References).Where(r => r.Status == SourceStatus.WhiteListed).Count()}");
+            _console.WriteLineInGray($"Invalid urls: {_wikiRefCache.Wiki.Namespaces.SelectMany(p => p.Pages).SelectMany(r => r.References).SelectMany(u => u.Urls).Where(u => u.SourceStatus == SourceStatus.Invalid).Count()}");
+            _console.WriteLineInGray($"Undefined urls: {_wikiRefCache.Wiki.Namespaces.SelectMany(p => p.Pages).SelectMany(r => r.References).SelectMany(u => u.Urls).Where(u => u.SourceStatus == SourceStatus.Undefined).Count()}");
+            _console.WriteLineInGray($"Whitelisted urls: {_wikiRefCache.Wiki.Namespaces.SelectMany(p => p.Pages).SelectMany(r => r.References).SelectMany(u => u.Urls).Where(u => u.SourceStatus == SourceStatus.WhiteListed).Count()}");
             _console.WriteLineInGray($"Reference wihtout metadata: {_wikiRefCache.Wiki.Namespaces.SelectMany(p => p.Pages).SelectMany(r => r.References).Where(r => r.FormattingIssue).Count()}");
-            _console.WriteLineInGray($"Dates: {_wikiRefCache.Wiki.Namespaces.SelectMany(p => p.Pages).Sum(p => p.DatesCount)}");
             _console.WriteLineInGray($"Misformed or missing dates: {_wikiRefCache.Wiki.Namespaces.SelectMany(p => p.Pages).Sum(p => p.MalformedDates)}");
-            _console.WriteLineInGray($"Wikipedia links: {_wikiRefCache.Wiki.Namespaces.SelectMany(p => p.Pages).Sum(p => p.WikiLinks)}");
+            _console.WriteLineInGray($"Wikipedia urls: {_wikiRefCache.Wiki.Namespaces.SelectMany(p => p.Pages).Sum(s => s.WikiLinks)}");
 
             _console.WriteSection("Invalid link");
             foreach (var url in _wikiRefCache.Wiki.Namespaces.SelectMany(p => p.Pages).SelectMany(r => r.References).SelectMany(u => u.Urls).Where(u => u.SourceStatus == SourceStatus.Invalid).OrderBy(u => u.Url))
