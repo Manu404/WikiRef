@@ -3,7 +3,7 @@ using WikiRef.Commons;
 
 namespace WikiRef
 {
-    [Verb("analyze", HelpText = "Provide analysis features regarding references. '--help analyse' for more informations.")]
+    [Verb("analyse", HelpText = "Provide analysis features regarding references. '--help analyse' for more informations.")]
     public class AnalyseOptions : DefaultOptions
     {
         [Option('a', "api", Required = true, HelpText = "Url of the wiki api to analyze, for eg: https://en.wikipedia.org/w/ - Required")]
