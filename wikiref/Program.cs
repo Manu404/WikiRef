@@ -43,7 +43,7 @@ namespace WikiRef
                 .WithParsed<YoutubeDownloadOption>(option =>
                 {
                     InitializeDependencies(option);
-                    new YoutubeBashScriptBuilder(_config, _bootStrapper.ConsoleHelper, _fileHelper.LoadWikiRefCacheFromJsonFile(_config.Inputjson)).ConstructBashScript();
+                    new YoutubeBashScriptBuilder(_config, _bootStrapper.ConsoleHelper, _fileHelper.LoadWikiRefCacheFromJsonFile(_config.Inputjson), _bootStrapper.RegexHelper).ConstructBashScript();
                 })
                 .WithParsed<AnalyseOptions>(option =>
                 {
