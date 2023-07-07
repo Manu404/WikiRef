@@ -85,12 +85,13 @@ namespace WikiRef
             var desitnationFilename = GetOutputPath(filename, page);
             bool fileExist = false;
 
-            foreach(var file in Directory.GetFiles(GetOutputDirectory(page)))
-            {
-                var youtubeVideoId = _regexHelper.ExtractYoutubeUrlFromEmbededVideoRegex.Match(file).Groups["id"];
-                if (youtubeVideoId != null)
-                    fileExist = true;
-            }
+            if (Directory.Exists(GetOutputDirectory(page))) 
+                foreach(var file in Directory.GetFiles(GetOutputDirectory(page)))
+                {
+                    var youtubeVideoId = _regexHelper.ExtractYoutubeIdFromFileNameRegex.Matches(file);
+                    if (youtubeVideoId != null && youtubeVideoId.Last().Groups["id"].Value == video.VideoId)
+                        fileExist = true;
+                }
 
             if (fileExist && !_config.DownloadRedownload)
             {
