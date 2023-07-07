@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Web;
 using System.Xml.Linq;
 using WikiRef.Commons;
 using WikiRef.Commons.Data;
@@ -15,12 +16,14 @@ namespace WikiRef
         private ConsoleHelper _console;
         private AppConfiguration _config;
         private WikiRefCache _wikiRefCache;
+        private RegexHelper _regexHelper;
 
-        public YoutubeBashScriptBuilder(AppConfiguration config, ConsoleHelper console, WikiRefCache wikiPageCache)
+        public YoutubeBashScriptBuilder(AppConfiguration config, ConsoleHelper console, WikiRefCache wikiPageCache, RegexHelper regexHelper)
         {
             _config = config;
             _console = console;
             _wikiRefCache = wikiPageCache;
+            _regexHelper = regexHelper;
         }
 
         public void ConstructBashScript()
@@ -80,14 +83,22 @@ namespace WikiRef
 
             var filename = $"{GetFileName(video)}.{_config.DownloadVideoFileExtension}";
             var desitnationFilename = GetOutputPath(filename, page);
+            bool fileExist = false;
 
-            if (File.Exists(desitnationFilename) && !_config.DownloadRedownload)
+            foreach(var file in Directory.GetFiles(GetOutputDirectory(page)))
+            {
+                var youtubeVideoId = _regexHelper.ExtractYoutubeUrlFromEmbededVideoRegex.Match(file).Groups["id"];
+                if (youtubeVideoId != null)
+                    fileExist = true;
+            }
+
+            if (fileExist && !_config.DownloadRedownload)
             {
                 if (_config.Verbose)
                     _console.WriteLine($"{desitnationFilename} exist.");
                 return String.Empty;
             }
-            else if(File.Exists(desitnationFilename) && _config.DownloadRedownload)
+            else if(fileExist && _config.DownloadRedownload)
             {
                 if (_config.Verbose)
                     _console.WriteLine($"remove and download {desitnationFilename}.");
@@ -140,6 +151,11 @@ namespace WikiRef
         private string GetOutputPath(string filename, string page)
         {
             return Path.Combine(_config.DownloadRootFolder, GetValidPath(page), GetValidPath(filename)).Replace("'", "_").Replace("\"", "_");
+        }
+
+        private string GetOutputDirectory(string page)
+        {
+            return Path.Combine(_config.DownloadRootFolder, GetValidPath(page)).Replace("'", "_").Replace("\"", "_");
         }
 
         private string GetValidPath(string path)
