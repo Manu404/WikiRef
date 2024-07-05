@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
 
-namespace WikiRef.Wiki
+namespace WikiRef.Data
 {
     public class WikiNamespace
     {

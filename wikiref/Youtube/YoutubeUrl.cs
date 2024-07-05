@@ -1,32 +1,30 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Web;
-using WikiRef.Commons;
-using WikiRef.Commons.Data;
+using WikiRef.Common;
+using WikiRef.Data;
 
 namespace WikiRef
 {
-    class YoutubeUrl : YoutubeUrlData
+    class YoutubeUrl : Data.YoutubeUrl
     {
-        private ConsoleHelper _console;
-        private AppConfiguration _config;
-        private RegexHelper _regexHelper;
-        private NetworkHelper _networkHelper;
+        private IConsole _console;
+        private IAppConfiguration _config;
+        private IRegexHelper _regexHelper;
+        private INetworkHelper _networkHelper;
 
         public YoutubeUrl()
         {
 
         }
 
-        public YoutubeUrl(string url, ConsoleHelper consoleHelper, AppConfiguration configuration, RegexHelper helper, NetworkHelper networkHelper)
+        public YoutubeUrl(IAppConfiguration configuration, IConsole console, IRegexHelper regexHelper, INetworkHelper networkHelper, string url)
         {
-            _console = consoleHelper;
+            _console = console;
             _config = configuration;
-            _regexHelper = helper;
+            _regexHelper = regexHelper;
             _networkHelper = networkHelper;
 
             Urls = new List<string>
@@ -47,16 +45,15 @@ namespace WikiRef
 
             try
             {
-                CheckTypeOfUrl();
+                SetUrlType();
             }
             catch (Exception ex)
             {
                 _console.WriteLineInRed($"Error checking validity for url {url}");
             }
-
         }
 
-        public static string GetVideoId(string url, RegexHelper regexHelper)
+        public static string GetVideoId(string url, IRegexHelper regexHelper)
         {
             try
             {
@@ -72,29 +69,28 @@ namespace WikiRef
         public async Task<SourceStatus> FetchPageName()
         {
             await RetreivePageName();
-            CheckValidity();
+            SetValidity();
             return IsValid;
         }
 
-        // Valid by default
-        private void CheckValidity()
+        private void SetValidity()
         {
-            if (Name == " - YouTube") // takedown - private or TOS violation
+            if (Name == " - YouTube")
             {
                 if (_config.Verbose)
-                    _console.WriteLineInOrange("Url invalid cause video is private or violate TOS.");
+                    _console.WriteLineInOrange("Invalid URL - video is private or violate TOS.");
                 IsValid = SourceStatus.Invalid;
             }
-            else if (Name == "YouTube") // redirect home page
+            else if (Name == "YouTube")
             {
                 if (_config.Verbose)
-                    _console.WriteLineInOrange("Url invalid cause redirection to homepage.");
+                    _console.WriteLineInOrange("Invalid URL - redirection to homepage.");
                 IsValid = SourceStatus.Invalid;
             }
             else if ((String.IsNullOrEmpty(Name) || String.IsNullOrWhiteSpace(Name)) && !Urls.Contains("/embed/")) // deleted channel, embeded videos doesen't have title, so htey should be considered valid
             {
                 if (_config.Verbose)
-                    _console.WriteLineInOrange("Url invalid cause refer to deleted channel or private.");
+                    _console.WriteLineInOrange("Invalid URL - refer to deleted channel or private.");
                 IsValid = SourceStatus.Invalid;
             }
             else
@@ -103,43 +99,43 @@ namespace WikiRef
             }
         }
 
-        private void CheckTypeOfUrl()
+        private void SetUrlType()
         {
-            if (Urls.Any(n => n.Contains("/user"))) // lien de chaine
+            if (Urls.Any(n => n.Contains("/user")))
             {
                 if (_config.Verbose)
                     _console.WriteLineInOrange($"{Urls.First()} is a user page.");
                 IsUser = true;
             }
-            else if (Urls.Any(n => n.Contains("/playlist"))) // playlist
+            else if (Urls.Any(n => n.Contains("/playlist"))) 
             {
                 if (_config.Verbose)
                     _console.WriteLineInOrange($"{Urls.First()} is a playlist.");
                 IsPlaylist = true;
             }
-            else if (Urls.Any(n => n.Contains("/about"))) // chaine
+            else if (Urls.Any(n => n.Contains("/about")))
             {
                 if (_config.Verbose)
                     _console.WriteLineInOrange($"{Urls.First()} is an about page.");
                 IsAbout = true;
             }
-            else if (Urls.Any(n => n.Contains("/community"))) // chaine
+            else if (Urls.Any(n => n.Contains("/community")))
             {
                 if (_config.Verbose)
                     _console.WriteLineInOrange($"{Urls.First()} is a community page.");
                 IsCommunity = true;
             }
-            else if (Urls.Any(n => n.Contains("/featured"))) // chaine
+            else if (Urls.Any(n => n.Contains("/featured")))
             {
                 if (_config.Verbose)
                     _console.WriteLineInOrange($"{Urls.First()} is a featured/home page.");
                 IsHome = true;
             }
-            else if (Urls.Any(n => n.Contains("/channels")) || Urls.Any(n => n.Contains("/videos"))) // chaine
+            else if (Urls.Any(n => n.Contains("/channels")) || Urls.Any(n => n.Contains("/videos")))
             {
                 if (_config.Verbose)
                     _console.WriteLineInOrange($"{Urls.First()} is an home page.");
-                IsChannels = true;
+                IsChannel = true;
             }
             else
             {
@@ -151,27 +147,24 @@ namespace WikiRef
         {
             try
             {
-                // if already retrived, return
                 if (!String.IsNullOrEmpty(Name))
                     return;
 
                 if (_config.Throttle != 0)
                 {
-                    _console.WriteLine($"Waiting {_config.Throttle} for {Urls.First()} (throttling)...");
+                    _console.WriteLine($"Waiting {_config.Throttle} seconds for {Urls.First()} (throttling)...");
                     await Task.Delay(_config.Throttle * 1000);
                 }
 
-                string urlToVerify = String.Empty;
-
-                if (Urls.Contains("embed")) // emebed videos have no name in the title, but there's a reference to the orignal video that can be retrieved.
-                    urlToVerify = GetSourceUrlFromEmbededVideo();
-                if (IsVideo)
+                string urlToVerify;
+                if (Urls.Contains("embed"))
+                    urlToVerify = GetSourceUrlFromEmbeddedVideo();
+                else if (IsVideo)
                     urlToVerify = VideoUrl;
                 else
                     urlToVerify = Urls.First();
 
-                string pageContent = String.Empty;
-
+                string pageContent;
                 if (urlToVerify.Contains("/shorts/"))
                     pageContent = await _networkHelper.GetYoutubeShortContent(urlToVerify);
                 else
@@ -180,27 +173,26 @@ namespace WikiRef
                 string title = _regexHelper.ExtractYoutubeVideoNameFromPageRegex.Matches(pageContent).FirstOrDefault()?.Groups["name"].Value;
 
                 // strip " - youtube" from the title
-                StringBuilder stripedTitleBuilder = new StringBuilder();
                 if (title.ToLower().EndsWith("youtube"))
-                    stripedTitleBuilder.Append(string.Join("-", title.Split('-').SkipLast(1)));
+                    title = string.Join("-", title.Split('-').SkipLast(1));
 
-                Name = HttpUtility.HtmlDecode(stripedTitleBuilder.ToString());
+                Name = HttpUtility.HtmlDecode(title);
 
-                ChannelName = _regexHelper.ExtractChannelName.Matches(pageContent.Replace("\"", "")).FirstOrDefault()?.Groups["name"].Value;
+                ChannelName = _regexHelper.ExtractChannelNameRegex.Matches(pageContent.Replace("\"", "")).FirstOrDefault()?.Groups["name"].Value;
 
                 if (_config.Verbose)
-                    _console.WriteLineInGray($"Retreiving name for {urlToVerify} - Name : {Name}");
+                    _console.WriteLineInGray($"Retrieving name for {urlToVerify} - Name : {Name}");
             }
             catch (Exception e)
             {
-                _console.WriteLineInRed($"URLs: {AggregatedUrls} - Erreur: {e.Message}");
+                _console.WriteLineInRed($"Urls: {AggregatedUrls} - Error: {e.Message}");
             }
         }
 
-        public string GetSourceUrlFromEmbededVideo()
+        public string GetSourceUrlFromEmbeddedVideo()
         {
             string pageContent = _networkHelper.GetContent(Urls.First()).Result;
-            var matches = _regexHelper.ExtractYoutubeUrlFromEmbededVideoRegex.Match(pageContent);
+            var matches = _regexHelper.ExtractYoutubeUrlFromEmbeddedVideoRegex.Match(pageContent);
             return HttpUtility.HtmlDecode(matches.Groups["url"].Value);
         }
     }

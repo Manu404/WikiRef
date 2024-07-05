@@ -1,56 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata;
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
-using System.Threading.Tasks;
-using WikiRef.Commons;
-using WikiRef.Commons.Data;
+using WikiRef.Data;
 using WikiRef.Wiki;
 
 namespace WikiRef.Report
 {
-    internal class ReportBuilder
+    internal interface IReportBuilder
+    {
+        string BuildReport();
+    }
+
+    internal class ReportBuilder : IReportBuilder
     {
         WikiRefCache _cache;
+        StringBuilder _buffer;
 
-        public ReportBuilder(WikiRefCache cache) 
-        { 
+        public ReportBuilder(WikiRefCache cache)
+        {
             _cache = cache;
+            _buffer = new StringBuilder();
         }
 
         public string BuildReport()
         {
-            StringBuilder builder = new StringBuilder();
-            builder.AppendLine($"'''Date: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")}'''");
-            builder.AppendLine($"__NOTOC__");
-            BuildOverview(builder);
+            _buffer.AppendLine($"'''Date: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")}'''");
+            _buffer.AppendLine($"__NOTOC__");
+            BuildOverviewSection();
             foreach (var ns in _cache.Wiki.Namespaces)
-                BuildDetailSection(builder, ns);
-            BuildwhitelistSection(builder);
-            return builder.ToString();
+                BuildDetailSection(ns);
+            BuildWhiteListSection();
+            return _buffer.ToString();
         }
 
-        private void BuildOverview(StringBuilder builder)
+        private void BuildOverviewSection()
         {
-            AddSectionTitle(builder, "Overview");
-            BuildPageTableHeader(builder); 
-            foreach (var ns in _cache.Wiki.Namespaces)
-                foreach (var page in ns.Pages)
-                    BuildLine(builder, page);
-            BuildPageTableFooter(builder);
+            BuilSectionTitle("Overview");
+            BuildOverviewSectionTableHeader();
+            foreach (var page in _cache.Wiki.Namespaces.SelectMany(ns => ns.Pages))
+                BuildOverviewSectionTableLine(page);
+            BuildOverviewSectionTableFooter();
         }
 
-        private void AddSectionTitle(StringBuilder builder, string name)
+        private void BuilSectionTitle(string name)
         {
-            builder.AppendLine($"== {name} ==");
+            _buffer.AppendLine($"== {name} ==");
         }
 
-        private void BuildPageTableHeader(StringBuilder builder)
+        private void BuildOverviewSectionTableHeader()
         {
-            builder.AppendLine("{| class=\"wikitable\"");
-            builder.AppendLine(@"
+            _buffer.AppendLine("{| class=\"wikitable\"");
+            _buffer.AppendLine(@"
             |+
             !Page
             !References
@@ -58,20 +59,20 @@ namespace WikiRef.Report
             !Whitelisted
             !Valid
             !Invalid
-            !Status".Trim());
+            !Status");
         }
 
-        private void BuildLine(StringBuilder builder, WikiPageData page) 
+        private void BuildOverviewSectionTableLine(Data.WikiPage page)
         {
-            
+
             var reference = page.References.Count;
             var citation = page.References.Where(r => r.IsCitation).Count();
             var whitelisted = page.References.SelectMany(u => u.Urls).Where(u => u.SourceStatus == SourceStatus.WhiteListed).Count();
             var invalidSource = page.References.Where(r => !r.IsCitation).Where(r => r.Status == SourceStatus.Invalid).Count();
             var validSource = page.References.Where(r => !r.IsCitation).Where(r => r.Status != SourceStatus.Invalid).Count();
             string status = page.References.Where(r => !r.IsCitation).Where(r => r.Status == SourceStatus.Invalid).Count() == 0 ? " Valid" : "Invalid";
-            string color = invalidSource > 0 ? "#f06130" : "#a7f030"; 
-            builder.AppendLine($@"
+            string color = invalidSource > 0 ? "#f06130" : "#a7f030";
+            _buffer.AppendLine($@"
                     |-
                     |[[{page.Name}]]
                     |{reference}
@@ -79,60 +80,59 @@ namespace WikiRef.Report
                     |{whitelisted}
                     |{validSource}
                     |{invalidSource}
-                    |style=""background-color: {color}"" | {status}".Trim());
+                    |style=""background-color: {color}"" | {status}");
         }
 
-        private void BuildPageTableFooter(StringBuilder builder)
+        private void BuildOverviewSectionTableFooter()
         {
-            builder.AppendLine("|}");
+            _buffer.AppendLine("|}");
         }
 
-        private void BuildDetailSection(StringBuilder builder, WikiNamespace ns)
+        private void BuildDetailSection(WikiNamespace ns)
         {
             if (ns.Pages.Where(p => p.References.Any(r => r.Status == SourceStatus.Invalid)).Count() > 0)
             {
-                AddSectionTitle(builder, $"Error details - {ns.Name}");
+                BuilSectionTitle($"Error details - {ns.Name}");
                 foreach (var page in ns.Pages.Where(p => p.References.Any(r => r.Status == SourceStatus.Invalid)))
-                    BuildeErrorDetail(builder, page);
+                    BuildErrorDetail(page);
             }
         }
 
-        private void BuildeErrorDetail(StringBuilder builder, WikiPage page)
+        private void BuildErrorDetail(Data.WikiPage page)
         {
             int i = 0;
-            builder.AppendLine($"=== {page.Name} ===");
+            _buffer.AppendLine($"=== {page.Name} ===");
             foreach (var reference in page.References.Where(r => r.Status == SourceStatus.Invalid))
             {
-                if (i > 0) builder.AppendLine("<hr />");
-                builder.AppendLine($"<code><nowiki>{reference.Content}</nowiki></code>");
+                if (i > 0) _buffer.AppendLine("<hr />");
+                _buffer.AppendLine($"<code><nowiki>{reference.Content}</nowiki></code>");
                 i += 1;
             }
         }
 
-        private void BuildwhitelistSection(StringBuilder builder)
+        private void BuildWhiteListSection()
         {
-            AddSectionTitle(builder, "Whitelist");
-            builder.AppendLine($"=== Whitelisted domains ===");
-            BuildWhitelistedUrl(builder);
-            builder.AppendLine("<hr />");
-            foreach (var ns in _cache.Wiki.Namespaces)
-                foreach (var page in ns.Pages)
-                    BuildeWhitelistDetail(builder, page);
+            BuilSectionTitle("Whitelist");
+            _buffer.AppendLine($"=== Whitelisted domains ===");
+            BuildWhiteListedUrl();
+            _buffer.AppendLine("<hr />");
+            foreach (var pages in _cache.Wiki.Namespaces.SelectMany(ns => ns.Pages))
+                BuildWhiteListDetail(pages);
         }
 
-        private void BuildWhitelistedUrl(StringBuilder builder)
+        private void BuildWhiteListedUrl()
         {
             foreach (var url in _cache.WhiteList)
-                builder.AppendLine($" - {url}");
+                _buffer.AppendLine($" - {url}");
         }
 
-        private void BuildeWhitelistDetail(StringBuilder builder, WikiPageData page)
+        private void BuildWhiteListDetail(Data.WikiPage page)
         {
             IEnumerable<string> urls = page.References.SelectMany(u => u.Urls).Where(u => u.SourceStatus == SourceStatus.WhiteListed).Select(u => u.Url);
             if (urls.Count() == 0) return;
-            builder.AppendLine($"=== {page.Name} ===");
-            foreach (var url in urls.OrderBy(u => u))            
-                builder.AppendLine($" - {url}");
+            _buffer.AppendLine($"=== {page.Name} ===");
+            foreach (var url in urls.OrderBy(u => u))
+                _buffer.AppendLine($" - {url}");
         }
     }
 }

@@ -1,0 +1,26 @@
+﻿using System.Collections.Generic;
+
+namespace WikiRef.Data
+{
+    public class Reference
+    {
+        public string Content { get; set; }
+        public List<ReferenceUrl> Urls { get; set; }
+        public SourceStatus Status { get; set; }
+        public bool FormattingIssue { get; set; }
+        public int InvalidUrls { get; set; }
+
+        public bool IsCitation { 
+            get {
+                return Content.Contains("group=\"citation\"");
+            } 
+        }
+
+        public Reference(string content)
+        {
+            Content = content;
+            Urls = new List<ReferenceUrl>();
+            FormattingIssue = false;    
+        }
+    }
+}

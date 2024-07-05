@@ -1,59 +1,45 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
-using WikiRef;
-using WikiRef.Commons;
-using WikiRef.Commons.Data;
-using WikiRef.Wiki;
+using WikiRef.Common;
+using WikiRef.Data;
 
 namespace WikiRef.Wiki
 {
-    public class WikiPage : WikiPageData
+    public class WikiPage : Data.WikiPage
     {
-        // Internal status flags
-        private bool isReferenceListBuilt = false;
-        private bool areUrlExtractedFromReferences = false;
-        private bool isPageContentRetreivedFromApi = false;
-
-        // External Dependencies
-        private ConsoleHelper _console;
+        private IConsole _console;
         private MediaWikiApi _api;
-        private AppConfiguration _config;
-        private WhitelistHandler _whitelist;
-        private RegexHelper _regexHelper;
-        private NetworkHelper _networkHelper;
-
-        [JsonIgnore] public int MalformedDates { get; set; }
-        public int WikiLinks { get; set; }
-        public List<WikiCategory> Categories { get; set; }
-
-        [JsonIgnore] public List<YoutubeUrlData> ThreadSafeYoutubeUrls { get; set; }
-        [JsonIgnore] public List<Reference> ThreadSafeReferences { get; set; }
+        private IAppConfiguration _config;
+        private WhiteListHelper _whitelist;
+        private IRegexHelper _regexHelper;
+        private INetworkHelper _networkHelper;
 
         public WikiPage()
         {
 
         }
 
-        public WikiPage(string name, string category, ConsoleHelper consoleHelper, MediaWikiApi api, AppConfiguration configuration, WhitelistHandler whiteList, RegexHelper regexHelper, NetworkHelper networkHelper)
+        public WikiPage(IAppConfiguration configuration, IConsole console, MediaWikiApi api, WhiteListHelper whiteList, IRegexHelper regexHelper, INetworkHelper networkHelper, string name, string category)
         {
-            YoutubeUrls = new List<YoutubeUrlData>();
+            YoutubeUrls = new List<Data.YoutubeUrl>();
             References = new List<Reference>();
 
-            Categories = new List<WikiCategory>();
-            Categories.Add(new WikiCategory()
+            Categories = new List<WikiCategory>
             {
-                Name = category
-            });
+                new WikiCategory()
+                {
+                    Name = category
+                }
+            };
             Name = name;
 
-            _console = consoleHelper;
+            _console = console;
             _api = api;
             _config = configuration;
             _whitelist = whiteList;
@@ -63,74 +49,54 @@ namespace WikiRef.Wiki
             BuildPage().Wait();
         }
 
-        public async Task BuildPage()
+        private async Task BuildPage()
         {
             await GetPageContentFromApi();
             BuildReferenceList();
-            ExtractUrlsFromReference();
+            ExtractUrlsFromReferences();
         }
 
         private async Task GetPageContentFromApi()
         {
-            if (isPageContentRetreivedFromApi) return;
             Content = await _api.GetPageContent(Name);
-            isPageContentRetreivedFromApi = true;
         }
 
         private void BuildReferenceList()
-        {
-            if (isReferenceListBuilt) return;
-            
+        {            
             MatchCollection matches = _regexHelper.ExtractReferenceFromPageRegex.Matches(Content);
-
             foreach (Match match in matches)
                 References.Add(new Reference(match.Value));
-
-            isReferenceListBuilt = true;
         }
-
-        private void ExtractUrlsFromReference()
+        
+        private void ExtractUrlsFromReferences()
         {
-            if (areUrlExtractedFromReferences) return;
-
             foreach(var reference in References)
             {
                 var matches = _regexHelper.ExtractUrlFromReferenceRegex.Matches(reference.Content);
 
                 foreach(Match match in matches)
                 {
-                    var url = HttpUtility.UrlDecode(match.Groups["url"].Value);
-                    if (url.Contains(','))
+                    if (match.Groups["url"].Value.Contains(','))
                         _console.WriteLineInOrange($"#This reference contains multiple urls. Reference: {reference.Content}");
 
-                    if (url.Contains("wikipedia"))
-                        WikiLinks += 1;
-
-                    reference.Urls.Add(new ReferenceUrl(url));
+                    reference.Urls.Add(new ReferenceUrl(HttpUtility.UrlDecode(match.Groups["url"].Value)));
                 }
             }
-            areUrlExtractedFromReferences = true;
         }
         
         public async Task CheckReferenceStatus()
         {
-            int numberOfcitation = References.Where(r => r.IsCitation).Count();
-            int numberOfReference = References.Count - numberOfcitation;
-            int checkedurls = 0;
+            int numberOfCitations = References.Where(r => r.IsCitation).Count();
+            int numberOfReferences = References.Count - numberOfCitations;
+            int checkedUrls = 0;
 
-            BuildAggregatedYoutubeUrl();
-
-            //new ParallelOptions
-            //{
-            //    MaxDegreeOfParallelism = Convert.ToInt32(Math.Ceiling((Environment.ProcessorCount * 0.75) * 2.0))
-            //};
+            BuildAggregatedYoutubeUrls();
 
             await Parallel.ForEachAsync(YoutubeUrls, async (youtubeUrls, token) =>
             {
                 await (youtubeUrls as YoutubeUrl).FetchPageName();
             });
 
-            // Check non youtube reference
             await Parallel.ForEachAsync(References, async (reference, token) =>
             {
                 foreach (var url in reference.Urls)
@@ -138,7 +104,9 @@ namespace WikiRef.Wiki
                     try
                     {
                         SourceStatus status = SourceStatus.Valid;
-                        if (IsYoutubeUrl(url.Url))
+                        if (!reference.Content.StartsWith("<ref>{{ReferenceText") && !reference.IsCitation)
+                            status = SourceStatus.Invalid;
+                        else if (IsYoutubeUrl(url.Url))
                         {
                             string VideoId = YoutubeUrl.GetVideoId(url.Url, _regexHelper);
                             if (VideoId != null && YoutubeUrls.Any(v => v.VideoId == VideoId))
@@ -147,13 +115,12 @@ namespace WikiRef.Wiki
                                 status = YoutubeUrls.FirstOrDefault(v => v.Urls.Any(u => u == url.Url)).IsValid;
                             else if (reference.IsCitation && IsYoutubeUrl(reference.Content)) // if url contained in citation
                             {
-                                var citationVideo = new YoutubeUrl(url.Url, _console, _config, _regexHelper, _networkHelper);
+                                var citationVideo = new YoutubeUrl(_config, _console, _regexHelper, _networkHelper, url.Url);
                                 await citationVideo.FetchPageName();
                                 status = citationVideo.IsValid;
                             }
                             else
                                 status = SourceStatus.Invalid;
-
                         }
                         else
                             status = CheckUrlStatus(url.Url);
@@ -162,28 +129,27 @@ namespace WikiRef.Wiki
 
                         // take the worst case scenario
                         reference.Status = (SourceStatus)Math.Max((int)status, (int)reference.Status);
-                        //reference.Status = status;
 
-                        DisplayreferencesStatus(reference, url.Url);
+                        DisplayReferenceStatus(reference, url.Url);
                     }
                     catch (Exception ex)
                     {
-                        _console.WriteLineInRed(string.Format("URL: {0} - Erreur: {1}", url.Url, ex.Message.Trim()));
+                        _console.WriteLineInRed(string.Format("URL: {0} - Error: {1}", url.Url, ex.Message.Trim()));
                     }
-                    checkedurls += 1;
+                    checkedUrls += 1;
                 }
             });
 
 
-            _console.WriteLine(String.Format("{0} reference found and {1} citation references. {2} url verified.", numberOfReference, numberOfcitation, checkedurls));
+            _console.WriteLine($"{numberOfReferences} references found and {numberOfCitations} citations references. {checkedUrls} url verified.");
 
             if (References.Any(r => r.Status == SourceStatus.Invalid))
-                _console.WriteLineInRed(String.Format("Some references seems invalid, check the error message and/or the wikicode for malformated refrerences or invalid urls"));
+                _console.WriteLineInRed("Some references seems invalid, check the error message and/or the wikicode for malformated refrerences or invalid urls");
             else
-                _console.WriteLineInGreen(String.Format("All references seems valid"));
+                _console.WriteLineInGreen("All references seems valid");
         }
 
-        private void DisplayreferencesStatus(Reference reference, string url)
+        private void DisplayReferenceStatus(Reference reference, string url)
         {
             if (reference.Status != SourceStatus.Valid || _config.Verbose)
             {
@@ -193,9 +159,9 @@ namespace WikiRef.Wiki
                     _console.WriteLineInRed($"#> Invalid reference: {displayedUrl} -> {reference.Status}");
                     _console.WriteLineInRed($"Content: {reference.Content}");
                 }
-                else if (reference.Status == SourceStatus.WhiteListed && _config.Verbose)
+                else if (_config.Verbose && reference.Status == SourceStatus.WhiteListed)
                     _console.WriteLineInOrange($"> #The url {url} is whitelited and wasn't checked.");
-                else if (reference.Status != SourceStatus.Valid)
+                else if(_config.Verbose && reference.Status != SourceStatus.Valid)
                     _console.WriteLineInGray($"#> Valid reference but might have some issues: {displayedUrl} -> {reference.Status}");
             }
         }
@@ -204,7 +170,7 @@ namespace WikiRef.Wiki
         {
             try
             {
-                if (_whitelist.CheckIfWebsiteIsWhitelisted(url))
+                if (_whitelist.CheckIfUrlIsWhiteListed(url))
                     return SourceStatus.WhiteListed;
 
                 var result = _networkHelper.GetStatus(url).Result;
@@ -213,49 +179,44 @@ namespace WikiRef.Wiki
             }
             catch (WebException ex)
             {
-                if (ex.Message.Contains("302")) // redirection
+                if (ex.Message.Contains("302"))
                     return SourceStatus.Valid;
 
-                _console.WriteLineInRed(String.Format("URL: {0} - Erreur: {1}", url, ex.Message));
+                _console.WriteLineInRed($"URL: {url} - Error: {ex.Message}");
                 return SourceStatus.Undefined;
             }
             catch (Exception e)
             {
-                _console.WriteLineInRed(String.Format("URL: {0} - Erreur: {1}", url, e.Message));
+                _console.WriteLineInRed($"URL: {url} - Error: {e.Message}");
                 return SourceStatus.Invalid;
             }
         }
 
-        public void BuildAggregatedYoutubeUrl()
+        private void BuildAggregatedYoutubeUrls()
         {
             _console.WriteLine("Aggregating youtube links");
 
-            foreach( var reference in References.Where(r => !r.IsCitation)) // can't || because collection is modified
+            foreach(var url in References.Where(r => !r.IsCitation).SelectMany(r => r.Urls))
             {
                 try
                 {
-                    foreach (var url in reference.Urls)
+                    if (IsYoutubeUrl(url.Url))
                     {
-                        if (IsYoutubeUrl(url.Url))
-                        {
-                            string VideoId = YoutubeUrl.GetVideoId(url.Url, _regexHelper);
-                            if (!YoutubeUrls.Exists(o => o.VideoId == VideoId || String.IsNullOrEmpty(VideoId)))
-                                YoutubeUrls.Add(new YoutubeUrl(url.Url, _console, _config, _regexHelper, _networkHelper));
-                            else                            
-                                YoutubeUrls.FirstOrDefault(o => VideoId == o.VideoId).Urls.Add(url.Url);
-                            
-                        }
+                        string videoId = YoutubeUrl.GetVideoId(url.Url, _regexHelper);
+                        if (!YoutubeUrls.Exists(o => o.VideoId == videoId) || String.IsNullOrEmpty(videoId))
+                            YoutubeUrls.Add(new YoutubeUrl(_config, _console, _regexHelper, _networkHelper, url.Url));
+                        else
+                            YoutubeUrls.FirstOrDefault(o => videoId == o.VideoId).Urls.Add(url.Url);
                     }
                 }
                 catch (Exception ex)
                 {
-                    _console.WriteLineInRed($"URL: {reference.Content} - Erreur: {ex.Message}");
+                    _console.WriteLineInRed($"URL: {url.Url} - Error: {ex.Message}");
                 }
             };
-
         }
 
-        public bool IsYoutubeUrl(string url)
+        private bool IsYoutubeUrl(string url)
         {
             return (url.Contains("youtu.", StringComparison.InvariantCultureIgnoreCase) || url.Contains("youtube.", StringComparison.InvariantCultureIgnoreCase));
         }

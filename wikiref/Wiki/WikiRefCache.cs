@@ -3,68 +3,47 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using WikiRef.Commons;
-using WikiRef.Commons.Data;
+using WikiRef.Common;
+using WikiRef.Data;
 
 namespace WikiRef.Wiki
 {
     public class WikiRefCache
     {
         [JsonProperty] public IEnumerable<string> WhiteList { get; private set; }
-        [JsonProperty] public Wiki Wiki { get; private set; }
+        [JsonProperty] public Data.Wiki Wiki { get; private set; }
 
         public WikiRefCache()
         {
-            Wiki = new Wiki();
+            Wiki = new Data.Wiki();
+            WhiteList = new List<string>();
         }
 
-        public WikiRefCache(AppConfiguration _config, MediaWikiApi _api, WhitelistHandler whitelistHandler, ConsoleHelper _consoleHelper)
+        public WikiRefCache(IAppConfiguration config, IConsole console, MediaWikiApi api, WhiteListHelper whitelistHandler)
         {
-            Wiki = new Wiki();
+            Wiki = new Data.Wiki();
+            WhiteList = whitelistHandler.WhiteList;
 
-            Wiki.URL = _config.WikiApi;
+            Wiki.Url = config.Url;
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Start();
 
-            if (!string.IsNullOrEmpty(_config.Page))
+            WikiNamespace ns = new WikiNamespace();
+            if (!string.IsNullOrEmpty(config.Page) || !string.IsNullOrEmpty(config.Category))
             {
-                WikiNamespace ns = new WikiNamespace();
                 ns.Name = "Principal";
-                ns.Pages = _api.GetWikiPagesFromCategories().Result.ToList();
-                Wiki.Namespaces.Add(ns);
+                ns.Pages = api.GetWikiPagesFromCategories().Result.ToList();
             }
-            else if (!string.IsNullOrEmpty(_config.Category))
+            else if (!string.IsNullOrEmpty(config.Namespace))
             {
-                WikiNamespace ns = new WikiNamespace();
-                ns.Name = "Principal";
-                ns.Pages = _api.GetWikiPagesFromCategories().Result.ToList();
-                Wiki.Namespaces.Add(ns);
+                ns.Name = config.Namespace;
+                ns.Pages = api.GetWikiPagesFromNamespace().Result.ToList();
             }
-            else if (!string.IsNullOrEmpty(_config.Namespace))
-            {
-                WikiNamespace ns = new WikiNamespace();
-                ns.Name = _config.Namespace;
-                ns.Pages = _api.GetWikiPagesFromNamespace().Result.ToList();
-                Wiki.Namespaces.Add(ns);
-            }
-            WhiteList = whitelistHandler.WhitelistWebsite;
+            Wiki.Namespaces.Add(ns);
 
             stopWatch.Stop();
             TimeSpan ts = stopWatch.Elapsed;
-            _consoleHelper.WriteLineInGray(String.Format("Runtime: {0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10));
+            console.WriteLineInGray(String.Format("Runtime: {0:00}:{1:00}:{2:00}.{3:00}", ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10));
         }
     }
-
-    //public class JsonWikiPageCache
-    //{
-    //    [JsonProperty("WikiPages")]
-    //    public IEnumerable<WikiPage> WikiPages { get; private set; }
-    //    [JsonProperty("Whitelist")]
-    //    public IEnumerable<string> WhiteList { get; private set; }
-
-    //    public JsonWikiPageCache(FileHelper helper, AppConfiguration config)
-    //    {
-    //        WikiPages = ;
-    //    }
-    //}
 }
