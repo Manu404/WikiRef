@@ -32,10 +32,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\WikiRef.Commons\WikiRef.Commons.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Update="output.json">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>

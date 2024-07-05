@@ -1,58 +1,47 @@
 ﻿using System;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Web;
-using System.Xml.Linq;
-using WikiRef.Commons;
-using WikiRef.Commons.Data;
+using WikiRef.Common;
+using WikiRef.Data;
 using WikiRef.Wiki;
 
 namespace WikiRef
 {
     class YoutubeBashScriptBuilder {
 
-        private ConsoleHelper _console;
-        private AppConfiguration _config;
+        private IConsole _console;
+        private IAppConfiguration _config;
+        private IRegexHelper _regexHelper;
         private WikiRefCache _wikiRefCache;
-        private RegexHelper _regexHelper;
 
-        public YoutubeBashScriptBuilder(AppConfiguration config, ConsoleHelper console, WikiRefCache wikiPageCache, RegexHelper regexHelper)
+        public YoutubeBashScriptBuilder(IAppConfiguration config, IConsole console, IRegexHelper regexHelper, WikiRefCache wikiPageCache)
         {
             _config = config;
             _console = console;
-            _wikiRefCache = wikiPageCache;
             _regexHelper = regexHelper;
+            _wikiRefCache = wikiPageCache;
         }
 
-        public void ConstructBashScript()
+        public void BuildBashScript()
         {
             StringBuilder builder = new StringBuilder();
-            int i = 0;
 
             builder.AppendLine("#!/bin/bash");
 
-            foreach(var cat in _wikiRefCache.Wiki.Namespaces)
-                foreach (var page in cat.Pages)
-                {
-                    foreach (var video in page.YoutubeUrls)
-                    {
-                        i++;
-                        builder.Append(ConstructBashInstruction(page.Name, video));
-                    }
-                }
+            foreach(var page in _wikiRefCache.Wiki.Namespaces.SelectMany(ns => ns.Pages))
+                foreach (var video in page.YoutubeUrls)
+                    builder.Append(BuildBashScriptInstruction(page.Name, video));
 
-            _console.WriteLine($"{i} video treated");
+            _console.WriteLine($"{_wikiRefCache.Wiki.Namespaces.SelectMany(ns => ns.Pages).SelectMany(page => page.YoutubeUrls).Count()} video treated");
 
-            // Save script
-            using (StreamWriter file = new StreamWriter(_config.DownloadOutpuScriptName))
+            using (StreamWriter file = new StreamWriter(_config.DownloadOutputScriptName))
             {
                 file.WriteLine(builder.ToString());
             }
         }
 
-        public string ConstructBashInstruction(string page, YoutubeUrlData video)
+        private string BuildBashScriptInstruction(string page, Data.YoutubeUrl video)
         {
             if (video.IsValid == SourceStatus.Invalid)
             {
@@ -60,7 +49,7 @@ namespace WikiRef
                     _console.WriteLineInOrange(String.Format("Download skipped. Invalid. Maybe private or violate TOS. {0} from {1}", video.AggregatedUrls, page));
                 return String.Empty;
             }
-            if (video.IsChannels && !_config.DownloadChannel)
+            if (video.IsChannel && !_config.DownloadChannel)
             {
                 if (_config.Verbose)
                     _console.WriteLineInOrange(String.Format("Download skipped. Url is a channel {0} from {1}. Use --download-channel if you want to download it's content", video.AggregatedUrls, page));
@@ -81,34 +70,34 @@ namespace WikiRef
 
             StringBuilder builder = new StringBuilder();
 
-            var filename = $"{GetFileName(video)}.{_config.DownloadVideoFileExtension}";
-            var desitnationFilename = GetOutputPath(filename, page);
-            bool fileExist = false;
+            string filename = $"{GetFileName(video)}.{_config.DownloadVideoFileExtension}";
+            string destinationFilename = GetOutputPath(filename, page);
+            bool fileExists = false;
 
             if (Directory.Exists(GetOutputDirectory(page))) 
                 foreach(var file in Directory.GetFiles(GetOutputDirectory(page)))
                 {
                     var youtubeVideoId = _regexHelper.ExtractYoutubeIdFromFileNameRegex.Matches(file);
                     if (youtubeVideoId != null && youtubeVideoId.Last().Groups["id"].Value == video.VideoId)
-                        fileExist = true;
+                        fileExists = true;
                 }
 
-            if (fileExist && !_config.DownloadRedownload)
+            if (fileExists && !_config.Redownload)
             {
                 if (_config.Verbose)
-                    _console.WriteLine($"{desitnationFilename} exist.");
+                    _console.WriteLine($"{destinationFilename} exist.");
                 return String.Empty;
             }
-            else if(fileExist && _config.DownloadRedownload)
+            else if(fileExists && _config.Redownload)
             {
                 if (_config.Verbose)
-                    _console.WriteLine($"remove and download {desitnationFilename}.");
-                builder.AppendLine($"rm -rf {desitnationFilename}");
+                    _console.WriteLine($"remove and download {destinationFilename}.");
+                builder.AppendLine($"rm -rf {destinationFilename}");
             }
             else
             {
                 if (_config.Verbose)
-                    _console.WriteLine($"{desitnationFilename} doesn't exist, add for download.");
+                    _console.WriteLine($"{destinationFilename} doesn't exist, add for download.");
             }
 
             builder.AppendLine($"{_config.DownloadToolLocation} {FormatArguments(video, filename, page)}");
@@ -116,14 +105,12 @@ namespace WikiRef
             return builder.ToString();
         }
 
-        public string GetFileName(YoutubeUrlData video)
+        private string GetFileName(Data.YoutubeUrl video)
         {
             try
             {
-                // Make video name valid for use as path
-                var filename = GetValidPath(video.Name).Replace(' ', '_');
+                string filename = GetValidPath(video.Name).Replace(' ', '_');
 
-                //add videoId at the end
                 filename = $"{filename}_[{video.VideoId}]";
 
                 if (_config.Verbose)
@@ -139,12 +126,12 @@ namespace WikiRef
             }
         }
 
-        private string FormatArguments(YoutubeUrlData video, string outputFile, string page)
+        private string FormatArguments(Data.YoutubeUrl video, string outputFile, string page)
         {
             return $"{_config.DownloadToolArguments} -o \"{GetOutputPath(outputFile, page)}\" {GetUrlFromVideoId(video)}";
         }
 
-        private string GetUrlFromVideoId(YoutubeUrlData video)
+        private string GetUrlFromVideoId(Data.YoutubeUrl video)
         {
             return $"https://www.youtube.com/watch?v={video.VideoId}";
         }

@@ -1,36 +1,31 @@
-﻿using CommandLine;
-using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using WikiRef.Commons;
-using WikiRef.Commons.Data;
+using WikiRef.Common;
+using WikiRef.Data;
 
 namespace WikiRef.Wiki
 {
-    class WikiAnalyser
+    class WikiAnalyzer
     {
-        MediaWikiApi _api;
-        ConsoleHelper _console;
+        IConsole _console;
         WikiRefCache _wikiRefCache;
-        AppConfiguration _config;
+        IAppConfiguration _config;
 
-        public WikiAnalyser(MediaWikiApi api, ConsoleHelper console, WikiRefCache wikiPageCache, AppConfiguration config)
+        public WikiAnalyzer(IAppConfiguration config, IConsole console, WikiRefCache wikiPageCache)
         {
-            _api = api;
             _console = console;
             _wikiRefCache = wikiPageCache;
             _config = config;   
         }
 
         // Main method for the analyze verb
-        public async Task AnalyseReferences()
+        public async Task AnalyzeReferences()
         {
-            foreach(var ns in _wikiRefCache.Wiki.Namespaces)
-                foreach (var page in ns.Pages.OrderBy(p => p.Name))
-                {
-                    _console.WriteSection(string.Format("Analyzing page: {0}...", page.Name));
-                    await page.CheckReferenceStatus();
-                }
+            foreach(var page in _wikiRefCache.Wiki.Namespaces.SelectMany(ns => ns.Pages))
+            {
+                _console.WriteSection(string.Format("Analyzing page: {0}...", page.Name));
+                await (page as WikiPage).CheckReferenceStatus();
+            }
 
             _console.WriteSection("Analysis summary");
             _console.WriteLineInGray($"References: {_wikiRefCache.Wiki.Namespaces.SelectMany(p => p.Pages).Sum(p => p.References.Count)}");

@@ -4,24 +4,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using WikiRef.Commons;
+using WikiRef.Common;
 
 namespace WikiRef.Wiki
 {
     public class MediaWikiApi
     {
-        private int _apiCalls;
-        private ConsoleHelper _console;
-        private WhitelistHandler _whitelistHandler;
-        private AppConfiguration _config;
-        private RegexHelper _regexHelper;
-        NetworkHelper _networkHelper;
+        private IAppConfiguration _config;
+        private IConsole _console;
+        private WhiteListHelper _whitelistHelper;
+        private IRegexHelper _regexHelper;
+        private INetworkHelper _networkHelper;
 
-        public MediaWikiApi(ConsoleHelper consoleHelper, AppConfiguration config, WhitelistHandler whitelistHandler, RegexHelper regexHelper, NetworkHelper networkHelper)
+        private int _apiCalls;
+
+        public MediaWikiApi(IAppConfiguration config, IConsole console, WhiteListHelper whitelistHelper, IRegexHelper regexHelper, INetworkHelper networkHelper)
         {
-            _console = consoleHelper;
-            _whitelistHandler = whitelistHandler;
             _config = config;
+            _console = console;
+            _whitelistHelper = whitelistHelper;
             _regexHelper = regexHelper;
             _networkHelper = networkHelper;
             _apiCalls = 0;
@@ -33,15 +34,13 @@ namespace WikiRef.Wiki
 
             try
             {
-                // If query page
                 if (string.IsNullOrEmpty(_config.Namespace))
-                    return new[] { new WikiPage(_config.Page, _config.Namespace, _console, this, _config, _whitelistHandler, _regexHelper, _networkHelper) };
+                    return new[] { new WikiPage(_config, _console, this, _whitelistHelper, _regexHelper, _networkHelper, _config.Page, _config.Namespace) };
 
-                if (await _networkHelper.GetStatus(_config.WikiApi) != HttpStatusCode.OK)
-                    _console.WriteLineInRed($"Provided api url seems invalid {_config.WikiApi}");
+                if (await _networkHelper.GetStatus(_config.Url) != HttpStatusCode.OK)
+                    _console.WriteLineInRed($"Provided api url seems invalid {_config.Url}");
 
-                // if query namespace, paging
-                string queryUrl = $"{_config.WikiApi}?action=query&generator=allpages&gaplimit=500&apnamespace={_config.Namespace}&format=json";
+                string queryUrl = $"{_config.Url}?action=query&generator=allpages&gaplimit=500&apnamespace={_config.Namespace}&format=json";
                 if (!String.IsNullOrEmpty(gap_continue))
                     queryUrl += $"&gapcontinue={gap_continue}";
 
@@ -55,7 +54,7 @@ namespace WikiRef.Wiki
                     pages.AddRange(await GetWikiPagesFromNamespace(jsonObject["continue"]["gapcontinue"].Value<string>()));
 
                 foreach (var page in jsonObject["query"]["pages"])
-                    pages.Add(new WikiPage((string)page.Children().First()["title"], _config.Category, _console, this, _config, _whitelistHandler, _regexHelper, _networkHelper));
+                    pages.Add(new WikiPage(_config, _console, this, _whitelistHelper, _regexHelper, _networkHelper, (string)page.Children().First()["title"], _config.Category));
                
                 return pages;
             }
@@ -73,15 +72,13 @@ namespace WikiRef.Wiki
 
             try
             {
-                // If query page
                 if (string.IsNullOrEmpty(_config.Category))
-                    return new[] { new WikiPage(_config.Page, _config.Category, _console, this, _config, _whitelistHandler, _regexHelper, _networkHelper) };
+                    return new[] { new WikiPage(_config, _console, this, _whitelistHelper, _regexHelper, _networkHelper, _config.Page, _config.Category) };
 
-                if (await _networkHelper.GetStatus(_config.WikiApi) != HttpStatusCode.OK)
-                    _console.WriteLineInRed($"Provided api url seems invalid {_config.WikiApi}");
+                if (await _networkHelper.GetStatus(_config.Url) != HttpStatusCode.OK)
+                    _console.WriteLineInRed($"Provided api url seems invalid {_config.Url}");
 
-                // if query category, paging
-                string queryUrl = $"{_config.WikiApi}?action=query&list=categorymembers&cmtitle=Category:{_config.Category}&cmlimit=500&format=json";
+                string queryUrl = $"{_config.Url}?action=query&list=categorymembers&cmtitle=Category:{_config.Category}&cmlimit=500&format=json";
                 if (!String.IsNullOrEmpty(page_continue))
                     queryUrl += $"&cmcontinue={page_continue}";
 
@@ -96,7 +93,7 @@ namespace WikiRef.Wiki
 
                 Parallel.ForEach(jsonObject["query"]["categorymembers"], page =>
                 {
-                    pages.Add(new WikiPage((string)page["title"], _config.Category, _console, this, _config, _whitelistHandler, _regexHelper, _networkHelper));
+                    pages.Add(new WikiPage(_config, _console, this, _whitelistHelper, _regexHelper, _networkHelper, (string)page["title"], _config.Category));
                 });
                 
                 return pages;
@@ -116,7 +113,7 @@ namespace WikiRef.Wiki
                 if (string.IsNullOrEmpty(pageName)) return string.Empty;
 
                 var sanitizedPageName = pageName.Replace(" ", "_");
-                string queryUrl = $"{_config.WikiApi}?action=query&prop=revisions&titles={sanitizedPageName}&rvslots=*&rvprop=timestamp|user|comment|content&format=json";
+                string queryUrl = $"{_config.Url}?action=query&prop=revisions&titles={sanitizedPageName}&rvslots=*&rvprop=timestamp|user|comment|content&format=json";
 
                 _console.WriteLineInGray($"{_apiCalls}::Retrieve {queryUrl} => {pageName}");
 

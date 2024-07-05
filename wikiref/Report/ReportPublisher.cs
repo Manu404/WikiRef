@@ -1,27 +1,23 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WikiClientLibrary.Client;
 using WikiClientLibrary.Pages;
 using WikiClientLibrary.Sites;
-using WikiRef.Commons;
-using WikiRef.Wiki;
+using WikiRef.Common;
 
 namespace WikiRef.Report
 {
     internal class ReportPublisher
     {
-        AppConfiguration _config;
-        ReportBuilder _builder;
-        ConsoleHelper _consoleHelper;
+        IAppConfiguration _config;
+        IReportBuilder _builder;
+        IConsole _console;
 
-        public ReportPublisher(AppConfiguration config, ReportBuilder builder, ConsoleHelper consoleHelper)
+        public ReportPublisher(IAppConfiguration config, IConsole IConsole, IReportBuilder builder)
         {
             _config = config;
             _builder = builder; 
-            _consoleHelper = consoleHelper;
+            _console = IConsole;
         }
 
         public async Task Publish()
@@ -30,62 +26,53 @@ namespace WikiRef.Report
             {
                 var pageName = _config.ReportPage;
                 var wikiClient = new WikiClient();
-                var site = new WikiSite(wikiClient, _config.WikiApi);
+                var site = new WikiSite(wikiClient, _config.Url);
                 string message = $"Publication date: {DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss")}";
-            try
-            {
+                try
+                {
 
-                    _consoleHelper.WriteLineInGray("Initilize");
+                    _console.WriteLineInGray("Initialize");
                     await site.Initialization;
 
-                    _consoleHelper.WriteLineInGray("Connect");
+                    _console.WriteLineInGray("Connect");
                     await site.LoginAsync(_config.User, _config.Password);
-                    _consoleHelper.WriteLineInGray("Connected !");
+                    _console.WriteLineInGray("Connected !");
 
-                    _consoleHelper.WriteSection($"Treating {pageName}");
+                    _console.WriteSection($"Treating {pageName}");
 
-                    _consoleHelper.WriteLineInGray("Fetch page");
-                    var page = new WikiClientLibrary.Pages.WikiPage(site, pageName);
+                    _console.WriteLineInGray("Fetch page");
+                    var page = new WikiPage(site, pageName);
                     await page.RefreshAsync(PageQueryOptions.FetchContent);
-                    _consoleHelper.WriteLineInGray(message);
+                    _console.WriteLineInGray(message);
 
-                    _consoleHelper.WriteLineInGray("Build Report");
+                    _console.WriteLineInGray("Build Report");
                     page.Content = _builder.BuildReport();
 
-                    _consoleHelper.WriteLineInGray("Purge cache");
+                    _console.WriteLineInGray("Purge cache");
                     await page.PurgeAsync(PagePurgeOptions.ForceRecursiveLinkUpdate);
 
-                    _consoleHelper.WriteLineInGray("Upload");
+                    _console.WriteLineInGray("Upload");
                     await page.UpdateContentAsync(message);
                 }
                 catch (Exception ex)
                 {
-                    _consoleHelper.WriteLineInRed($"Error with MediaWiki API : {ex.Message}");
-                    DigInnerException(ex, _consoleHelper);
+                    _console.WriteLineInRed($"Error with MediaWiki API : {ex.Message}");
                 }
+
                 try
                 {
-                    _consoleHelper.WriteLineInGray("Disconnect");
+                    _console.WriteLineInGray("Disconnect");
                     await site.LogoutAsync();
                 }
                 catch (Exception ex)
                 {
-                    _consoleHelper.WriteLineInRed($"Error with MediaWiki API : {ex.Message}");
-                    DigInnerException(ex, _consoleHelper);
+                    _console.WriteLineInRed($"Error with MediaWiki API : {ex.Message}");
                 }
             }
             catch (Exception ex)
             {
-                _consoleHelper.WriteLineInRed($"Error building report : {ex.Message}");
-                DigInnerException(ex, _consoleHelper);
+                _console.WriteLineInRed($"Error building report : {ex.Message}");
             }
-        }
-
-        private void DigInnerException(Exception ex, ConsoleHelper _consoleHelper)
-        {
-            _consoleHelper.WriteLineInRed($"Exception : {ex.Message}{Environment.NewLine}{ex.StackTrace}");
-            if (ex.InnerException != null)
-                DigInnerException(ex.InnerException, _consoleHelper);
         }
     }
 }

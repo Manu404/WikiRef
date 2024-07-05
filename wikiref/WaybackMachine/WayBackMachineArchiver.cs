@@ -1,24 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using WikiRef.Commons;
+using WikiRef.Common;
 using WikiRef.Wiki;
 
 namespace WikiRef
 {
     public class WayBackMachineArchiver
     {
-        private ConsoleHelper _console;
-        private AppConfiguration _config;
+        private IConsole _console;
+        private IAppConfiguration _config;
+        private INetworkHelper _networkHelper;
         private WikiRefCache _wikiRefCache;
-        private NetworkHelper _networkHelper;
 
-        public WayBackMachineArchiver(AppConfiguration config, ConsoleHelper console, NetworkHelper networkHelper, WikiRefCache wikiPageCache)
+        public WayBackMachineArchiver(IAppConfiguration config, IConsole console, INetworkHelper networkHelper, WikiRefCache wikiPageCache)
         {
             _config = config;
             _console = console;
@@ -29,29 +24,20 @@ namespace WikiRef
 
         public async Task Archive()
         {
-            foreach(var ns in _wikiRefCache.Wiki.Namespaces)
-                foreach (var page in ns.Pages)
+            foreach(var page in _wikiRefCache.Wiki.Namespaces.SelectMany(ns => ns.Pages))
+            {
+                await Parallel.ForEachAsync(page.References.Where(r => !r.IsCitation), async (reference, token) =>
                 {
-                    await Parallel.ForEachAsync(page.References.Where(r => !r.IsCitation), async (reference, token) =>
-                    {
-                        foreach (var url in reference.Urls.Where(url => !IsYoutubeUrl(url.Url) && !IsWaybackMachine(url.Url)))
-                        { 
-                            await Task.Delay(_config.Throttle);
-                            await AnalyseUrl(url.Url);
-                        }
-                    });
-                    //await Parallel.ForEachAsync(page.YoutubeUrls, async (video, token) =>
-                    //{
-                    //    if (video.IsVideo)
-                    //        await AnalyseUrl(video.VideoUrl);
-                    //    else
-                    //        foreach (var url in video.Urls)
-                    //            await AnalyseUrl(url);
-                    //});
-                }
+                    foreach (var url in reference.Urls.Where(url => !IsYoutubeUrl(url.Url) && !IsWaybackMachine(url.Url)))
+                    { 
+                        await Task.Delay(_config.Throttle);
+                        await AnalyzeUrl(url.Url);
+                    }
+                });
+            }
         }
 
-        private async Task AnalyseUrl(string url)
+        private async Task AnalyzeUrl(string url)
         {
             try
             {
